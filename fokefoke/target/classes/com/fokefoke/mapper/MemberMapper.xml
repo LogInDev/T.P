@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fokefoke.mapper.MemberMapper">
+
+<!-- 회원가입 -->
+<insert id="memberJoin">
+	<![CDATA[
+		insert into member(memberId, memberPw, memberName,
+		birth, phone, adminCk, consentPush,
+		consentEmail, consentSMS, money, point)
+		values (#{memberId}, #{memberPw}, #{memberName},
+		#{birth}, #{phone}, 0, #{consentPush},
+		#{consentEmail}, #{consentSMS}, 100000, 5000)
+	]]>
+</insert>
+
+<!-- 아이디 중복 검사 -->
+<select id="idCheck" resultType="int">
+	<![CDATA[
+		select count(*) from member where memberId = #{memberId}
+	]]>
+</select>
+
+<!-- 로그인 -->
+<select id="memberLogin" resultType="com.fokefoke.dto.MemberDTO">
+	<![CDATA[
+		select memberId, memberPw, adminCk, money, point
+		from member
+		where memberId = #{memberId}
+	]]>
+</select>
+
+<!-- 회원 정보 수정 -->
+<update id="memberEdit">
+	<![CDATA[
+		update member set
+		memberName = #{memberName},
+		birth = #{birth},
+		phone = #{phone}
+		where memberId = #{memberId}  
+	]]>
+</update>
+
+<!-- 회원 정보 1명 불러오기 -->
+<select id="memberSelectOne" resultType="com.fokefoke.dto.MemberDTO">
+	<![CDATA[
+		select memberId, memberPw, memberName, birth, phone, adminCk,
+		consentPush, consentEmail, consentSMS, money, point
+		from member
+		where memberId = #{memberId}
+	]]>
+</select>
+
+<!-- 회원 탈퇴 -->
+<delete id="memberWithdrawals">
+	<![CDATA[
+		delete from member
+		where memberId = #{memberId}
+	]]>
+</delete>
+
+<!-- 비밀번호 변경 -->
+<update id="editPassword">
+	<![CDATA[
+		update member set
+		memberPw = #{memberPw}
+		where memberId = #{memberId}
+	]]>
+</update>
+
+<!-- 아이디 찾기 -->
+<select id="findId" resultType="com.fokefoke.dto.MemberDTO">
+	<![CDATA[
+		select memberId from member
+		where memberName = #{memberName} and phone = #{phone}
+	]]>
+</select>
+
+<!-- 임시 비밀번호로 재설정 -->
+<update id="findPw">
+	<![CDATA[
+		update member set memberPw = #{memberPw} where memberId = #{memberId}
+	]]>
+</update>
+
+<!-- 마케팅 수신 푸시 재설정 -->
+<update id="consentSet">
+	<![CDATA[
+		update member set
+		consentPush = #{consentPush},
+		consentEmail = #{consentEmail},
+		consentSMS = #{consentSMS}
+		where memberId = #{memberId}
+	]]>
+</update>
+
+</mapper>

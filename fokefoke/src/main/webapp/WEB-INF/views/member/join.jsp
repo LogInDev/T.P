@@ -1,0 +1,584 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!doctype html>
+<head>
+<meta charset="UTF-8">
+<title>포케포케 : 회원가입</title>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Google Font -->
+<link
+	href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
+	rel="stylesheet">
+
+<!-- Css Styles -->
+<link rel="stylesheet" href="/resources/css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="/resources/css/font-awesome.min.css" type="text/css">
+<link rel="stylesheet" href="/resources/css/elegant-icons.css" type="text/css">
+<link rel="stylesheet" href="/resources/css/magnific-popup.css" type="text/css">
+<link rel="stylesheet" href="/resources/css/nice-select.css" type="text/css">
+<link rel="stylesheet" href="/resources/css/owl.carousel.min.css" type="text/css">
+<link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
+<link rel="stylesheet" href="/resources/css/style.css" type="text/css">
+<link rel="stylesheet" href="/resources/css/join.css" type="text/css">
+
+<!-- Favicons -->
+<link href="/resources/img/favicon.png" rel="icon" />
+<link href="/resources/img/favicon.png" rel="apple-touch-icon" />
+
+</head>
+<body>
+<jsp:include page="/WEB-INF/views/header.jsp" />
+	<!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__text">
+                        <h2>회원가입</h2>
+                        <div class="breadcrumb__links">
+                            <a style="font-weight: 700; color: #469543;"><span style="font-weight: 700; color: #469543;">01 정보입력</span></a>
+                            <span style="color: #afafaf;">02 가입완료</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Checkout Section Begin -->
+    <form id="signupForm" method="post">
+	    <section class="checkout spad">
+	        <div class="container">
+	            <div class="checkout__form">
+                	<div class="row gx-4 gx-lg-5 justify-content-center">
+                        <div class="col-md-10 col-lg-8 col-xl-7">
+                            <h4 class="checkout__title" style="margin-bottom: 50px;">회원가입</h4>
+                            
+                            <!-- 기본 정보 -->
+                            <!-- 행 분리 -->
+                            <div class="row" style="position: relative;">
+                            
+	                            <!-- 이메일 -->
+		                        <div class="col-lg-6">
+	         	                  	<div class="checkout__input email">
+		                            	<label for="email" style="position: relative;">
+		                            	이메일<span class="goodstar">*</span>
+		                            	</label>
+		                               	<input type="text" class="email_input" id="firstEmail"
+		                               	 	style="color: #000;" required>
+		                               	<div class="text-success input"></div>
+		                               	<div class="text-success numNo"></div>
+	                               	</div>
+	                          	</div>
+		                        <span class="goodgolbaeng">@</span>
+	                            <div class="col-lg-6">
+	                           		<div class="checkout__input">
+										<input type="text" id="lastEmail"
+											style="width: 49%; margin-top: 32px; color: #000;" disabled value="naver.com">
+										<select class="goodselect" name="selectEmail" id="selectEmail"
+											style="color: #000;">
+											 <option value="1">직접입력</option>
+											 <option value="naver.com" selected>naver.com</option>
+											 <option value="hanmail.net">hanmail.net</option>
+											 <option value="hotmail.com">hotmail.com</option>
+											 <option value="nate.com">nate.com</option>
+											 <option value="yahoo.co.kr">yahoo.co.kr</option>
+											 <option value="empas.com">empas.com</option>
+											 <option value="dreamwiz.com">dreamwiz.com</option>
+											 <option value="freechal.com">freechal.com</option>
+											 <option value="lycos.co.kr">lycos.co.kr</option>
+											 <option value="korea.com">korea.com</option>
+											 <option value="gmail.com">gmail.com</option>
+											 <option value="hanmir.com">hanmir.com</option>
+											 <option value="paran.com">paran.com</option>
+										</select>
+									</div>
+	                            </div>
+		                        <div style="margin: auto;">
+		                        <button type="button" class="goodbtn" id="mail_go_input">
+									이메일 인증하기
+								</button>
+								</div>
+                            </div>
+                            
+                            <!-- 인증코드 -->
+	                        <div class="checkout__input emailCk">
+		                    	<label for="email" style="position: relative;">
+		                    	인증코드<span class="goodstar">*</span>
+		                    	</label>
+		                          	<input type="email" class="email_check_input"
+		                           	style="color: #000;" disabled="disabled" required>
+		                       	<div class="text-success"></div>
+		                        <div class="centerplz">
+			                    	<button type="button" class="goodbtn" id="mail_check_button" disabled="disabled">
+										확인
+									</button>
+								</div>
+	                        </div>
+	                        
+	                        <!-- 비밀번호 -->
+                            <div class="checkout__input password">
+                            	<label for="password" style="position: relative;">
+                            	비밀번호<span class="goodstar">*</span>
+                            	</label>
+                                <input type="password" class="pw_input" id="password" name="memberPw"
+                                	style="color: #000;" placeholder="영문, 숫자를 포함한 8자 이상의 비밀번호를 입력해주세요." required>
+                                <div class="text-success pwError"></div>
+                            </div>
+                            
+                            <!-- 비밀번호 확인 -->
+                            <div class="checkout__input passwordConfirm">
+                                <label for="passwordConfirm" style="position: relative;">
+                                비밀번호 확인<span class="goodstar">*</span>
+                                </label>
+                                <input type="password" class="pwck_input" id="passwordConfirm"
+                                	style="color: #000;" name="passwordConfirm" required>
+                            	<div class="text-success pwCkError"></div>
+                            </div>
+                            
+                            <!-- 이름 -->
+                             <div class="checkout__input name">
+                                <label for="name" style="position: relative;">
+                                이름<span class="goodstar">*</span>
+                                </label>
+                                <input type="text" class="name_input" id="name"
+                                	style="color: #000;" name="memberName" required>
+                            	<div class="text-success nameError"></div>
+                            </div>
+                            
+                            <!-- 행 분리 -->
+                            <div class="row">
+                            
+	                           	<!-- 생년월일 -->
+	                            <div class="col-lg-6">
+	                            	<div class="checkout__input birth">
+	                                	<label for="birthdate" style="position: relative;">
+	                                	생년월일<span class="goodstar">*</span>
+	                                	</label>
+	                                	<input type="date" class="bitrh_input" id="birth"
+	                                		style="color: #000; padding-right: 20px;" name="birth" required>
+                            			<div class="text-success birthError"></div>
+	                            	</div>
+	                            </div>
+	                            
+	                            <!-- 전화번호 -->
+	                            <div class="col-lg-6">
+		                            <div class="checkout__input phone">
+		                                <label for="phone" style="position: relative;">
+		                                전화번호<span class="goodstar">*</span>
+		                                </label>
+		                                <input type="tel" class="phone_input" id="phone" name="phone"
+		                                	maxlength="11" style="color: #000;"
+		                                	placeholder="'-'를 제외한 휴대폰 번호를 입력해 주세요" required>
+                            			<div class="text-success phoneError"></div>
+	                            	</div>
+	                            </div>
+                            </div>
+                            <div class="checkout__title"></div>
+                            <!-- 기본정보 끝 -->
+                            
+                            <!-- 약관동의 -->
+                            <label for="agreement" style="position: relative;">
+                            약관동의<span class="goodstar">*</span>
+                            </label>
+                            <div class="centerplz">
+	                            <div class="checkout__input__checkbox checkbox_group" style="margin-top: 10px;">
+	                            	<label for="check_all">
+	                                   전체동의
+	                                    <input type="checkbox" id="check_all">
+	                                    <span class="checkmark"></span>
+	                               	</label>
+	                               	<hr>
+	                            	<label>
+	                                   (필수) 만 14세 이상입니다.
+	                                    <input type="checkbox" class="normal" id="check_1">
+	                                    <span class="checkmark"></span>
+	                               	</label>
+	                            	<label>
+	                                   (필수) 이용약관
+	                                    <a class="float-right" href="/usepolicy" target=" _blank"
+	                                    	style="color:#469543; font-size: 12px;">전체보기 ></a>
+	                                    <input type="checkbox" class="normal" id="check_2">
+	                                    <span class="checkmark"></span>
+	                               	</label>
+	                            	<label>
+	                                   (필수) 개인정보 수집 및 이용동의
+	                                    <a class="float-right" href="/privacy" target=" _blank"
+	                                    	style="color:#469543; font-size: 12px;">전체보기 ></a>
+	                                    <input type="checkbox" class="normal" id="check_3">
+	                                    <span class="checkmark"></span>
+	                               	</label>
+	                               	<div class="checkbox_group2">
+		                            	<label>
+		                                   (선택) 정보 수신 동의
+		                                    <input type="checkbox" class="normal check_all2" id="check_4">
+		                                    <span class="checkmark"></span>
+		                               	</label>
+		                               	<div class="centerplz2">
+			                            	<label style=" padding-left: 20px; display: inline-block;">
+			                                   PUSH 수신 동의 
+			                                    <input type="checkbox" class="normal normal2" name="consentPush"
+			                                    		value='1' id="consentPush">
+			                                    <input type="hidden" class="consentPush_input" name="consentPush"
+			                                    		value='0' id="consentPush_hidden">
+			                                    <span class="checkmark"></span>
+			                               	</label>
+			                           		<label style=" padding-left: 20px; display: inline-block;">
+			                                    이메일 수신 동의
+			                                    <input type="checkbox" class="normal normal2" name="consentEmail"
+			                                    		value='1' id="consentEmail">
+			                                    <input type="hidden" class="consentEmail_input" name="consentEmail"
+			                                    		value='0' id="consentEmail_hidden">
+			                                    <span class="checkmark"></span>
+			                                </label>
+			                          		<label style=" padding-left: 20px; display: inline-block;">
+			                                    문자 / 알림톡 수신 동의
+			                                    <input type="checkbox" class="normal normal2" name="consentSMS"
+			                                   			value='1' id="consentSMS">
+			                                   	<input type="hidden" class="consentSMS_input" name="consentSMS"
+			                                    		value='0' id="consentSMS_hidden">
+			                                    <span class="checkmark"></span>
+			                                 </label>
+			                          	</div>
+	                                </div>
+ 	                           <div class="text-success agreeError"></div>
+	                            </div>
+                            </div>
+                            <!-- 약관동의 끝 -->
+                            
+	                        <div class="row d-flex justify-content-center" style="margin-top: 20px;">
+	                       		<button type="button" class="goodbtn" id="joinSubmit">회원가입 완료</button>
+	                        </div>
+                        </div>
+                    </div>
+            	</div>
+        	</div>
+    	</section>
+    </form>
+    <!-- Checkout Section End -->
+<jsp:include page="/WEB-INF/views/footer.jsp" />
+
+		<!-- 페이지에서 작동되는 함수들 -->
+	<script>
+	var code = '';
+	
+	/* 유효성 검사 통과유무 변수 */
+	var idCheck = false; // 아이디 입력 
+	var idDupCheck = false; // 아이디 중복 검사
+	var idNumCheck = false; // 아이디 인증코드 확인
+	var pwCheck = false; // 비번 입력
+	var pwFormatCheck = false; // 비번 입력 형식
+	var pwCorCheck = false; // 비번 확인 입력
+	var pwCorFormatCheck = false; // 비번 확인 일치
+	var nameCheck = false; // 이름 입력
+	var birthCheck = false; // 생일 입력
+	var phoneCheck = false; // 번호 입력
+	var agreementCheck = false; // 필수 약관동의
+	 
+	/* 마케팅 동의 */
+	if ($("#consentPush").is(":checked")) {
+	    $("#consentPush_hidden").prop("disabled", true);
+	}
+	if ($("#consentEmail").is(":checked")) {
+	    $("#consentEmail_hidden").prop("disabled", true);
+	}
+	if ($("#consentSMS").is(":checked")) {
+	    $("#consentSMS_hidden").prop("disabled", true);
+	}
+	
+	/* 체크박스 전체 선택 */
+	$(".checkbox_group").on("click", "#check_all", function () {
+	  var checked = $(this).is(":checked");
+
+	  if(checked){
+	  	$(this).parents(".checkbox_group").find('input').prop("checked", true);
+	  } else {
+	  	$(this).parents(".checkbox_group").find('input').prop("checked", false);
+	  }
+	}); // 체크박스 전체 선택 끝
+	
+	/* 체크박스 개별 선택 */
+	$(".checkbox_group").on("click", ".normal", function() {
+	    var is_checked = true;
+
+	    $(".checkbox_group .normal").each(function(){
+	        is_checked = is_checked && $(this).is(":checked");
+	    });
+
+	    $("#check_all").prop("checked", is_checked);
+	}); // 체크박스 개별 선택 끝
+	
+	/* 정보 수신 동의(마케팅 전체 선택) */
+	$(".checkbox_group2").on("click", ".check_all2", function () {
+	  var checked = $(this).is(":checked");
+
+	  if(checked){
+	  	$(this).parents(".checkbox_group2").find('input').prop("checked", true);
+	  } else {
+	  	$(this).parents(".checkbox_group2").find('input').prop("checked", false);
+	  }
+	}); // 마케팅 전체 선택 끝
+	
+	/* 마케팅 개별 선택 */
+	$(".checkbox_group2").on("click", ".normal2", function() {
+	    var is_checked = true;
+
+	    $(".checkbox_group .normal2").each(function(){
+	        is_checked = is_checked && $(this).is(":checked");
+	    });
+
+	    $(".check_all2").prop("checked", is_checked);
+	}); // 마케팅 개별 선택 끝
+	
+	/* 약관 동의 유효성 변수 검사 */
+	function agreeInputCheck() {
+		var checked1 = $("#check_1").is(":checked");
+		var checked2 = $("#check_2").is(":checked");
+		var checked3 = $("#check_3").is(":checked");
+	
+		if(checked1 && checked2 && checked3){
+			$('.agreeError').attr('class', 'text-success');
+			$('.agreeError').html('');
+			agreementCheck = true;
+		}else{
+			$('.agreeError').removeClass('text-success').addClass('text-danger');
+			$('.agreeError').html('약관 동의를 확인해주세요.');
+			agreementCheck = false;
+		}
+	}; // 약관 동의 유효성 변수 검사 끝
+	
+	$(document).ready(function(){
+		
+		/* 회원가입 버튼(회원가입 기능 작동) */
+		$('#joinSubmit').click(function(){
+			
+			/* 아이디 유효성 검사 */
+	        idInputCheck();
+			if(idCheck) idDupInputCheck();
+			if(idDupCheck) idReceiveCheck();
+			if(idNumCheck == false) {
+				$('#firstEmail').focus();
+				return false;
+			}
+		
+	        /* 비밀번호 유효성 검사 */
+	       	pwInputCheck();
+	        if(pwCheck) pwFormCheck();
+			if(pwCheck == false || pwFormatCheck == false) {
+	        	$('#password').focus();
+	        	return false;
+			}
+	        if(pwFormatCheck) pwCorInputCheck();
+			if(pwCorCheck) pwCorFormCheck();
+			if(pwCorFormatCheck == false) {
+				$('#passwordConfirm').focus();
+				return false;
+			}
+			
+			/* 이름 유효성 검사 */
+			nameInputCheck();
+			if(nameCheck == false){
+				$('#name').focus();
+				return false;
+			}
+			
+			/* 생일 유효성 검사 */
+			birthInputCheck();
+			if(birthCheck == false){
+				$('#birth').focus();
+				return false;
+			}
+			
+			/* 전화번호 유효성 검사 */
+			phoneInputCheck();
+			if(phoneCheck == false){
+				$('#phone').focus();
+				return false;
+			}
+			
+			/* 약관동의 유효성 검사 */
+			agreeInputCheck();
+			if(agreementCheck == false){
+				$('.checkout__input__checkbox').focus();
+				return false;
+			}
+			
+	        /* 최종 유효성 검사 */
+	        if(idCheck && idDupCheck && idNumCheck && pwCheck &&
+	        		pwFormatCheck && pwCorCheck && pwCorFormatCheck &&
+	        		nameCheck && birthCheck && phoneCheck && agreementCheck){
+	        	var email1Val = $('input[id="firstEmail"]').val();
+	    		var email2Val = $('input[id="lastEmail"]').val();
+	    		var memberIdVal = email1Val + '@' + email2Val;
+	        	
+	    		$('form').append('<input type="hidden" name="memberId" value="' + memberIdVal + '">');
+				$('#signupForm').attr('action', '/member/join');
+				$('#signupForm').submit();
+	        }else{
+				alert('잘못된 입력입니다.');
+	        }
+		}); // 버튼 함수 끝
+	}); // 자동 실행 함수 끝
+	
+	/* 이메일 입력방식 선택 */
+	$('#selectEmail').change(function(){
+	   $('#selectEmail option:selected').each(function () {
+			
+			if($(this).val()== '1'){ //직접입력일 경우
+				 $('#lastEmail').val('');                        //값 초기화
+				 $('#lastEmail').attr('disabled',false); //활성화
+			}else{ //직접입력이 아닐경우
+				 $('#lastEmail').val($(this).text());      //선택값 입력
+				 $('#lastEmail').attr('disabled',true); //비활성화
+			}
+		idChange();
+		$('#firstEmail').focus();
+	   });
+	}); // 이메일 입력 방식 끝
+	
+ 	/* 아이디 입력 시 */
+	$('#firstEmail').on('input', function(){
+		idChange();
+	});
+	$('#lastEmail').on('input', function(){
+		idChange();
+	});
+	
+	
+	/* 이메일 인증하기 버튼 클릭 시 */
+	$('#mail_go_input').click(function(){
+		idInputCheck();
+		if(idCheck) idDupInputCheck();
+		if(idCheck && idDupCheck) {
+			idNumSend();
+			return false;
+		}
+		$('#firstEmail').focus();
+	}); // 인증번호 이메일 전송 함수 끝
+	
+	/* 인증코드 비교 (인증코드 확인 버튼 클릭) */
+	$('#mail_check_button').click(function(){
+		var inputCode = $('.email_check_input').val(); // 입력한 인증코드
+		
+		if(inputCode == code) {
+			$('.emailCk .text-danger').attr('class', 'text-success');
+			$('#mail_go_input').attr("disabled", true); // 이메일 인증하기 버튼 사용불가
+			$('.email_check_input').attr("disabled", true); // 인증코드 입력란 사용불가
+			$('#mail_check_button').attr("disabled", true); // 인증코드 확인 버튼 사용불가
+			idNumCheck = true;
+			idReceiveCheck();
+		}else {
+			$('.email_check_input').focus();
+			$('.emailCk .text-success').attr('class', 'text-danger');
+			$('.emailCk .text-danger').html('인증코드를 다시 확인해주세요.');
+			idNumCheck = false;
+		}
+	}); // 인증코드 비교 함수 끝
+	
+	/* 인증코드 이메일 전송 */
+	function idNumSend() {
+		var email1Val = $('input[id="firstEmail"]').val();
+		var email2Val = $('input[id="lastEmail"]').val();
+		var memberIdVal = email1Val + '@' + email2Val;
+		
+		$.ajax({
+			type : 'GET',
+			url : 'mailCheck?memberId=' + memberIdVal,
+			success : function(data) {
+				$('.email_check_input').attr('disabled', false); // 인증번호 입력란
+				$('#mail_check_button').attr('disabled', false); // 인증번호 확인 버튼
+				code = data;
+			}
+		}); // ajax 끝
+	}; // idNumSend 끝
+	
+	/* 인증코드 유효성 변수 검사 */
+	function idReceiveCheck() {
+		if(idCheck && idDupCheck && idNumCheck == false){
+			$('.email .numNo').removeClass('text-success').addClass('text-danger');
+			$('.email .numNo').html('이메일 인증을 완료해주세요.');
+		}else {
+			$('.email .numNo').removeClass('text-danger').addClass('text-success');
+			$('.email .numNo').html('');
+		}
+	}; // idReceiveCheck 끝
+	
+	/* 아이디 중복 유효성 검사 */
+	function idDupInputCheck() {
+		var email1Val = $('input[id="firstEmail"]').val();
+		var email2Val = $('input[id="lastEmail"]').val();
+		var memberIdVal = email1Val + '@' + email2Val;
+		var data = {memberId : memberIdVal} // '컨트롤에 넘길 데이터 이름' : '데이터(#email에 입력되는 값)'
+		
+		$.ajax({
+			type : 'post',
+			url : '/member/memberIdChk',
+			data : data,
+			success : function(result) {
+				if(result != 'fail') { // 사용 가능한 ID (중복 X)
+					$('.email .input').removeClass('text-danger').addClass('text-success');
+					idDupCheck = true;
+				}else { // 사용 불가능 (중복 O)
+					$('.email .input').removeClass('text-success').addClass('text-danger');
+					$('.email .input').html('이미 가입된 이메일입니다.');
+					$('.email .numNo').removeClass('text-danger').addClass('text-success');
+					$('.email .numNo').html('');
+					idDupCheck = false;
+				}
+			} /* success 종료 */
+		});	/* ajax 종료 */
+	}; // idDupInputCheck 끝
+	
+	/* 아이디 입력 유효성 검사 */
+	function idInputCheck() {
+		var email1Val = $('input[id="firstEmail"]').val();
+		var email2Val = $('input[id="lastEmail"]').val();
+		var memberIdVal = email1Val + '@' + email2Val;
+		
+		$('.email .numNo').removeClass('text-danger').addClass('text-success');
+		$('.email .numNo').html('');
+		
+		if(memberIdVal == '@') {
+			$('.email .input').removeClass('text-success').addClass('text-danger');
+			$('.email .input').html('아이디를 입력해주세요.');
+			idCheck = false;
+			return false;
+		}else if(!mailFormCheck(memberIdVal)){
+			$('.email .input').removeClass('text-success').addClass('text-danger');
+			$('.email .input').html('올바른 이메일을 입력해주세요.');
+			idCheck = false;
+			return false;
+		}
+		idCheck = true;
+	}; // idInputCheck 끝
+	
+	/* 입력 이메일 형식 유효성 검사 */
+	function mailFormCheck(memberIdVal){
+		var form = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+		return form.test(memberIdVal);
+	}; // 이메일 형식 유효성 검사 끝
+	
+	/* 인증코드 백 + 아이디 입력 유효성 검사 */
+	function idChange(){
+		$('#mail_go_input').attr("disabled", false); // 이메일 인증하기 버튼 사용가능
+		$('.email_check_input').val(''); // 인증코드 입력란 공란으로
+		$('.email_check_input').attr("disabled", true); // 인증코드 입력란 사용불가
+		$('#mail_check_button').attr("disabled", true); // 인증코드 확인 버튼 사용불가
+		$('.emailCk .text-danger').attr("class", "text-success"); // 인증코드 오류메세지 리셋
+		idNumCheck = false;
+		
+		idInputCheck();
+		if(idCheck) idDupInputCheck();
+	}; // 인증코드 백 끝
+	</script>
+	
+	<!-- Js Plugins -->
+	<script src="/resources/js/password.js"></script>
+	<script src="/resources/js/name.birth.phone.js"></script>
+</body>
+</html>

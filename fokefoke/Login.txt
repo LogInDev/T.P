@@ -1,0 +1,53 @@
+* controller * > src\main\java\com\fokefoke\controller
+1. AdminController.java
+2. MemberController.java
+
+* DTO * src\main\java\com\fokefoke\dto
+1. MemberDTO.java
+
+* interceptor * > src\main\java\com\fokefoke\interceptor
+1. AdminInterceptor.java
+2. LoginInterceptor.java
+3. MypageInterceptor.java
+
+* mapper.java * > src\main\java\com\fokefoke\mapper
+1. MemberMapper.java
+
+* service * > src\main\java\com\fokefoke\service
+1. MemberService.java
+2. MemberServiceImpl.java
+
+* mapper.xml * > src\main\resources\com\fokefoke\mapper
+1. MemberMapper.xml
+
+* css * > \src\main\webapp\resources\css
+1. login.css
+2. join.css
+
+* web. xml * > src\main\webapp\WEB-INF
+1. web.xml -> 한글깨짐, 비밀번호 암호화 등록
+
+* context.xml * > src\main\webapp\WEB-INF\spring\appServlet
+1. security-context.xml
+2. servlet-context.xml -> 인터셉터 적용
+
+* views * > src\main\webapp\WEB-INF\views
+1. index.jsp -> 메뉴 로그인 / 관리자
+
+member > src\main\webapp\WEB-INF\views\member
+1. edit.jsp -> 회원정보수정 페이지
+2. edit_password.jsp -> 비밀번호 변경 페이지
+3. find_email.jsp -> 아이디 찾기 페이지
+4. find_password.jsp -> 비밀번호 찾기 페이지
+5. join.jsp -> 회원가입 페이지
+6. login.jsp -> 로그인 페이지
+7. logintest.jsp -> 로그인 테스트 페이지 (암호화x)
+8. mypage_info.jsp -> 마이페이지 인포 페이지
+9. push_setting.jsp -> 마케팅 수신 설정 페이지
+10. withdrawals.jsp -> 회원 탈퇴 페이지
+
+* admin * > src\main\webapp\WEB-INF\views\admin
+1. main.jsp -> 임시 관리자 메인 페이지
+
+* pom.xml * > 프로젝트 폴더 최상위
+1. pom.xml -> security
