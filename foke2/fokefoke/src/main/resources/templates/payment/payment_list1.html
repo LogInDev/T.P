@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragments/layout}">
+<th:block layout:fragment="content">
+<head>
+
+    <!-- jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+    <!-- iamport.payment.js -->
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>	
+	
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"
+   integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+   crossorigin="anonymous"></script>
+
+<meta charset="UTF-8">
+<meta name="description" content="Male_Fashion Template">
+<meta name="keywords" content="Male_Fashion, unica, creative, html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>포케포케 : 결제하기</title>
+
+
+<!-- 결제 동의 텍스트 -->
+<style>
+.counsel_copy {
+	font-size: 0.7em;
+}
+</style>
+<!-- 결제동의 내역에 점 없애는 효과 -->
+<style>
+ul li {
+	list-style: none;
+}
+</style>
+<!-- <p>태그 단락 줄이는 스타일 -->
+<style>
+  p {
+    margin: 0;
+    padding: 0;
+  }
+</style> 
+ <style> 
+  .store_name{
+  color:black;
+  }
+</style>
+
+<!--css 통일-->
+<style>
+    .checkout__input input,
+    .checkout__input select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-top: 6px;
+      margin-bottom: 16px;
+      resize: vertical;
+    }
+
+    /* 선택하라는 문장의 스타일 */
+    option:first-child {
+      color: #aaa;
+    }
+
+    .col-lg-4 {
+      display: flex;
+      flex-direction: column;
+    }	
+	
+</style>
+
+<!-- 주문시 요청사항 텍스트 입력 시 없어지는 이벤트 -->
+<script>
+const textBox = document.querySelector('input[name="order"]');
+if (textBox !== null) {
+  textBox.addEventListener('input', function(){
+    if (textBox.value.length > 0) {
+      textBox.removeAttribute('placeholder');
+    } else {
+      textBox.setAttribute('placeholder', '주문시 요청 사항을 입력해 주세요.');
+    }
+  });
+}
+</script>
+
+<!--무통장 버튼 클릭시 해당 폼 생성-->
+<script>
+function showBankInfo() {
+  $('#bank-info').append(
+    '<div class="col-lg-4" id="bankForm">' +
+    '<div class="checkout__input">' +
+    '<input type="text" name="bank" placeholder="입금자 이름"><br><strong>입금은행</strong>  <select name="bankAccount" class="bankAccount"><option value="">선택해주세요</option><option value="1">국민 4444-555-6666 (주)포케포케</option><option value="2">신한 9999-888-7777 (주)포케포케</option><option value="3">우리 1111-222-3333 (주)포케포케</option></select>' +
+    '</div>' +
+    '</div>'
+  );
+  $('#bank').prop('disabled', true); // 무통장 버튼 비활성화
+}
+</script>
+<!--카카오 버튼 클릭시 무통장 폼 삭제-->
+<script>
+function toggleBankInfo() {
+  const bankForm = document.getElementById("bankForm");
+  
+  if (!bankForm) {
+    showBankInfo();
+  } else {
+    bankForm.remove();
+    $('#bank').prop('disabled', false); // 무통장 버튼 활성화
+  }
+}
+</script>
+
+<!-- 구매결제 버튼 창 누르면 실행 -->								
+<!--<script>
+function validateForm() {
+  var checkBox = document.getElementById("paymentAgree");
+  if (!checkBox.checked){
+    alert("구매조건 및 결제진행 동의에 체크해주세요.");
+    return false;
+  }else{
+	  if(confirm("주문 후 제조가 시작되면 취소가 불가능 합니다. 주문하시겠습니까?")){
+		  $('#detailForm').attr('action', '/payment/order1').submit();
+	  }
+   }
+}
+</script>-->
+<script>
+function validateForm() {
+  var checkBox = document.getElementById("paymentAgree");
+  if (!checkBox.checked){
+    alert("구매조건 및 결제진행 동의에 체크해주세요.");
+    return false;
+  }
+  return confirm("주문 후 제조가 시작되면 취소가 불가능 합니다. 주문하시겠습니까?");
+}
+
+function onSubmitForm() {
+  $('#detailForm').attr('action', '/payment/order').submit();
+}
+//함수안에 얼터창과 카카오페이 onclick이벤트를 넣어줌 밑의 결제하기 버튼에서 사용
+function validateAndRequestPay() {
+    if (validateForm()) {
+        requestPay();
+    }
+}
+</script>
+<!--카카오페이 창-->
+<script>
+  var IMP = window.IMP;
+  IMP.init("imp01240830");
+
+  function requestPay() {
+    IMP.request_pay({
+      pg: "kakaopay",
+      pay_method: "card",
+      merchant_uid: "57008833-33013",
+      name: "포케 샐러드",
+      amount: 100,
+      buyer_email: "Iamport@chai.finance",
+      buyer_name: "포케포케",
+      buyer_tel: "010-1234-5678",
+      buyer_addr: "서울특별시 종로 더조은",
+      buyer_postcode: "123-456",
+    }, function (rsp) {
+      if (rsp.success) {
+        alert("결제성공");
+        onSubmitForm();
+      } else {
+        alert("결제실패" + rsp.error_msg);
+      }
+    });
+  }
+</script>
+
+<!-- <script>
+$(function(){
+  let price = "${detail.price}";
+  let point = price * 0.05;
+  let pointString = parseInt(point); // This formats the number with commas
+console.log(pointString);
+  $('#pointAccumulation').val(pointString);
+console.log($('#pointAccumulation').val());
+});
+</script>-->
+
+<!--<script>
+$(document).ready(function() {
+  let price = parseFloat($("#price").val());
+  let point = price * 0.05;
+  let pointString = parseInt(point);
+  console.log(pointString);
+  $('#pointAccumulation').val(pointString);
+  console.log($('#pointAccumulation').val());
+});
+</script>-->
+
+
+<!-- 포인트 사용 -->
+<script>
+function setPointAmount(amount) {
+  document.getElementById('pointAmt').value = amount;
+  
+  // 버튼 클릭하면 해당 포인트 텍스트 나타남
+  var newPaymentAmountElem = document.getElementById('newPaymentAmount');
+  newPaymentAmountElem.textContent = amount + 'Point';
+}
+
+</script>
+
+
+<script>
+function calculateTotal() {
+    var prices = document.getElementsByName("price");
+    var quantities = document.getElementsByName("quantity"); 
+    var total = 0;
+    for (var i = 0; i < prices.length; i++) {
+        var price = parseInt(prices[i].value); 
+        var quantity = parseInt(quantities[i].value); 
+        total += price * quantity;
+    }
+    document.getElementById("totalPrice").innerText = total + "원"; 
+}
+</script>
+
+
+<body>
+
+	<section class="breadcrumb-option">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="breadcrumb__text">
+						<h2 align="center">결제 페이지</h2>
+						<div class="breadcrumb__links"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Breadcrumb Section End -->
+
+	<!-- Checkout Section Begin -->
+	<section class="checkout spad">
+		<div class="container">
+			<div class="checkout__form">
+				<form id="detailForm" method="post">
+				<!-- CSRF 토큰을 포함시키는 부분 -->
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+				<input type="hidden" id="pointAccumulation" name="point" th:value="${member.point}">
+					<div class="row">
+						<div class="col-lg-12 col-md-6">
+							<h6 class="checkout__title">픽업매장</h6>
+							<div class="row">
+								<div class="col-lg-6">
+									<div class="checkout__input">
+										<p>
+											매장명<span>*</span>
+										</p>
+										<input type="text" class="store_name" readonly name="storeName" th:value="${store.storeName }">
+									</div>
+								</div>
+								<div class="col-lg-6">
+									<div class="checkout__input">
+										<p>
+											매장주소<span>*</span>
+										</p>
+										<input type="text" readonly name="storeAddress"
+											th:value="${store.storeAddress}">
+									</div>
+								</div>
+							</div>
+							<div class="checkout__input">
+								<p>
+									포장방법<span>*</span>
+								</p>
+								<input type="text" readonly value="포장">
+							</div>
+							<div class="checkout__input">
+								<p>
+									전화번호<span>*</span>
+								</p>
+								<input type="text" name="phone" th:value="${member.phone}"
+									class="checkout__input__add">
+							</div>
+							<div class="checkout__input">
+								<p>주문시 요청사항</p>
+								<input type="text" maxlength="50" name="order"
+									placeholder="주문시 요청사항을 입력하세요">
+							</div>
+							<div class="checkout__input__checkbox">
+								<label for="zero"> &#x1F374;일회용품(스푼, 포크 등)을 사용하지
+									않겠습니다.🌍 <input type="checkbox" id="zero"> <span
+									class="checkmark"></span>
+								</label>
+							</div>
+							<!-- 할인방법 -->
+							<div class="container">
+							<h6 class="checkout__title">할인 방법 선택</h6>
+							<div class="row">
+						<div class="col-lg-8 col-md-6">
+							<div class="checkout__input">
+								<span>포인트 사용</span>
+								<input id="pointAmt" name="point" type="text" value="">
+								<span>보유 포인트:</span>
+								<span id="point" th:text="${member.point}"></span>
+								</div>
+								</div>
+								<div class="col-lg-4 col-md-6">
+								<br>
+								<button type="button" th:onclick="'setPointAmount(' + ${member.point} + ')'"
+								 style="background-color: #469543; color: #fff; border-radius: 30px; padding: 10px 20px; border: none; margin: 0 auto;">전체사용</button>							
+							</div>
+							</div>
+							</div>
+							<br>
+							<!-- 결제수단 -->
+							<h6 class="checkout__title">결제 수단 선택</h6>
+								<div class="row" id="bank-info">
+								  <div class="col-lg-6">
+								    <div class="checkout__input">
+								      <button id="cart" type="button" class="btn btn-success"
+										    style="background-color: #469543; color: #fff; border-radius: 30px; padding: 10px 20px; border: none; margin: 0 auto;"
+										    onclick="toggleBankInfo();"><img src="/img/icon/kakaopay.png" alt="카카오페이">
+										</button>
+										 &nbsp;&nbsp;&nbsp;
+										<button id="bank" type="button" class="bank-button" style="background-color: #469543; color: #fff; border-radius: 30px; padding: 10px 20px; border: none; margin: 0 auto;" onclick="showBankInfo();">무통장입금</button>
+								    </div>
+								  </div>
+								</div>
+							<br>
+							<h6 class="checkout__title">현금영수증</h6>
+						<div class="cash">
+						<div class="form_radio square">
+							<label>
+								<button type="button" class="btn btn-success" onclick="hideForms()" style="background-color: #469543; color: #fff; border-radius: 30px; padding: 10px 20px; border: none; margin: 0 auto;">발급안함</button>&nbsp;&nbsp;&nbsp;
+							</label> <label>
+								<button id="form-container1" type="button"
+									class="btn-personal" style="background-color: #469543; color: #fff; border-radius: 30px; padding: 10px 20px; border: none; margin: 0 auto;" >개인소득공제</button>&nbsp;&nbsp;&nbsp;
+							</label> <label>
+								<button id="form-container2" type="button"
+									class="btn-business" style="background-color: #469543; color: #fff; border-radius: 30px; padding: 10px 20px; border: none; margin: 0 auto;">사업자증빙용</button>&nbsp;&nbsp;&nbsp;
+							</label>
+						</div>
+						<!-- 개인소득 -->
+						<span id="form-container"></span>
+						<!-- 사업자증빙 -->
+						<div id="output-container"></div>
+					</div>
+				
+<!-- 결제 관련 이벤트 -->				
+<script>
+
+/* 버튼 최대 2개 클릭 */
+let maxNumClicks = 2;
+let numClicks = 0;
+
+let cashReceipt = document.querySelector('.cash');
+let radioButtons = cashReceipt.querySelectorAll('.btn-success');
+
+radioButtons.forEach(function(button) {
+  button.addEventListener("click", function() {
+    if (button.classList.contains('active')) {
+      button.classList.remove('active');
+      numClicks--;
+    } else if (numClicks < maxNumClicks) {
+      button.classList.add('active');
+      numClicks++;
+    }
+    
+    if (numClicks === maxNumClicks) {
+      radioButtons.forEach(function(button) {
+        if (!button.classList.contains('active')) {
+          button.disabled = true;
+        }
+      });
+    } else {
+      radioButtons.forEach(function(button) {
+        button.disabled = false;
+      });
+    }
+  });
+});
+
+/* 개인, 사업자 현금 영수증 폼 구현 */
+	let personalBtn = document.querySelector('.btn-personal');
+	let businessBtn = document.querySelector('.btn-business');
+	let formContainer = document.getElementById("form-container");
+
+	personalBtn.addEventListener("click", function() {
+		let form = document.createElement("form");
+		let input = document.createElement("input");
+		let submitBtn = document.createElement("button");
+
+	  input.setAttribute("type", "text");
+	  input.setAttribute("name", "text-input");
+
+	  submitBtn.setAttribute("type", "submit");
+	  submitBtn.textContent = "입력";
+
+	  form.appendChild(input);
+	  form.appendChild(submitBtn);
+	  formContainer.appendChild(form);
+
+	  form.addEventListener("submit", function(event) {
+	    event.preventDefault();
+
+	    let outputContainer = document.getElementById("output-container");
+	    let inputValue = input.value;
+
+	    form.style.display = "none";
+	    outputContainer.textContent = inputValue;
+	  });
+	});
+
+	businessBtn.addEventListener("click", function() {
+		let form = document.createElement("form");
+		let input = document.createElement("input");
+		let submitBtn = document.createElement("button");
+
+	  input.setAttribute("type", "text");
+	  input.setAttribute("name", "company-name");
+
+	  submitBtn.setAttribute("type", "submit");
+	  submitBtn.textContent = "입력";
+
+	  form.appendChild(input);
+	  form.appendChild(submitBtn);
+	  formContainer.appendChild(form);
+
+	  form.addEventListener("submit", function(event) {
+	    event.preventDefault();
+
+	    let outputContainer = document.getElementById("output-container");
+	    let inputValue = input.value;
+
+	    form.style.display = "none";
+	    outputContainer.textContent = inputValue;
+	  });
+	});
+/* 발급안함 버튼 누르면 기존 폼 사라지게 하는 부분(발급안함 버튼에 onclick 줌) */
+function hideForms(){
+	let forms = document.querySelectorAll(".cash form");
+	let formContainer = document.querySelector("#form-container");
+	let outputContainer = document.getElementById("output-container");
+
+	forms.forEach(function(form){
+		formContainer.removeChild(form);
+	});
+	outputContainer.textContent="";
+}
+
+</script>
+
+							<p>&nbsp;</p>
+						<h6 class="checkout__title">주문내역</h6>
+							<div class="checkout__input__checkbox">
+								<tr>
+									<td>
+										<div class="name" data-target="mainItem">
+											<br> 
+											<strong th:text="${detail.productName}"></strong><br>
+											<strong style="font-size: 13px; font-weight: bold;">
+												<span th:text="${detail.base}"></span>&nbsp;
+												<span th:text="${detail.atopping}"></span>&nbsp;
+												<span th:text="${detail.btopping}"></span>&nbsp;
+												<span th:text="${detail.ctopping}"></span>&nbsp;
+												<span th:text="${detail.dtopping}"></span>&nbsp;
+												<span th:text="${detail.asource}"></span>&nbsp;
+												<span th:text="${detail.bsource}"></span>&nbsp;
+												<span th:text="${detail.aextratopping}"></span>&nbsp;
+												<span th:text="${detail.bextratopping}"></span>&nbsp;
+												<span th:text="${detail.extramain}"></span>&nbsp;
+												<span th:text="${detail.setbeverage}"></span>&nbsp;
+												<span th:text="${detail.setside}"></span>&nbsp;
+											</strong>
+										</div>
+									</td>
+									<td>
+										<div style="text-align: right; font-size: 14px; font-weight: bold;">
+											<span th:text="|${detail.total}개|"></span>&nbsp;&nbsp;
+											<span th:text="|${detail.price}원|"></span>
+										</div>
+									</td>
+								</tr>
+							</div>
+							<br>
+							<br>
+							
+							<!-- 결제창 -->
+							<h6 class="checkout__title">총 결제 금액</h6>
+							<div class="cart__total" style=" color: #E53637; font-size: 16px;">
+								<p>상품 수량</p>
+								<div style="text-align: right; font-size: 16px; font-weight: bold;" th:text="|${detail.total}개|"></div>
+								<p>총 주문 금액</p>
+								<div style="text-align: right; font-size: 16px; font-weight: bold;" th:text="|${detail.price}원|"></div>
+								<p>포인트 사용</p>
+								<div id="newPaymentAmount" style="text-align: right; font-size: 16px; font-weight: bold;">Point</div>
+								<p>잔여 결제 금액</p>
+								<div id="finalPrice" style="text-align: right; font-size: 16px; font-weight: bold;" ></div>
+								
+								
+								<!-- 결제 내역에서 잔여 결제 금액(총 주문 금액 - 포인트 사용 = 잔여 결제 금액) -->
+								<div id="tempPrice" th:text="${detail.price}" style="display: none;"></div>
+								<div id="tempPoint" th:text="${member.point}" style="display: none;"></div>
+								
+								<!--th:inline 속성을 사용해 자바스크립트 코드가 Thymeleaf 변수 포함할 수 있다고 지정-->
+								<script th:inline="javascript">
+								$(document).ready(function(){
+								let price = parseFloat($('#tempPrice').text()); <!--text()사용해 정의한 요소들의 값 읽어오기-->
+								let point = parseFloat($('#tempPoint').text());
+								let finalPrice = price - point;
+								//console.log(finalPrice);
+								$('#finalPrice').text(finalPrice + '원'); //jquery 사용
+								//이 코드를 사용했을 때 콘솔에는 값이 제대로 찍히지만 화면에는 finalPrice 의 값을 제대로 받지 못함 이유는 finalPrice의 변수의 값이 문자열 형태로 넣어지게 되는데 해당 변수의 값이 숫자로 변환이 되면서 에러가 나는거 같음
+								//document.getElementById('finalPrice').innerHTML = `${finalPrice}원`; 
+								});
+								</script>
+								</div>
+							<br>
+							<div class="checkout__input">
+								<div class="checkout__input__checkbox">
+									<label for="paymentAgree"><input id="paymentAgree"
+										type="checkbox" value="Y" /> <span class="checkmark"></span>
+										<strong>구매조건및 결제진행 동의</strong>
+									</label>
+								</div>
+								<ul>
+									<li class="counsel_copy">주문할 메뉴와 가격, 매장정보를 명확히 확인하였으며
+										결제진행에 동의합니다.</li>
+									<li class="counsel_copy">제조시간은 매장상황에 따라 상이할 수 있습니다.</li>
+									<li class="counsel_copy">주문자 정보가 서비스 제공을 위해 주문 매장에 제공됩니다.</li>
+									<li class="counsel_copy on">주문 후 제조가 시작되면 주문을 취소할 수 없습니다.</li>
+								</ul>
+								<br>
+								<div style="text-align: center;" class="btn_area">
+									<button onclick="validateAndRequestPay();" type="button" style="background-color: #469543; color: #fff; border-radius: 30px; padding: 10px 20px; border: none; margin: 0 auto;">결제하기</button>
+									<!--<button onclick="validateForm();" type="button"
+											style="background-color: #469543; color: #fff; border-radius: 30px; padding: 10px 20px; border: none; margin: 0 auto;">결제하기</button>-->
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</section>
+	<!-- Checkout Section End -->
+
+
+
+
+	<!-- Js Plugins -->
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.nice-select.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.nicescroll.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.magnific-popup.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.countdown.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.slicknav.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/mixitup.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/owl.carousel.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
+	
+</body>
+
+</head>

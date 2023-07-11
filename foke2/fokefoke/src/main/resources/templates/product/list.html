@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragments/layout}">
+<th:block layout:fragment="content">
+
+	<head>
+		<title>메뉴고르기</title>
+
+		<meta charset="UTF-8">
+		<meta name="description" content="FokeFoke">
+		<meta name="keywords" content="FokeFoke, salad, fresh, fast">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+		<!-- Google Font -->
+		<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
+			rel="stylesheet">
+
+		<script src="https://code.jquery.com/jquery-3.6.4.min.js"
+			integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+		
+	</head>
+
+	<body>
+
+		<!-- 서브메뉴 -->
+		<section class="breadcrumb-option">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="breadcrumb__text">
+							<h4>포케포케 메뉴</h4>
+							<div class="breadcrumb__links">
+								<a href="/">Home</a>
+								<a href="/store/list">매장찾기</a>
+								<span>메뉴선택</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- 서브메뉴 끝 -->
+
+		<!-- 포케포케 메뉴 -->
+		<section class="product spad">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="product__details__tab">
+							<ul class="nav nav-tabs product__details__tab__title" role="tablist" id="menu-tabs">
+								<li class="nav-item">
+									<a class="nav-link" data-toggle="tab" href="#all-menu" role="tab"
+										aria-selected="true" onclick="selectTab('all-menu')">전체메뉴</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" data-toggle="tab" href="#salad-menu" role="tab"
+										aria-selected="false" id="tab1" onclick="selectTab('salad-menu')">샐러드</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" data-toggle="tab" href="#side-menu" role="tab"
+										aria-selected="false" id="tab2" onclick="selectTab('side-menu')">사이드</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" data-toggle="tab" href="#drink-menu" role="tab"
+										aria-selected="false" id="tab3" onclick="selectTab('drink-menu')">음료수</a>
+								</li>
+							</ul>
+
+							<!-- 전체메뉴 -->
+							<div class="tab-content">
+								<div class="tab-pane active" id="all-menu" role="tabpanel">
+									<div class="product__details__tab__content">
+										<div class="row product__list">
+											<div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix list"
+												th:each="list : ${list}"
+												th:onclick="|location.href='@{/detail/view(productName=${list.productName})}'|"
+												style="cursor: pointer;">
+												<div class="product__item__pic set-bg"
+													th:style="'background-image: url(' + @{${list.productImage}} + ');'">
+													<span th:if="${list.productLabel eq 'new'}" class="new">New</span>
+													<span th:if="${list.productLabel eq 'sale'}"
+														class="sale">Sale</span>
+													<div th:if="${stockList.productDTO.productId == list.productId and stockList.quantity == 0}"
+														th:each="stockList : ${stock}"
+														class="product__item__pic disabled"
+														th:style="'background-image: url('+${list.productImage}+');background-size: cover;'"
+														th:onclick="${stockList.quantity eq 0} ? 'event.stopPropagation();' : ''">
+														<span class="soldout">Sold Out</span>
+													</div>
+												</div>
+												<div class="product__item__text">
+													<h5 th:text="${list.productName}">
+													</h5>
+												</div>
+												<div class="product__item__text">
+													<h6 th:text="${list.productEname}">
+													</h6>
+												</div>
+												<div class="product__item__text">
+													<h4 th:text="${list.productCalorie}">
+														kcal
+													</h4>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- 전체메뉴 끝 -->
+
+							<!-- 샐러드 -->
+							<div class="tab-pane" id="salad-menu" role="tabpanel">
+								<div class="product__details__tab__content salad-content">
+									<div class="row product__list">
+										<div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix salad"
+											th:each="salad : ${salad}"
+											th:onclick="|location.href='@{/detail/view(productName=${salad.productName})}'|"
+											style="cursor: pointer;">
+											<div class="product__item__pic set-bg"
+												th:style="'background-image: url(' + @{${salad.productImage}} + ');'">
+												<span th:if="${salad.productLabel eq 'new'}" class="new">New</span>
+												<span th:if="${salad.productLabel eq 'sale'}" class="sale">Sale</span>
+												<div th:if="${stockList.productDTO.productId == salad.productId and stockList.quantity == 0}"
+													th:each="stockList : ${stock}" class="product__item__pic disabled"
+													th:style="'background-image: url('+${salad.productImage}+');background-size: cover;'"
+													th:onclick="${stockList.quantity eq 0} ? 'event.stopPropagation();' : ''">
+													<span class="soldout">Sold Out</span>
+												</div>
+											</div>
+											<div class="product__item__text">
+												<h5 th:text="${salad.productName}"></h5>
+											</div>
+											<div class="product__item__text">
+												<h6 th:text="${salad.productEname}">
+												</h6>
+											</div>
+											<div class="product__item__text">
+												<h4 th:text="${salad.productCalorie}">
+													kcal
+												</h4>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- 샐러드 끝 -->
+
+							<!-- 사이드 -->
+							<div class="tab-pane" id="side-menu" role="tabpanel">
+								<div class="product__details__tab__content side-content">
+									<div class="product__details__tab__content__item">
+										<div class="row product__list">
+											<div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix side"
+												th:each="side : ${side}"
+												th:onclick="|location.href='@{/detail/view(productName=${side.productName})}'|"
+												style="cursor: pointer;">
+												<div class="product__item__pic set-bg"
+													th:style="'background-image: url(' + @{${side.productImage}} + ');'">
+													<span th:if="${side.productLabel eq 'new'}" class="new">New</span>
+													<span th:if="${side.productLabel eq 'sale'}"
+														class="sale">Sale</span>
+													<div th:if="${stockList.productDTO.productId == side.productId and stockList.quantity == 0}"
+														th:each="stockList : ${stock}"
+														class="product__item__pic disabled"
+														th:style="'background-image: url('+${side.productImage}+');background-size: cover;'"
+														th:onclick="${stockList.quantity eq 0} ? 'event.stopPropagation();' : ''">
+														<span class="soldout">Sold Out</span>
+													</div>
+												</div>
+												<div class="product__item__text">
+													<h5 th:text="${side.productName}">
+													</h5>
+												</div>
+												<div class="product__item__text">
+													<h6 th:text="${side.productEname}">
+													</h6>
+												</div>
+												<div class="product__item__text">
+													<h4 th:text="${side.productCalorie}">
+														kcal
+													</h4>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- 사이드 끝 -->
+
+							<!-- 음료 -->
+							<div class="tab-pane" id="drink-menu" role="tabpanel">
+								<div class="product__details__tab__content drink-content">
+									<div class="row product__list">
+										<div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix drink"
+											th:each="drink : ${drink}"
+											th:onclick="|location.href='@{/detail/view(productName=${drink.productName})}'|"
+											style="cursor: pointer;">
+											<div class="product__item__pic set-bg"
+												th:style="'background-image: url(' + @{${drink.productImage}} + ');'">
+
+												<span th:if="${drink.productLabel eq 'new'}" class="new">New</span>
+												<span th:if="${drink.productLabel eq 'sale'}" class="sale">Sale</span>
+												<div th:if="${stockList.productDTO.productId == drink.productId and stockList.quantity == 0}"
+													th:each="stockList : ${stock}" class="product__item__pic disabled"
+													th:style="'background-image: url('+${drink.productImage}+');background-size: cover;'"
+													th:onclick="${stockList.quantity eq 0} ? 'event.stopPropagation();' : ''">
+													<span class="soldout">Sold Out</span>
+												</div>
+											</div>
+											<div class="product__item__text">
+												<h5 th:text="${drink.productName}">
+												</h5>
+											</div>
+											<div class="product__item__text">
+												<h6 th:text="${drink.productEname}">
+												</h6>
+											</div>
+											<div class="product__item__text">
+												<h4 th:text="${drink.productCalorie}">
+													kcal
+												</h4>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- 음료 끝 -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- 전체메뉴 끝 -->
+		<script>
+
+			//페이지 들어올때 전체메뉴 활성화
+			document.addEventListener("DOMContentLoaded", function () {
+				selectTab('all-menu'); // 샐러드 탭 활성화
+			});
+			//tab 버튼 스크립트
+			function selectTab(tabId) {
+				// 모든 컨텐츠를 비활성 상태로 변경
+				var tabContainers = document.querySelectorAll('.tab-pane');
+				tabContainers.forEach(function (tab) {
+					tab.classList.remove('active');
+					tab.style.display = 'none'; // 컨텐츠 숨김 처리
+				});
+
+				// 현재 선택된 탭 컨텐츠 활성화
+				var tabContainer = document.querySelector('#' + tabId);
+				tabContainer.classList.add('active');
+				tabContainer.style.display = 'block'; // 컨텐츠 보이기
+
+				// 모든 탭 버튼 class를 비활성 상태로 변경
+				var tabButtons = document.querySelectorAll('.nav-link');
+				tabButtons.forEach(function (button) {
+					button.classList.remove('active');
+				});
+
+				// 선택된 탭 버튼만 활성 상태로
+				var tabButton = document.querySelector('a[href="#' + tabId + '"]');
+				tabButton.classList.add('active');
+			}
+		</script>
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+			function reList() {
+			    let tab = /*[[${tab}]]*/ 'default';
+				console.log(tab === "음료수");
+				if (tab === "샐러드") {
+					//document.querySelector('#tab1').click();
+					selectTab('salad-menu');
+				} else if (tab === "사이드") {
+					//document.querySelector('#tab2').click();
+					selectTab('side-menu');
+				} else if (tab === "음료수") {
+					//document.querySelector('#tab3').click();
+					selectTab('drink-menu');
+				}
+			}
+			document.addEventListener("DOMContentLoaded", function () {
+				reList();
+			});
+  			/*]]>*/
+		</script>
+		<script type="text/javascript" src="//openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=plyv9nfbr0"></script>
+
+	</body>
+</th:block>
+
+</html>

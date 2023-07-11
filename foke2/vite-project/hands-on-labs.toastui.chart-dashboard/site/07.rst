@@ -1,0 +1,86 @@
+###################
+바 차트에 추가 옵션 적용해보기
+###################
+
+
+바 차트의 x, y축에 타이틀 옵션 (:code:`xAxis.title, yAxis.title`) 적용하기
+=====================
+
+아래와 같이 미리 작성된 옵션 위에 추가하여 x, y축에 타이틀을 표기해 봅시다.
+
+.. code-block:: javascript
+
+  // src/index.js
+
+  const barChartOptions = {
+    ...
+    yAxis: {
+      title: '혈액형'
+    },
+    xAxis: {
+      title: '수혈자'
+    }
+  }
+
+옵션에 대해 좀 더 궁금하다면 아래 위키 문서를 확인하세요.
+
+- |link_1|
+
+바 차트 x, y축 레이블에 suffix 옵션 적용하기
+=====================
+
+아래와 같이 앞에서 미리 작성된 옵션 위에 :code:`xAxis.suffix` 옵션을 추가합니다.
+
+.. code-block:: javascript
+
+  // src/index.js
+
+  const barChartOptions = {
+    ...
+    xAxis: {
+      title: '수혈자',
+      suffix: '명'
+    }
+  };
+
+바 차트에 테마 적용하기
+=====================
+
+아래와 같이 미리 작성된 옵션 위에 추가하여 새로운 테마를 적용해봅시다.
+
+.. code-block:: javascript
+
+  // src/index.js
+
+  const theme = {
+    series: {
+      colors: ['#289399', '#295ba0']
+    }
+  };
+
+  tuiChart.registerTheme('myTheme', theme);
+
+  const barChartOptions = {
+    ...
+    theme: 'myTheme'
+  };
+
+테마 적용에 대해 좀 더 궁금하다면 아래 위키 문서를 확인하세요.
+
+- |link_2|
+
+결과 확인
+=====================
+
+위 예제를 잘 따라 오셨을 경우 아래 이미지와 같은 형태의 바 차트가 만들어집니다.
+
+.. image:: _static/step06.png
+
+
+.. |link_1| raw:: html 
+
+  <a href="https://github.com/nhn/tui.chart/blob/master/docs/wiki/features-axes.md" target="_blank">문서 링크</a>
+
+.. |link_2| raw:: html 
+
+  <a href="https://github.com/nhn/tui.chart/blob/master/docs/wiki/theme.md#how-to-use-theme" target="_blank">문서 링크</a>

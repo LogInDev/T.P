@@ -1,0 +1,34 @@
+<table>
+    <thead>
+        <tr>
+            <th>memberId</th>
+            <th>adminCk</th>
+            <th>birth</th>
+            <th>consentEmail</th>
+            <th>consentPush</th>
+            <th>consentSMS</th>
+            <th>memberName</th>
+            <th>memberPw</th>
+            <th>money</th>
+            <th>phone</th>
+            <th>point</th>
+            <th>sex</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="member : ${memberList}">
+            <td th:text="${member.memberId}"></td>
+            <td th:text="${member.adminCk}"></td>
+            <td th:text="${member.birth}"></td>
+            <td th:text="${member.consentEmail}"></td>
+            <td th:text="${member.consentPush}"></td>
+            <td th:text="${member.consentSMS}"></td>
+            <td th:text="${member.memberName}"></td>
+            <td th:text="${member.memberPw}"></td>
+            <td th:text="${member.money}"></td>
+            <td th:text="${member.phone}"></td>
+            <td th:text="${member.point}"></td>
+            <td th:text="${member.sex}"></td>
+        </tr>
+    </tbody>
+</table>

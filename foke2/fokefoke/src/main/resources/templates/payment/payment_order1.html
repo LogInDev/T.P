@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragments/layout}">
+<th:block layout:fragment="content">
+<head>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"
+   integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+   crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<meta charset="UTF-8">
+<meta name="description" content="Male_Fashion Template">
+<meta name="keywords" content="Male_Fashion, unica, creative, html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>포케포케 : 결제하기</title>
+
+
+<!-- <p>태그 단락 줄이는 스타일 -->
+<style>
+  p {
+    margin: 0;
+    padding: 0;
+  }
+</style> 
+ <style> 
+  .store_name{
+  color:black;
+  }
+</style>
+
+<!-- 주문 랜덤번호 박스 -->
+<style>
+.order-box {
+	padding: 10px;
+	margin: 23px 880px -54px 300px;
+	background-color: #469543;
+	color: #fff;
+}
+</style>
+
+<!--css 통일-->
+<style>
+    .checkout__input input,
+    .checkout__input select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-top: 6px;
+      margin-bottom: 16px;
+      resize: vertical;
+    }
+
+    /* 선택하라는 문장의 스타일 */
+    option:first-child {
+      color: #aaa;
+    }
+
+    .col-lg-4 {
+      display: flex;
+      flex-direction: column;
+    }	
+	
+</style>
+
+<!-- 포인트 사용 -->
+<script>
+function setPointAmount(amount){
+document.getElementById('pointAmt').value = amount;
+}
+</script>
+
+
+<script>
+function calculateTotal() {
+    var prices = document.getElementsByName("price"); 
+    var quantities = document.getElementsByName("quantity"); 
+    var total = 0; 
+    for (var i = 0; i < prices.length; i++) {
+        var price = parseInt(prices[i].value); 
+        var quantity = parseInt(quantities[i].value); 
+        total += price * quantity; 
+    }
+    document.getElementById("totalPrice").innerText = total + "원"; 
+}
+</script>
+
+	
+
+<body>
+
+	<!-- Breadcrumb Section Begin -->
+	<section class="breadcrumb-option">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="breadcrumb__text">
+						<h2 align="center">주문 상세 내역</h2>
+						<div class="breadcrumb__links"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	<!-- 주문번호 랜덤 -->
+	<div class="order-box" style="display: flex; align-items: center;">
+    	<h4 style="margin-right: 10px; color:#fff;">주문번호 : </h4>
+    <div>
+        <h4 style='color:#fff;' th:text="${randomString}"></h4>
+    </div>
+	</div>
+	<section class="checkout spad">
+		<div class="container">
+			<div class="checkout__form">
+				<form action="#">
+					<div class="row">
+						<div class="col-lg-12 col-md-6">
+							<h6 class="checkout__title">픽업매장</h6>
+							<div class="row">
+								<div class="col-lg-6">
+									<div class="checkout__input">
+										<p>
+											매장명<span>*</span>
+										</p>
+										<input type="text" readonly name="storeName" th:value="${store.storeName}">
+									</div>
+								</div>
+								<div class="col-lg-6">
+									<div class="checkout__input">
+										<p>
+											매장주소<span>*</span>
+										</p>
+										<input type="text" readonly name="storeAddress"
+											th:value="${store.storeAddress}">
+									</div>
+								</div>
+							</div>
+
+								<div class="checkout__input">
+								<p>
+									전화번호<span>*</span>
+								</p>
+								<input type="text" name="phone" th:value="${member.phone}"
+									class="checkout__input__add">
+							</div>
+							<p>&nbsp;</p>
+							<h6 class="checkout__title">주문내역</h6>
+							<div class="checkout__input__checkbox">
+								<tr>
+									<td>
+										<div class="name" data-target="mainItem">
+											<br> 
+											<strong th:text="${detail.productName}"></strong><br>
+											<strong style="font-size: 13px; font-weight: bold;">
+												<span th:text="${detail.base}"></span>&nbsp;
+												<span th:text="${detail.atopping}"></span>&nbsp;
+												<span th:text="${detail.btopping}"></span>&nbsp;
+												<span th:text="${detail.ctopping}"></span>&nbsp;
+												<span th:text="${detail.dtopping}"></span>&nbsp;
+												<span th:text="${detail.asource}"></span>&nbsp;
+												<span th:text="${detail.bsource}"></span>&nbsp;
+												<span th:text="${detail.aextratopping}"></span>&nbsp;
+												<span th:text="${detail.bextratopping}"></span>&nbsp;
+												<span th:text="${detail.extramain}"></span>&nbsp;
+												<span th:text="${detail.setbeverage}"></span>&nbsp;
+												<span th:text="${detail.setside}"></span>&nbsp;
+											</strong>
+										</div>
+									</td>
+									<td>
+										<div style="text-align: right; font-size: 14px; font-weight: bold;">
+											<span th:text="|${detail.total}개|"></span>&nbsp;&nbsp;
+											<span th:text="|${detail.price}원|"></span>
+										</div>
+									</td>
+								</tr>
+							</div>
+							<br>
+							<br>
+							<!-- 결제창 -->
+							<h6 class="checkout__title">총 결제 금액</h6>
+							<div class="cart__total" style=" color: #E53637; font-size: 16px;">
+								<p>상품 수량</p>
+							    <div style="text-align: right; font-size: 16px; font-weight: bold;" th:text="|${detail.total}개|"></div>
+							    <p>총 주문 금액</p>
+							    <div style="text-align: right; font-size: 16px; font-weight: bold;" th:text="|${detail.price}원|"></div>
+							    <p>사용한 포인트</p>
+							    <div id="newPaymentAmount" style="text-align: right; font-size: 16px; font-weight: bold;" th:text="|${member.point }Point|"></div>
+							    <p>잔여 결제 금액</p>
+							    <div id="finalPrice" style="text-align: right; font-size: 16px; font-weight: bold;" ></div>
+								
+								<!-- 결제 내역에서 잔여 결제 금액(총 주문 금액 - 포인트 사용 = 잔여 결제 금액) -->
+								<div id="tempPrice" th:text="${detail.price}" style="display: none;"></div>
+    							<div id="tempPoint" th:text="${member.point}" style="display: none;"></div>
+								
+								<!--th:inline 속성을 사용해 자바스크립트 코드가 Thymeleaf 변수 포함할 수 있다고 지정함-->
+								<script th:inline="javascript">
+								$(document).ready(function(){
+								let price = parseFloat($('#tempPrice').text()); <!--text()사용해 정의한 요소들의 값 읽어오기-->
+								let point = parseFloat($('#tempPoint').text());
+								let finalPrice = price - point;
+								//console.log(finalPrice);
+								$('#finalPrice').text(finalPrice + '원'); //jquery 사용
+								//이 코드를 사용했을 때 콘솔에는 값이 제대로 찍히지만 화면에는 finalPrice 의 값을 제대로 받지 못함 이유는 finalPrice의 변수의 값이 문자열 형태로 넣어지게 되는데 해당 변수의 값이 숫자로 변환이 되면서 에러가 나는거 같음
+								//document.getElementById('finalPrice').innerHTML = `${finalPrice}원`; 
+								});
+								</script>
+							</div> 
+							<br>
+							<br>
+							<!-- 포인트 적립 -->
+							<h6 class="checkout__title">포인트 적립</h6>
+								<div>
+								<p>포인트 적립 내역</p>
+								<div id="pointAccumulation" align="right"></div>
+								</div>
+								
+<script th:inline="javascript">
+$(document).ready(function() {
+    let price = parseFloat($('#tempPrice').text());
+    let point = parseFloat($('#tempPoint').text());
+    let finalPrice = price - point;
+
+    $('#finalPrice').text(finalPrice + '원');
+
+    // 잔여 결제 금액을 기반으로 포인트 적립 내역 설정
+    calculatePoint(finalPrice);
+});
+
+function calculatePoint(finalPrice) {
+    let point = finalPrice * 0.05;
+    let pointString = parseInt(point);
+
+    document.getElementById("pointAccumulation").innerText = pointString;
+}
+</script>								
+								
+							<div class="checkout__input">
+									<br>
+								<div style="text-align: center;" class="btn_area">
+									<button type="button" onclick="location.href='http://localhost:8080'" style="background-color: #469543; color: #fff; border-radius: 30px; padding: 10px 20px; border: none; margin: 0 auto;">
+									목록보기</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</section>
+	
+
+	<!-- Js Plugins -->
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.nice-select.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.nicescroll.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.magnific-popup.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.countdown.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.slicknav.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/mixitup.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/owl.carousel.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
+	
+</body>
+
+</head>

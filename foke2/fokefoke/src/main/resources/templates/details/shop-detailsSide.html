@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragments/layout}">
+<th:block layout:fragment="content">
+<head th:with="memberId=${session.memberId}">
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"
+		integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+	<meta charset="UTF-8">
+	<title>포케포케 : 주문하기</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+	<!-- Google Font -->
+	<link th:href="@{https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap}"
+		rel="stylesheet">
+
+	<style type="text/css">
+		.container2 {
+			display: flex;
+			min-width: 500px;
+		}
+
+		.container2+.container2 {
+			margin-top: 13px;
+		}
+
+		.image {
+			display: flex;
+			align-items: center;
+			flex-basis: 30%;
+			background-color: #008000db;
+			border-radius: 50px 0 0 0;
+			padding: 0 10px;
+		}
+
+		.image img {
+			margin-right: 10px;
+		}
+
+
+
+		input::-webkit-outer-spin-button,
+		input::-webkit-inner-spin-button {
+			-webkit-appearance: none;
+			margin: 0;
+		}
+
+
+		.productMenu {
+			display: inline-block;
+			padding-bottom: 12px;
+			margin-right: 55px;
+		}
+
+		.productStyle {
+			font-size: 20px;
+			color: #b7b7b7;
+			font-weight: 700;
+			font-family: 'Noto Sans KR', sans-serif;
+		}
+
+		.productStyle:hover {
+			font-size: 20px;
+			color: #469543;
+			font-weight: 700;
+			font-family: 'Noto Sans KR', sans-serif;
+		}
+	</style>
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		/*옵션 제약 함수*/
+
+		<!-- 수량 버튼 함수 -->
+		function incrementNumber() {
+			let input = $('#count');
+			let value = parseInt(input.val());
+			input.val(value + 1);
+			let value1 = parseInt(input.val());
+			let total = $('#totalSum');
+			let realPrice = $('#realPrice');
+			let sum = parseInt(realPrice.val());
+			total.val(value1 * sum);
+			const $input = $('#totalSum');
+			into();
+
+		}
+		function decrementNumber() {
+			let input = $('#count');
+			let value = parseInt(input.val());
+			if (value > 1) {
+				input.val(value - 1);
+				let value1 = parseInt(input.val());
+				let total = $('#totalSum');
+				let realPrice = $('#realPrice');
+				let sum = parseInt(realPrice.val());
+				total.val(value1 * sum);
+				const $input = $('#totalSum');
+			}
+			into();
+		}
+
+		function into() {
+			let input = $('#totalSum');
+			let price = input.val();
+			var formatter = new Intl.NumberFormat('ko-KR');
+			var formattedPrice = formatter.format(Number(price));
+			document.getElementById('priceFormatted').innerText = formattedPrice;
+			console.log("sss>>" + input + "??" + price + ">>>" + priceFormatted + "/*/*" + formattedPrice);
+		}
+		let result = 0;
+		function gotocart() {
+			var detailString = $("#detailForm").serialize();
+			$.ajax({
+				type: 'post',
+				url: '/cart/add',
+				data: detailString,
+				//beforeSend: addCsrfTokenToAjaxRequest,
+				dataType: 'json',
+				success: function (data) {
+					result = data;
+					console.log(result);
+				},
+				error: function (request, status, error) {
+					console.log(request, status, error)
+				}
+			})
+		}
+
+		$(function () {
+			const memberId = /*[[${memberId}]]*/'';
+			$('#cartPlus').mouseenter(function () {
+				$(this).css({
+					'background-color': '#f06923',
+					'color': '#fff'
+				});
+			}).mouseleave(function () {
+				$(this).css({
+					'background-color': '#fff',
+					'color': '#f06923'
+				});
+			});
+			into();
+			$("#cartPlus").click(function () {
+				gotocart();
+				if (result == 0) alert("장바구니에 담겼습니다.");
+
+				if (confirm("장바구니를 확인하시겠습니까?")) {
+					$('#detailForm').attr('action', '/cart/' + memberId).submit();
+				} else {
+					return false;
+				}
+			});
+			$("#order").click(function () {
+				$('#detailForm').attr('action', '/payment/list1').submit();
+			});
+
+		});
+	</script>
+
+</head>
+
+<body th:with="memberId=${session.memberId}">
+	<section class="breadcrumb-option">
+		<div class="container container2">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="breadcrumb__text">
+						<h4>포케포케 메뉴</h4>
+						<div class="breadcrumb__links">
+							<a th:href="@{/}">Home</a>
+						<a th:href="@{/store/list}">매장찾기</a>
+						<a th:href="@{/product/reList}">메뉴선택</a><span>Customizing</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- 서브메뉴 끝 -->
+
+	<!-- 포케포케 메뉴 -->
+	<section class="product spad">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="product__details__tab">
+						<ul class="nav nav-tabs" role="tablist">
+							<a th:href="@{/product/reList}" class="productStyle"><span
+									class="productMenu">전체메뉴</span></a>
+							<a th:href="@{|/product/reList?num=1|}" class="productStyle"><span
+									class="productMenu">샐러드</span></a>
+							<a th:href="@{|/product/reList?num=2|}" class="productStyle"><span
+									class="productMenu">사이드</span></a>
+							<a th:href="@{|/product/reList?num=3|}" class="productStyle"><span
+									class="productMenu">음료수</span></a>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Product section-->
+	<form id="detailForm" method="post">
+		<!-- CSRF 토큰을 포함시키는 부분 -->
+      	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+		<input type="hidden" name="memberId" th:value="${memberId}">
+		<input type="hidden" name="productName" th:value="${product.productName }">
+		<input type="hidden"  name="productImage" th:value="${product.productImage}">
+		<section class="py-5" style="margin:-70px 0 0 0;">
+			<div class="container px-4 px-lg-5 my-5">
+				<div class="row gx-4 gx-lg-5 align-items-center">
+					<div class="col-md-6">
+						<img class="card-img-top mb-5 mb-md-0" th:src="${product.productImage }" alt="..." />
+					</div>
+					<div class="col-md-6">
+						<div class="small mb-1"><span th:text="${product.productType }"></span></div>
+						<h1 class="display-5 fw-bolder" th:text="${product.productName }"></h1>
+						<span class="text-decoration-line-through" th:text="${product.productEname }"></span> <br>
+						<div class="fs-5 mb-5">
+							<p class="lead" style="margin-top: 50px;" th:text="${product.productDetail }"></p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<th:block th:if="${nutritional != null and not #strings.isEmpty(nutritional.weight)}">
+    <span style="display:inline-block;font-size:20pt;font-weight:550;color:#00000094;margin:0 0 14px 126px;">영양성분표</span>
+    <div class="table-responsive">
+        <table class="table" style="font-size:15pt;font-weight:bold;text-align:center;width:80%;height:120px;margin:0 0 0 130px;">
+            <tr>
+                <th style="border-top:2px solid #008000db;color:#008000db;">중량(g)</th>
+                <th style="border-top:2px solid #008000db;color:#008000db;">열량(kcal)</th>
+                <th style="border-top:2px solid #008000db;color:#008000db;">단백질(g)</th>
+                <th style="border-top:2px solid #008000db;color:#008000db;">포화지방(g)</th>
+                <th style="border-top:2px solid #008000db;color:#008000db;">당류(g)</th>
+                <th style="border-top:2px solid #008000db;color:#008000db;">나트륨(mg)</th>
+            </tr>
+            <tr>
+                <td style="border-top:0.5px solid #008000db;color:#00000094;">
+                    <span th:text="${nutritional.weight}"></span>
+                </td>
+                <td style="border-top:0.5px solid #008000db;color:#00000094;">
+                    <span th:text="${nutritional.calorie}"></span>
+                </td>
+                <td style="border-top:0.5px solid #008000db;color:#00000094;">
+                    <span th:text="${nutritional.protein}"></span>
+                </td>
+                <td style="border-top:0.5px solid #008000db;color:#00000094;">
+                    <span th:text="${nutritional.saturatedFat}"></span>
+                </td>
+                <td style="border-top:0.5px solid #008000db;color:#00000094;">
+                    <span th:text="${nutritional.sugarContent}"></span>
+                </td>
+                <td style="border-top:0.5px solid #008000db;color:#00000094;">
+                    <span th:text="${nutritional.sodium}"></span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</th:block>
+<th:block th:unless="${nutritional != null and not #strings.isEmpty(nutritional.weight)}">
+    <br/><br/><br/><br/>
+</th:block>
+
+
+
+			<!-- Plus, minus button -->
+			<div class="container container2">
+				<table style="text-align:center;">
+					<div class="btn">
+						<tr>
+							<td>
+
+								<span
+									style="display: inline-block; width: 100px; font-size: 35px; font-weight: 1000;">수량
+								</span>
+							</td>
+							<td>
+
+								<button type="button" class="btn" onclick="decrementNumber()"
+									style="border: 3px solid #008000db; border-radius: 80px; color: #008000db;  font-size: 24px; font-weight: 1000; padding: 0px 14px 0px 14px;">-</button>
+							</td>
+							<td>
+
+								<span> <input type="number" id="count" name="total" value="1" min="1"
+										max="9999"
+										style="border: none; display: inline-block; text-align: center; font-size: 40px; font-weight: 1000;">
+								</span>
+							</td>
+							<td>
+
+								<button type="button" class="btn" onclick="incrementNumber()"
+									style="border: 3px solid #008000db; border-radius: 80px; color: #008000db; font-size: 24px; font-weight: 1000; padding: 0px 11px 0px 11px;">+</button>
+					</div>
+					</td>
+					<td>
+
+						<div class="total" style="margin-left: 250px; font-size: 30px; font-weight: 1000;">
+							<span id="realreal"><input type="hidden" id="realPrice" th:value="${product.productPrice}"></span>
+
+					</td>
+					<td>
+
+						<div class="comeon" style="margin:0 0 0 0;">
+							<span style="display: inline-block;width: 250px; font-size: 35px; font-weight: 1000;">총 주문
+								금액</span>
+					</td>
+					<td>
+
+						<span id="priceFormatted"
+							style="display: inline-block; width: 200px; border: none; font-size: 55px; color: #008000db; font-weight: 1000;"></span>
+					</td>
+					<td>
+
+						<span style="font-size: 35px; font-weight: 1000;">원</span>
+					</td>
+					<input type="hidden" name="price" id="totalSum" th:value="${product.productPrice}">
+
+			</div>
+			</tr>
+			</table>
+			</div>
+			</div>
+			<hr>
+			<br><br>
+			<div class="container">
+				<div class="modal_btn">
+					<div class="d-flex justify-content-center">
+						<button type="button" id="cartPlus" class="btn btn-lg "
+							style="display: inline-block;text-align: center;color: #f06923; width: 170px; border: 2px solid #f06923; border-radius: 30px; margin-left: 10px;">장바구니</button>
+						<button type="button" id="order" class="btn btn-lg text-white"
+							style="display: inline-block;text-align: center;background-color: #f06923; width: 170px; border-radius: 30px; margin-left: 10px;">주문하기</button>
+					</div>
+				</div>
+			</div>
+		</section>
+		<br> <br> <br> <br>
+	</form>
+
+	
+</body>
+</th:block>
+</html>

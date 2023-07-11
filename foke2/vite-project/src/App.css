@@ -1,0 +1,54 @@
+.App {
+  /* display: flex; */
+  /* justify-content: center; */
+  align-items: center;
+  /* height: 100vh; */
+  /* text-align: center; */
+}
+.MarTop {
+  display: inline-block;
+  margin-top: 40px;
+}
+.ChartCss {
+  display: inline-block;
+  margin-top: 80px;
+  width: 600px;
+  height: 300px;
+  box-shadow: 6px 3px 11px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+.wordCss {
+  display: inline-block;
+  margin-top: 40px;
+  width: 700px;
+  height: 380px;
+  box-shadow: 6px 3px 11px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 45%;
+}
+.searchtext {
+  align-items: center;
+  padding: 1rem 1.5rem;
+  font-size: 1.5rem;
+}
+
+.btn-flat {
+  background-color: rgba(214, 41, 10, 0.705);
+  color: white;
+}
+
+.btn-xxl {
+  padding: 1rem 1.5rem;
+  font-size: 1.5rem;
+}
+
+.high {
+  height: 600px;
+}
+.menubar {
+  display: inline-block;
+  margin-top: 80px;
+  /* height: 900px; */
+  width: 300px;
+  box-shadow: 6px 3px 11px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragments/layout}">
+<th:block layout:fragment="content">
+
+<head>
+	<title>포케포케 : 아이디 찾기</title>
+	<link rel="stylesheet" th:href="@{/css/join.css}" type="text/css">
+</head>
+
+<body>
+	<div class="loginbody" style="display: block; padding-top: 0px;">
+		<section class="checkout spad">
+			<div class="container">
+				<div class="checkout__form">
+					<div class="row gx-4 gx-lg-5 justify-content-center">
+						<div class="col-md-10 col-lg-8 col-xl-7" style="background-color: #fff; padding: 100px 70px 70px 70px;
+                                border-radius: 10px;">
+							<div class="centerplz" style="font-weight:bold; font-size:18px; margin: 0px 0px 20px;">
+								<h5>아이디를 확인해 주세요.</h5>
+							</div>
+							<div class="blog__details__btns__item"
+								style="padding: 25px 50px 30px; font-size: 15px; border: 1px solid #469543;">
+								<div class="centerplz">
+									<span th:text="${memberId}"></span>
+								</div>
+							</div>
+							<div class="row d-flex justify-content-center">
+								<button type="button" class="goodbtn" id="login" style="margin: 25px;">
+									로그인
+								</button>
+								<button type="button" class="goodbtn" id="find_password" style="margin: 25px;">
+									비밀번호 찾기
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<!-- 페이지에서 작동되는 함수들 -->
+	<script>
+		$(document).ready(function () {
+			/* 로그인 버튼 클릭 시 */
+			$('#login').click(function () {
+				window.location.href = '/login/loginform';
+			}); // 로그인 버튼 끝
+
+			/* 로그인 버튼 클릭 시 */
+			$('#find_password').click(function () {
+				window.location.href = '/login/find_password';
+			}); // 로그인 버튼 끝
+		});
+	</script>
+</body>
+
+</html>

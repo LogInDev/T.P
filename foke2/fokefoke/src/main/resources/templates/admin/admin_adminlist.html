@@ -1,0 +1,85 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{adminconfig/layout}">
+	<th:block layout:fragment="content">
+
+<body>
+        <!-- Table Start -->
+        <div class="container-fluid pt-4 px-4">
+            <div class="row g-4">
+				<div class="col-sm-12">
+                    <div class="bg-light rounded h-100 p-4">
+                        <h6 class="mb-4">관리자 리스트</h6>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">관리자ID</th>
+                                    <th scope="col">이름</th>
+                                    <th scope="col">생일</th>
+                                    <th scope="col">전화번호</th>
+                                  <!--  <th scope="col">성별</th>-->
+                                    <th scope="col">관리자추방</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                   <tr th:each="member, loop : ${paging}" th:if="${member.adminCk == 1}">
+                                    <th scope="row" th:text="${member.memberId}"></th>
+                                    <td th:text="${member.memberName}"></td>
+                                    <td th:text="${member.birth}"></td>
+                                    <td th:text="${member.phone}"></td>
+                                   <!-- <td><span th:if="${member.sex == 0}">남</span><span th:if="${member.sex == 1}">여</span></td>-->
+                                 
+                                    <td>
+										<form th:action="@{/admin/modify/{id}(id=${member.memberId})}" th:method="post">
+										    <input type="submit" class="btn btn-sm btn-outline-primary" value="추방">
+										
+										</form>
+									</td>
+									
+                                </tr>
+                            </tbody>
+                        </table>
+                        	
+                    </div>
+                </div>
+				<!-- 페이징처리 시작 -->
+				<div class="row">
+				    <div class="col-lg-12 d-flex justify-content-center">
+				        <div th:if="${!paging.isEmpty()}" class="product__pagination">
+				            <span class="paginate_button prev" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+				                <a th:href="@{|?page=${paging.number-1}|}" th:if="${paging.hasPrevious}">
+				                    이전
+				                </a>
+				            </span>
+				            <span th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
+				                  th:if="${page >= paging.number-5 and page <= paging.number+5}"
+				                  th:classappend="${page == paging.number} ? 'active'" class="paginate_button active">
+				                <a th:text="${page}" class="paginate_button"
+				                   th:href="@{|?page=${page}|}"></a>
+				            </span>
+				            <span class="paginate_button next" th:classappend="${!paging.hasNext} ? 'disabled'">
+				                <a th:href="@{|?page=${paging.number+1}|}" th:if="${paging.hasNext}">
+				                    다음
+				                </a>
+				            </span>
+				        </div>
+				    </div>
+				</div>
+				<!-- 페이징처리 끝 -->
+
+        	</div>
+        </div>
+	<!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/lib/chart/chart.min.js"></script>
+    <script src="/lib/easing/easing.min.js"></script>
+    <script src="/lib/waypoints/waypoints.min.js"></script>
+    <script src="/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="/lib/tempusdominus/js/moment.min.js"></script>
+    <script src="/lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    
+    <!-- Template Javascript -->
+    <script src="/js/admin/main.js"></script>
+</body>
+</th:block>
+</html>

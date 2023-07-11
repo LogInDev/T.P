@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragments/layout}">
+<th:block layout:fragment="content">
+<head>
+
+    <!-- jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+    <!-- iamport.payment.js -->
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"
+   integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+   crossorigin="anonymous"></script>
+
+<meta charset="UTF-8">
+<meta name="description" content="Male_Fashion Template">
+<meta name="keywords" content="Male_Fashion, unica, creative, html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>포케포케 : 결제하기</title>
+
+<!-- 주문 랜덤번호 박스 -->
+<style>
+.order-box {
+	padding: 10px;
+	margin: 23px 880px -54px 300px;
+	background-color: #469543;
+	color: #fff;
+}
+</style>
+
+<!--css 통일-->
+<style>
+    .checkout__input input,
+    .checkout__input select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-top: 6px;
+      margin-bottom: 16px;
+      resize: vertical;
+    }
+
+    /* 선택하라는 문장의 스타일 */
+    option:first-child {
+      color: #aaa;
+    }
+
+    .col-lg-4 {
+      display: flex;
+      flex-direction: column;
+    }	
+	
+</style>
+
+<!-- 포인트 사용 -->
+<script>
+function setPointAmount(amount){
+document.getElementById('pointAmt').value = amount;
+}
+</script>
+
+
+<script>
+function calculateTotal() {
+    var prices = document.getElementsByName("price"); // 가격 정보를 담은 input 태그들의 name 속성 값이 "price"인 요소들을 가져옵니다.
+    var quantities = document.getElementsByName("quantity"); // 수량 정보를 담은 input 태그들의 name 속성 값이 "quantity"인 요소들을 가져옵니다.
+    var total = 0; // 총 주문금액을 담을 변수를 초기화합니다.
+    for (var i = 0; i < prices.length; i++) {
+        var price = parseInt(prices[i].value); // 가격 정보를 가져와 정수형으로 변환합니다.
+        var quantity = parseInt(quantities[i].value); // 수량 정보를 가져와 정수형으로 변환합니다.
+        total += price * quantity; // 총 주문금액을 계산합니다.
+    }
+    document.getElementById("totalPrice").innerText = total + "원"; // 총 주문금액을 화면에 출력합니다.
+}
+</script>
+
+<body>
+
+	<!-- Breadcrumb Section Begin -->
+	<section class="breadcrumb-option">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="breadcrumb__text">
+						<h2 align="center">주문 상세 내역</h2>
+						<div class="breadcrumb__links"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Breadcrumb Section End -->
+	
+	<!-- 주문번호 랜덤 -->
+	<div class="order-box" style="display: flex; align-items: center;">
+    	<h4 style="margin-right: 10px; color:#fff;">주문번호 : </h4>
+    <div>
+        <h4 style='color:#fff;' th:text="${randomString}"></h4>
+    </div>
+	</div>
+
+	<!-- Checkout Section Begin -->
+	<section class="checkout spad">
+		<div class="container">
+			<div class="checkout__form">
+				<form id="detailForm" method="post">
+				
+				<!--<input type="hidden" id="pointAccumulation" name="point" value="">-->
+				<input type="hidden" name="point" value="point">
+					<div class="row">
+						<div class="col-lg-12 col-md-6">
+							<h6 class="checkout__title">픽업매장</h6>
+							<div class="row">
+								<div class="col-lg-6">
+									<div class="checkout__input">
+										<p>
+											매장명<span>*</span>
+										</p>
+										<input type="text" class="store_name" readonly name="storeName" th:value="${store.storeName}">
+									</div>
+								</div>
+								<div class="col-lg-6">
+									<div class="checkout__input">
+										<p>
+											매장주소<span>*</span>
+										</p>
+										<input type="text" readonly name="storeAddress"
+											th:value="${store.storeAddress}">
+									</div>
+								</div>
+							</div>
+							<div class="checkout__input">
+								<p>
+									전화번호<span>*</span>
+								</p>
+								<input type="text" name="phone" th:value="${member.phone}"
+									class="checkout__input__add">
+							</div>
+							<p>&nbsp;</p>
+							<h6 class="checkout__title">주문내역</h6>
+								<div class="checkout__input__checkbox">
+								<table id="cart">
+								<th:block th:each="cart:${cart}">
+								<!--<c:forEach var="cart" items="${cart}">-->
+								<input type="hidden" name="cartId" th:value="${cart.cartId}">
+								<tr class="cartInfo_tr">
+	                           	    <td class="hdn">
+										<input type="hidden" class="hdn_cartCount_input" th:value="${cart.cartCount}">
+										<input type="hidden" class="hdn_price_input" th:value="${cart.price}">
+										<input type="hidden" class="hdn_onePrice_input" th:value="${cart.onePrice}">
+										<input type="hidden" class="hdn_totalPrice_input" th:value="${cart.onePrice * cart.cartCount}">
+										<input type="hidden" class="hdn_point_input" th:value="${cart.point}">
+										<input type="hidden" class="hdn_totalPoint_input" th:value="${cart.totalPoint}">
+									</td>
+									<td>
+										<div class="cartname" data-target="mainItem">
+										<br> 
+										<span class="cart" style="font-size: 13px; font-weight: bold;">
+										<span th:if="${not #strings.isEmpty(cart.productName)}" th:text="${cart.productName}"></span><br>
+										<span th:if="${not #strings.isEmpty(cart.base)}" th:text="${cart.base}"></span>&nbsp;
+										<span th:if="${not #strings.isEmpty(cart.atopping)}" th:text="${cart.atopping}"></span>&nbsp;
+										<span th:if="${not #strings.isEmpty(cart.btopping)}" th:text="${cart.btopping}"></span>&nbsp;
+										<span th:if="${not #strings.isEmpty(cart.ctopping)}" th:text="${cart.ctopping}"></span>&nbsp;
+										<span th:if="${not #strings.isEmpty(cart.dtopping)}" th:text="${cart.dtopping}"></span>&nbsp;
+										<span th:if="${not #strings.isEmpty(cart.asource)}" th:text="${cart.asource}"></span>&nbsp;
+										<span th:if="${not #strings.isEmpty(cart.bsource)}" th:text="${cart.bsource}"></span>&nbsp;
+										<span th:if="${not #strings.isEmpty(cart.aextratopping)}" th:text="${cart.aextratopping}"></span>&nbsp;
+										<span th:if="${not #strings.isEmpty(cart.bextratopping)}" th:text="${cart.bextratopping}"></span>&nbsp;
+										<span th:if="${not #strings.isEmpty(cart.extramain)}" th:text="${cart.extramain}"></span>&nbsp;
+										<span style="display:inline-block;margin:0 0 0 980px; font-size: 13px; font-weight: bold;"><span th:if="${not #strings.isEmpty(cart.cartCount)}" th:text="|${cart.cartCount}개|"></span>&nbsp;&nbsp;
+										<span th:if="${not #strings.isEmpty(cart.cartCount)}" th:text="${cart.onePrice * cart.cartCount}"></span>원&nbsp;
+										<input type="hidden" id="sum" name="price" th:value="${cart.onePrice * cart.cartCount}">
+										</span>
+										</div>
+									</td>
+								</tr>
+								</th:block>
+								</table>
+							</div>
+							<br>
+							 <!--결제창--> 
+							<h6 class="checkout__title">총 결제 금액</h6>
+							<div class="cart__total">
+                    	<ul>
+                            
+                            <li>상품 수량<span class="cart_totalCount"></span></li>
+                            
+                            <li>총 주문 금액<span class="cart_totalPrice"></span></li>
+                            
+                            <li>사용한 포인트<span class="cart_usePoint"></span></li>
+                           
+                            <li>잔여 결제 금액<span class="cart_totalPay"></span></li>
+                        </ul>		
+                        </div>
+                        
+								<!-- 결제 내역에서 잔여 결제 금액(총 주문 금액 - 포인트 사용 = 잔여 결제 금액)--> 
+								<script>
+								function finalPriceFn(){
+								let price = "${detail.price}";
+								let point = "${member.point}";
+								let finalPrice = price - point;
+								$('#finalPrice').text(finalPrice + '원');
+								}
+								$(document).ready(function(){
+								finalPriceFn();
+								//console.log(finalPrice);
+								 //jquery 사용
+								//이 코드를 사용했을 때 콘솔에는 값이 제대로 찍히지만 화면에는 finalPrice 의 값을 제대로 받지 못함 이유는 finalPrice의 변수의 값이 문자열 형태로 넣어지게 되는데 해당 변수의 값이 숫자로 변환이 되면서 에러가 나는거 같음
+								//document.getElementById('finalPrice').innerHTML = `${finalPrice}원`; 
+								});
+								</script>
+							<br>
+							<br>
+							<!-- 포인트 적립 -->
+							<h6 class="checkout__title">포인트 적립</h6>
+								<div>
+								<p>포인트 적립 내역</p>
+								<div id="pointAccumulation" align="right"></div>
+								</div>
+							<div class="checkout__input">
+									<br>
+								<div style="text-align: center;" class="btn_area">
+									<button type="button" onclick="location.href='http://localhost:8080'" style="background-color: #469543; color: #fff; border-radius: 30px; padding: 10px 20px; border: none; margin: 0 auto;">
+									목록보기</button>
+								</div>
+							</div>							
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</section>
+
+<script>
+$(document).ready(function() {
+    TotalCartInfo();
+    calculatePoint();
+});
+</script>    
+
+<!--<script>
+$(document).ready(function() {
+	TotalCartInfo();
+	console.log(TotalCartInfo());
+});
+</script>-->	
+	
+<script>
+$(document).ready(function () {
+  TotalCartInfo();
+});
+
+function TotalCartInfo() {
+
+  let totalCount = 0;
+  let totalPrice = 0;
+  let usePoint = 0;
+  let totalPay = 0;
+
+  $(".cartInfo_tr").each(function (index, element) {
+    totalCount += parseInt($(element).find(".hdn_cartCount_input").val());
+    totalPrice += parseInt($(element).find(".hdn_totalPrice_input").val());
+  });
+
+  usePoint = parseInt([[${member.point}]]);
+  totalPay = totalPrice - usePoint;
+
+  $(".cart_totalCount").text(totalCount + " 개");
+  $(".cart_totalPrice").text(totalPrice.toLocaleString() + " 원");
+  $(".cart_usePoint").text(usePoint + " Point");
+  $(".cart_totalPay").text(totalPay.toLocaleString() + " 원");
+
+  calculatePoint(totalPay);
+}
+
+function calculatePoint(basePrice) {
+  let point = basePrice * 0.05;
+  let pointString = parseInt(point);
+
+  document.getElementById("pointAccumulation").innerText = pointString;
+}
+</script>
+
+	<!-- Checkout Section End -->
+
+
+
+
+	<!-- Js Plugins -->
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.nice-select.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.nicescroll.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.magnific-popup.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.countdown.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.slicknav.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/mixitup.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/owl.carousel.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
+	
+</body>
+
+</head>

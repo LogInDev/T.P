@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	<th:block th:fragment="adminSidebar">
+
+<body>
+             <!-- Sidebar Start -->
+        <div class="sidebar pe-4 pb-3">
+            <nav class="navbar bg-light navbar-light">
+                <a th:href="@{/admin/main}" class="navbar-brand mx-4 mb-3">
+                    <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>FokeFoke</h3>
+                </a>
+                <div class="d-flex align-items-center ms-4 mb-4">
+                    <div class="position-relative">
+                        <img class="rounded-circle" th:src="@{/img/kimeyung.png}" alt="" style="width: 40px; height: 40px;">
+                        <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+                    </div>
+                    <div class="ms-3">
+                        <h6 class="mb-0" ><span th:text="${username}"></span></h6>
+                        <span>관리자</span>
+                    </div>
+                </div>
+                <div class="navbar-nav w-100">
+                    <a th:href="@{/admin/adminlist}" th:classappend="${currentUrl == '/admin/adminlist' ? 'active' : ''}" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>관리자정보</a>
+                    <a th:href="@{/admin/list}" th:classappend="${currentUrl == '/admin/list' ? 'active' : ''}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>회원정보</a>
+                    <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>주문정보</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>매출정보</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="button.html" class="dropdown-item">Buttons</a>
+                            <a href="typography.html" class="dropdown-item">Typography</a>
+                            <a href="element.html" class="dropdown-item">Other Elements</a>
+                        </div>
+                    </div>
+                    <a th:href="@{/admin/noticelist}" th:classappend="${currentUrl == '/admin/noticelist' ? 'active' : ''}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>이벤트정보</a>
+                    <a th:href="@{/}" th:classappend="${currentUrl == '/' ? 'active' : ''}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>나가기</a>
+                    
+                </div>
+            </nav>
+        </div>
+        <!-- Sidebar End -->
+</body>
+	</th:block>
+</html>

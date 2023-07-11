@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="headerFragment">
+
+	<head>
+		<title>FokeFoke</title>
+		<meta charset="UTF-8">
+		<meta name="description" content="FokeFoke">
+		<meta name="keywords" content="FokeFoke, salad, fresh, fast">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<!-- Google Font -->
+		<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+			integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+			crossorigin="anonymous" />
+		<link rel="stylesheet" type="text/css"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+		<link rel="stylesheet" type="text/css" th:href="@{/css/chatstyle.css}" />
+		<script src="https://tistory3.daumcdn.net/tistory/941717/skin/images/jquery.min.js"
+			type="text/javascript"></script>
+		<script src="https://tistory3.daumcdn.net/tistory/941717/skin/images/snowfall.jquery.js"
+			type="text/javascript"></script>
+	</head>
+
+	<body th:with="memberId=${session.memberId}">
+		<!-- Page Preloder -->
+		<div id="preloder">
+			<div class="loader"></div>
+		</div>
+
+		<!-- Offcanvas Menu Begin -->
+		<div class="offcanvas-menu-overlay"></div>
+		<div class="offcanvas-menu-wrapper">
+			<div class="offcanvas__option">
+				<div class="offcanvas__links">
+					<!-- 로그인 하지 않은 상태 -->
+					<a sec:authorize="isAnonymous()" th:href="@{/login/loginform}">로그인</a>
+					<a sec:authorize="isAnonymous()" th:href="@{/login/join}">회원가입</a>
+
+					<!-- 로그인한 상태 -->
+					<a sec:authorize="isAuthenticated()" th:href="@{/login/logout}" class="gnb_logout_button">로그아웃</a>
+					<a sec:authorize="isAuthenticated()" th:href="@{/member/mypage/info}">마이페이지</a>
+
+					<!-- 경로 수정 필요-->
+					<a sec:authorize="isAuthenticated()" th:href="@{/cart/${memberId}}">장바구니</a>
+					<!-- 수정 필요-->
+					<!-- 관리자 로그인 -->
+					<div th:if="${adminCk == 1}">
+						<a href="/admin/main">관리자 페이지</a>
+					</div>
+				</div>
+			</div>
+			<div id="mobile-menu-wrap"></div>
+			<div class="offcanvas__text">
+				<p>신선함과 건강을 담은 샐러드, FokeFoke mobile</p>
+			</div>
+		</div>
+		<!-- Offcanvas Menu End -->
+
+		<!-- Header Section Begin -->
+		<header class="header">
+			<div class="header__top">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-6 col-md-7">
+							<div class="header__top__left">
+								<p>신선함과 건강을 담은 샐러드, FokeFoke</p>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-5">
+							<div class="header__top__right">
+								<div class="header__top__links">
+
+									<!-- 로그인 하지 않은 상태 -->
+									<a sec:authorize="isAnonymous()" th:href="@{/login/loginform}">로그인</a>
+									<a sec:authorize="isAnonymous()" th:href="@{/login/join}">회원가입</a>
+
+									<!-- 로그인한 상태 -->
+									<a sec:authorize="isAuthenticated()" th:href="@{/login/logout}"
+										class="gnb_logout_button">로그아웃</a>
+									<a sec:authorize="isAuthenticated()" th:href="@{/member/mypage/info}">마이페이지</a>
+
+									<!-- 경로 수정 필요-->
+									<a sec:authorize="isAuthenticated()" th:href="@{/cart/${memberId}}">장바구니</a>
+									<!-- 관리자 로그인 -->
+									<div th:if="${adminCk == 1}">
+										<a href="/admin/main">관리자 페이지</a>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+
+
+
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-3 col-md-3">
+						<div class="header__logo">
+							<a href="/"><img th:src="@{/img/logo.png}" alt="포케포케"></a>
+						</div>
+					</div>
+					<div class="col-lg-9 col-md-6">
+						<nav class="header__menu mobile-menu">
+							<ul>
+								<li class="dropdown"><a href="/">포케포케</a></li>
+								<li><a href="#">새소식</a>
+									<ul class="dropdown">
+										<li><a href="/notice/list">이벤트·프로모션</a></li>
+									</ul>
+								</li>
+								<li><a href="#">온라인 주문</a>
+									<ul class="dropdown">
+										<li><a href="/store/list">매장찾기</a></li>
+									</ul>
+								</li>
+								<!--<li><a href="#">만든사람</a>
+									<ul class="dropdown">
+										<li><a href="#">박지유</a></li>
+										<li><a href="#">김다정</a></li>
+										<li><a href="#">차지환</a></li>
+										<li><a href="#">기승서</a></li>
+										<li><a href="#">최새롬</a></li>
+										<li><a href="#">김도훈</a></li>
+									</ul>
+								</li>-->
+								<li><a href="http://13.209.99.2/">맛집 추천</a></li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+				<div class="canvas__open">
+					<i class="fa fa-bars"></i>
+				</div>
+			</div>
+			<button onclick="chat()" class="btn" value="캐릭터"
+				style="display: flex; justify-content: center; align-items: center; background-color: #A8D0B6; border: 5px solid #EB7454; border-radius: 50px; width: 100px; height: 100px; position: fixed; right: 70px; bottom: 70px; box-sizing: border-box;">
+				<img class="imgmain" src="/img/mainch.png" style="width:150%; height:130%;" alt="포케포케">
+			</button>
+			<div id="whiteBox"
+				style="overflow: auto;display:none; width: 400px; height: 650px; background-color: white;border: 5px solid #EB7454;border-radius: 20px; position: fixed; right: 60px; bottom: 180px; box-sizing: border-box; z-index: 100;">
+
+				<div sec:authorize="isAuthenticated()" id="user_chat_data" class="user_chat_data">
+					<!--<span th:text="${#authentication.principal.username}"></span>-->
+					<div class="profile_name" style="position: sticky; top: 0; z-index: 100;">
+						&nbsp;&nbsp;&nbsp;&nbsp;<img src="/img/mainch.png" style="width: 20%;height: 20%;"
+							class="mr-3 rounded-circle" />
+						<span id="username" th:text="${session.member.memberName}"
+							value="${session.member.memberName}"></span><span>님 무엇을 도와드릴까요?</span>
+					</div>
+
+					<div class="container-fluid chat_section" id="chat-box"></div>
+
+					<div class="type_msg" style="position: sticky; bottom: 0; z-index: 100; background-color: #fff;">
+						<div class="input_msg_write">
+							<input id="chat-outgoing-msg" type="text" class="write_msg" placeholder="Type a message" />
+							<button id="chat-send" class="msg_send_btn" type="button">
+								<i class="fa fa-paper-plane" aria-hidden="true"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<!-- Header Section End -->
+
+		<script th:inline="javascript">
+			const memberId = /*[[${session.member.memberId}]]*/ ''; // memberId 변수를 새롭게 받아옵니다.
+			console.log(memberId);
+			function chat() {
+				if (memberId != 'guest') { // memberId가 존재하는 경우에만 실행합니다.
+					var whiteBox = document.getElementById("whiteBox");
+					if (whiteBox.style.display === "none") {
+						whiteBox.style.display = "block";
+						whiteBox.scrollTop = whiteBox.scrollHeight;
+					} else {
+						whiteBox.style.display = "none";
+					}
+				} else { // memberId가 존재하지 않는 경우, alert 메시지를 띄웁니다.
+					alert("로그인이 필요합니다.");
+					window.location.href = "/login/loginform";
+				}
+			}
+
+			var xhr = new XMLHttpRequest();
+			var csrfToken = /*[[${_csrf.token}]]*/ 'default-token';
+			const username = /*[[${session.member.memberId}]]*/'';
+			let roomNum;
+			if (username === "admin") {
+				roomNum = prompt("어떤아이디?");
+				roomNum += "1";
+			} else {
+				roomNum = username + "1";
+			}
+			/*document.querySelector("#username").innerHTML =
+			  username + "님 무엇을 도와드릴까요?";*/
+			//SSE연결하기
+			const eventSource = new EventSource(
+				`http://34.64.159.23:8000/chat/roomNum/${roomNum}`
+			);
+
+			eventSource.onmessage = (event) => {
+				const data = JSON.parse(event.data);
+				console.log(1, data);
+				if (data.sender === username) {
+					//로그인한 유저가 보낸 메시지
+					//파란박스(오른쪽)
+					initMyMessage(data);
+				} else {
+					//회색박스(왼쪽)
+					initYourMessage(data);
+				}
+			};
+
+			//파란박스 만들기
+			function getSendMsgBox(data) {
+				let md = data.createdAt.substring(5, 10);
+				let tm = data.createdAt.substring(11, 16);
+				converTime = tm + " | " + md;
+
+				return `<div class="sent_msg">
+    <p>${data.msg}</p>
+    <span class="time_date"> ${converTime} / <b>${data.sender}</b> </span>
+  </div>`;
+			}
+
+			//회색박스 만들기
+			function getReceiveMsgBox(data) {
+				let md = data.createdAt.substring(5, 10);
+				let tm = data.createdAt.substring(11, 16);
+				converTime = tm + " | " + md;
+
+				return `<div class="received_withd_msg">
+    <p>${data.msg}</p>
+    <span class="time_date"> ${converTime} / <b>${data.sender}</b> </span>
+  </div>`;
+			}
+
+			//최초 초기화 될 때 1번방에 3건이 있으면 3건을 다 가져옴
+			//addMessage함수가 호출되면 db에 insert되고 그 데이터가 자동으로 흘러들어와(SEE) 그럼 initMyMessage 함수가 실행되어 append됨.
+			//파란박스 초기화하기
+			function initMyMessage(data) {
+				let chatBox = document.querySelector("#chat-box");
+
+				let sendBox = document.createElement("div");
+				sendBox.className = "outgoing_msg";
+				sendBox.innerHTML = getSendMsgBox(data);
+				chatBox.append(sendBox);
+				//채팅 메시지 보낼때 받을 때 자동 스크롤 되게 설정
+				/* document.documentElement.scrollTop = document.body.scrollHeight;*/
+				let whiteBox = document.getElementById("whiteBox");
+				whiteBox.scrollTop = whiteBox.scrollHeight;
+			}
+
+			//회색박스 초기화 하기
+			function initYourMessage(data) {
+				let chatBox = document.querySelector("#chat-box");
+
+				let receivedBox = document.createElement("div");
+				receivedBox.className = "received_msg";
+				receivedBox.innerHTML = getReceiveMsgBox(data);
+				chatBox.append(receivedBox);
+				//채팅 메시지 보낼때 받을 때 자동 스크롤 되게 설정
+				/* document.documentElement.scrollTop = document.body.scrollHeight;*/
+				let whiteBox = document.getElementById("whiteBox");
+				whiteBox.scrollTop = whiteBox.scrollHeight;
+
+			}
+
+			//AJAX채팅 메시지 전송(RoomNum으로 보냄)
+			async function addMessage() {
+				let msgInput = document.querySelector("#chat-outgoing-msg");
+
+				let chat = {
+					sender: username,
+					roomNum: roomNum,
+					msg: msgInput.value,
+				};
+				//fetch통신시 시간이 걸려서 null을 먼저 출력하고 통신함. 해서 await로 기다려줘야함. 또한 await로 인해 다른 모든 함수도 실행되지 않아서 비동기 함수로 수정해줘야함.
+
+				await fetch("http://34.64.159.23:8000/chat", {
+					method: "post", //http post 메서드 (새로운 데이터를 write할때 사용)
+					body: JSON.stringify(chat), //JS -> JSON으로 변경
+					headers: {
+						//내가 보내는 데이터 타입을 알려줌
+						"Content-Type": "application/json;charset=utf-8",
+						"X-CSRFToken": csrfToken, // 헤더에 CSRF 토큰 추가
+					},
+				});
+				
+
+				msgInput.value = "";
+			}
+
+			//버튼 클릭시 메시지 전송
+			document.querySelector("#chat-send").addEventListener("click", () => {
+				//   alert("클릭됨");
+				addMessage();
+			});
+
+			//엔터를 치면 메시지 전송
+			document
+				.querySelector("#chat-outgoing-msg")
+				.addEventListener("keydown", (e) => {
+					console.log(e.keyCode);
+					if (e.keyCode === 13) {
+						//   alert("클릭됨");
+						addMessage();
+					}
+				});
+
+
+
+			
+
+		</script>
+		<script>
+			var $snow = jQuery.noConflict();
+			// $snow 함수를 사용하여 jQuery 코드 작성
+			$snow(document).ready(function () {
+				$snow(document).snowfall({
+					deviceorientation: true,
+					round: true,
+					minSize: 1,
+					maxSize: 10,
+					flakeCount: 50			
+				});
+			});
+		</script>
+
+
+
+
+		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+		<!--<script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+      integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+      crossorigin="anonymous"
+    ></script>-->
+
+	</body>
+</th:block>
+
+
+
+</html>

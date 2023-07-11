@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragments/layout}">
+<th:block layout:fragment="content">
+
+<head>
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"
+		integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+	<meta charset="UTF-8">
+	<meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
+   <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
+	<title>포케포케 : 주문하기</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+	<!-- Google Font -->
+	<link th:href="@{https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap}"
+		rel="stylesheet">
+
+	<!-- Css Styles -->
+	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/elegant-icons.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/magnific-popup.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/nice-select.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/owl.carousel.min.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/slicknav.min.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+
+	<!-- Favicons -->
+	<link th:href="@{/img/favicon.png}" rel="icon" />
+	<link th:href="@{/img/favicon.png}" rel="apple-touch-icon" />
+<style type="text/css">
+.container2 {
+	display: flex;
+	min-width: 500px;
+}
+
+.container2+.container2 {
+	margin-top: 13px;
+}
+
+.image {
+	display: flex;
+	align-items: center;
+	flex-basis: 30%;
+	background-color: #008000db;
+	border-radius: 50px 0 0 0;
+	padding: 0 10px;
+}
+
+.image img {
+	margin-right: 10px;
+}
+
+
+
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+
+</style>
+
+</head>
+<body th:with="memberId=${session.memberId}">
+
+<section class="breadcrumb-option" >
+		<div class="container container2">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="breadcrumb__text">
+						<h4>포케포케 메뉴</h4>
+						<div class="breadcrumb__links">
+							<span>메뉴 상세정보</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- 서브메뉴 끝 -->
+	
+
+	<!-- Product section-->
+	<form id="detailForm" method="post">
+		 <!-- CSRF 토큰을 포함시키는 부분 -->
+      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+	<input type="hidden" name="memberId" th:value="${memberId}">
+	<input type="hidden" name="productName" th:value="${product.productName }">
+	<input type="hidden" name="productImage" th:value="${product.productImage }"> 
+	<section class="py-5" style="margin:-70px 0 0 0;">
+		<div class="container px-4 px-lg-5 my-5">
+			<div class="row gx-4 gx-lg-5 align-items-center">
+				<div class="col-md-6">
+					<img class="card-img-top mb-5 mb-md-0"
+						th:src="${product.productImage }"
+						alt="..." />
+				</div>
+				<div class="col-md-6">
+					<div class="small mb-1"><span th:text="${product.productType }"></span></div>
+					<h1 class="display-5 fw-bolder" th:text="${product.productName }"></h1>
+						<span class="text-decoration-line-through" th:text="${product.productEname }"></span> <br>
+						<div class="fs-5 mb-5">
+					<p class="lead" style="margin-top: 50px;" th:text="${product.productDetail }"></p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<th:block th:if="${nutritional != null && not #strings.isEmpty(nutritional.weight)}">
+    <span style="display:inline-block;font-size:20pt;font-weight:550;color:#00000094;margin:0 0 14px 126px;">영양성분표</span>
+    <div class="table-responsive">
+        <table class="table" style="font-size:15pt;font-weight:bold;text-align:center;width:80%;height:120px;margin:0 0 0 130px;">
+            <tr>
+                <th style="border-top:2px solid #008000db;color:#008000db;">중량(g)</th>
+                <th style="border-top:2px solid #008000db;color:#008000db;">열량(kcal)</th>
+                <th style="border-top:2px solid #008000db;color:#008000db;">단백질(g)</th>
+                <th style="border-top:2px solid #008000db;color:#008000db;">포화지방(g)</th>
+                <th style="border-top:2px solid #008000db;color:#008000db;">당류(g)</th>
+                <th style="border-top:2px solid #008000db;color:#008000db;">나트륨(mg)</th>
+            </tr>
+            <tr>
+                <td style="border-top:0.5px solid #008000db;color:#00000094;">
+                    <span th:text="${nutritional.weight}"></span>
+                </td>
+                <td style="border-top:0.5px solid #008000db;color:#00000094;">
+                    <span th:text="${nutritional.calorie}"></span>
+                </td>
+                <td style="border-top:0.5px solid #008000db;color:#00000094;">
+                    <span th:text="${nutritional.protein}"></span>
+                </td>
+                <td style="border-top:0.5px solid #008000db;color:#00000094;">
+                    <span th:text="${nutritional.saturatedFat}"></span>
+                </td>
+                <td style="border-top:0.5px solid #008000db;color:#00000094;">
+                    <span th:text="${nutritional.sugarContent}"></span>
+                </td>
+                <td style="border-top:0.5px solid #008000db;color:#00000094;">
+                    <span th:text="${nutritional.sodium}"></span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</th:block>
+<th:block th:if="${nutritional == null || #strings.isEmpty(nutritional.weight)}">
+    <br/><br/><br/><br/>
+</th:block>
+
+
+
+</section>
+		<br> <br> <br> <br>
+</form>
+
+	<!-- Js Plugins -->
+	<script src="/js/jquery-3.3.1.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/jquery.nice-select.min.js"></script>
+	<script src="/js/jquery.nicescroll.min.js"></script>
+	<script src="/js/jquery.magnific-popup.min.js"></script>
+	<script src="/js/jquery.countdown.min.js"></script>
+	<script src="/js/jquery.slicknav.js"></script>
+	<script src="/js/mixitup.min.js"></script>
+	<script src="/js/owl.carousel.min.js"></script>
+	<script src="/js/main.js"></script>
+</body>
+</th:block>
+</html>

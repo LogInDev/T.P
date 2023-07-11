@@ -1,0 +1,58 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/layout}">
+	
+<body>
+<section class="breadcrumb-option">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="breadcrumb__text">
+						<h4>공지&이벤트</h4>
+						<div class="breadcrumb__links">
+							<a href="/noticedetail">Home</a><span>공지&이벤트</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>	
+	
+<div layout:fragment="content" class="container">
+    <h5 class="my-3 border-bottom pb-2">질문등록</h5>
+   	<form th:action="@{/notice/modify/{id}(id = ${noticedto.noticeId})}" method="post" th:object="${noticeDTO}" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="noticeTitle" class="form-label">제목</label>
+            <input name="noticeTitle" type="text" th:value="${noticedto.noticeTitle}">
+        </div>
+        <div class="mb-3">
+            <label for="noticeContent" class="form-label">내용</label>
+          <textarea name="noticeContent" th:text="${noticedto.noticeContent}"></textarea>
+        </div>
+        <!--썸네일 이미지-->
+	       <div class="form-group row">
+				<label class="col-sm-2 control-label" >이미지</label>
+				<div class="col-sm-5">
+		           <div class="form_section_content">
+		           	<input class="btn btn-outline-dark" type="file" id="fileItem" name="fileItem" th:text="${noticedto.noticeImage}">
+		           </div>
+	           </div>
+	       </div>
+		
+		<!--게시판 이미지-->
+       <div class="form-group row">
+			<label class="col-sm-2 control-label" >게시물 이미지</label>
+			<div class="col-sm-5">
+	           <div class="form_section_content">
+	           	<input class="btn btn-outline-dark" type="file" id="detailFile" name="detailFile" th:text="${noticedto.detailImage}">
+	           </div>
+           </div>
+       </div>
+        
+        <input type="submit" value="수정하기" class="btn btn-primary my-2">
+    </form>
+     <a href="/notice/list"> <button class="btn btn-primary">목록 </button></a>
+</div>
+
+
+</body>
+
+</html>

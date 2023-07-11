@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="footerFragment">
+
+	<body>
+		<!-- Footer Section Begin -->
+		<footer class="footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-8 offset-lg-1 col-md-3 col-sm-6">
+						<div class="footer__widget">
+							<h6>이용약관&nbsp&nbsp&nbsp&nbsp회사소개&nbsp&nbsp&nbsp&nbsp개인정보처리방침&nbsp&nbsp&nbsp&nbsp이용안내</h6>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-6 col-sm-6">
+						<div class="footer__about">
+							<div class="footer__logo">
+								<a href="/"><img th:src="@{/img/footer-logo.png}" alt="포케포케"></a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12 text-center">
+						<div class="footer__copyright__text">
+							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+							<p>
+								서울특별시 종로구 우정국로2길 21 5층 | 대표 : Kim Gyeong-mun(김경문) | 전화 : 02-766-8367 | 사업자등록번호 :
+								668-85-00778
+							</p>
+							<p>
+								Copyright ©
+								<script>
+									document.write(new Date().getFullYear());
+								</script>
+								2024 FokeFoke All rights reserved
+							</p>
+							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<!-- Footer Section End -->
+	</body>
+</th:block>
+
+</html>

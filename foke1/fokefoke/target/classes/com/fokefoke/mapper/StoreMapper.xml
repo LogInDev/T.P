@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fokefoke.mapper.StoreMapper">
+
+	<select id="getList" resultType="com.fokefoke.dto.StoreDTO">
+		<![CDATA[
+		select * from store where storeId > 0
+		]]>
+	</select>
+
+	<insert id="insert" useGeneratedKeys="true"
+		keyProperty="storeId">
+<![CDATA[
+  INSERT INTO store (storeName, storeAddress, storeTel, storeOpen, storeClose, storeLat, storeLng)
+  VALUES (#{storeName}, #{storeAddress}, #{storeTel}, #{storeOpen}, #{storeClose}, #{storeLat}, #{storeLng})
+  ]]>
+	</insert>
+
+	<insert id="insertSelectKey">
+		<selectKey keyProperty="storeId" order="BEFORE"
+			resultType="int">
+  <![CDATA[
+    SELECT LAST_INSERT_ID() + 1 as nextval
+  ]]>
+		</selectKey>
+  <![CDATA[
+    INSERT INTO store (storeName, storeAddress, storeTel, storeOpen, storeClose, storeLat, storeLng)
+    VALUES (#{storeName}, #{storeAddress}, #{storeTel}, #{storeOpen}, #{storeClose}, #{storeLat}, #{storeLng})
+  ]]>
+	</insert>
+
+	<select id="read" resultType="com.fokefoke.dto.StoreDTO">
+	<![CDATA[
+	select * from store where storeId = #{storeId}
+	]]>
+	</select>
+
+	<delete id="delete">
+	<![CDATA[
+	delete from store where storeId = #{storeId}
+	]]>
+	</delete>
+
+	<update id="update">
+	<![CDATA[
+	update store set storeName= #{storeName}, storeAddress= #{storeAddress}, storeTel= #{storeTel},
+	storeOpen= #{storeOpen}, storeClose= #{storeClose}, storeLat= #{storeLat}, storeLng= #{storeLng}
+	where storeId = #{storeId}
+	]]>
+	</update>
+
+	<!-- 교재 294p 참고 -->
+	<!-- <select id="getListWithPaging" resultType="com.fokefoke.dto.StoreDTO"> 
+		<![CDATA[ SELECT storeId, storeName, storeAdress, storeTel, storeOpen, storeClose, 
+		storeLat, storeLng FROM store ORDER BY storeId DESC LIMIT #{amount} OFFSET 
+		${(pageNum - 1) * amount} ]]> </select> -->
+
+	<!-- 교재 338p 참고 -->
+	<sql id="paging">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item="type" collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'area'">
+							storeAddress LIKE CONCAT('%', #{keyword}, '%')
+						</when>
+						<when test="type == 'store'">
+							storeName LIKE CONCAT('%', #{keyword}, '%')
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+
+	<!-- 교재 335p 참고 -->
+	<select id="getListWithPaging"
+		resultType="com.fokefoke.dto.StoreDTO">
+    <![CDATA[
+        SELECT storeId, storeName, storeAddress, storeTel, storeOpen, storeClose, storeLat, storeLng
+        FROM store 
+    ]]>
+		<where>
+			<if test="type == 'area'">
+				storeAddress LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="type == 'store'">
+				storeName LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+		</where>
+    <![CDATA[
+        ORDER BY storeId DESC LIMIT #{amount} OFFSET ${(pageNum - 1) * amount}
+    ]]>
+	</select>
+
+	<!-- 교재 323p 참고 -->
+	<select id="getTotalCount" resultType="int">
+    <![CDATA[
+    SELECT COUNT(*) FROM store
+    ]]>
+		<if test="type == 'area'">
+			WHERE storeAddress LIKE CONCAT('%', #{keyword}, '%')
+		</if>
+		<if test="type == 'store'">
+			WHERE storeName LIKE CONCAT('%', #{keyword}, '%')
+		</if>
+	</select>
+
+	<select id="getMap" resultType="com.fokefoke.dto.StoreDTO">
+		<![CDATA[
+		select * from store where storeId > 0
+		]]>
+	</select>
+
+	<select id="getFilteredMap"
+		resultType="com.fokefoke.dto.StoreDTO">
+		<![CDATA[
+		select * from store where storeId > 0
+		]]>
+	</select>
+
+</mapper>

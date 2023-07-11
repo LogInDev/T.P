@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<!-- layout 관련 namespace 추가 선언 -->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+	<meta charset="utf-8">
+	<meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
+	<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
+	<th:block th:replace="fragments/config :: configFragment"></th:block>
+</head>
+<!-- header.html -->
+<th:block th:replace="fragments/header :: headerFragment"></th:block>
+<!-- 공통적이지 않은 부분이 들어가는 부분 -->
+
+<body>
+	<th:block layout:fragment="content"></th:block>
+</body>
+<!-- footer.html -->
+<th:block th:replace="fragments/footer :: footerFragment"></th:block>
+
+</html>

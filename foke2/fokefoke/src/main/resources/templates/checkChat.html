@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>chat</title>
+</head>
+
+<body>
+	<!-- Add an HTML element to hold the distinct sender list -->
+	<h1>chat리스트</h1>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">관리자ID</th>
+				<th scope="col">이름</th>
+				<th scope="col">생일</th>
+				<th scope="col">전화번호</th>
+				<!--   <th scope="col">성별</th>-->
+				<th scope="col">관리자추방</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="member, loop : ${paging}" th:if="${member.adminCk == 1}">
+				<th scope="row" th:text="${member.memberId}"></th>
+				<td th:text="${member.memberName}"></td>
+				<td th:text="${member.birth}"></td>
+				<td th:text="${member.phone}"></td>
+				<!--    <td><span th:if="${member.sex == 0}">남</span><span th:if="${member.sex == 1}">여</span></td>-->
+
+				<td>
+					<form th:action="@{/admin/delete/{id}(id=${member.memberId})}" th:method="post">
+						<input type="submit" class="btn btn-sm btn-outline-secondary" value="삭제">
+
+					</form>
+				</td>
+				<td id="chat">
+					<form th:action="" th:method="">
+						<input type="submit" class="btn btn-sm btn-outline-secondary" value="상담">
+
+					</form>
+				</td>
+
+			</tr>
+		</tbody>
+	</table>
+
+	<script th:src="@{/js/addCsrfTokenToAjaxRequest.js}"></script>
+
+	<script th:inline="javascript">
+		var xhr = new XMLHttpRequest();
+		var csrfToken = /*[[${_csrf.token}]]*/ 'default-token';
+		function getDistinctSender() {
+			fetch('http://34.64.159.23:8000/distinct-sender', {
+				headers: {
+					'X-CSRF-Token': csrfToken,
+				},
+			})
+				.then((response) => {
+					console.log(response);
+					if (response.ok) {
+						return response.json(); // 응답을 JSON 형식으로 파싱합니다.
+					} else {
+						throw new Error('Network response error');
+					}
+				})
+				.then((data) => {
+					displayDistinctSender(data);
+				})
+				.catch(error => console.error('Error fetching distinct senders:', error));
+		}
+
+		function displayDistinctSender(senderList) {
+			console.log("++++++++", senderList);
+			const container = document.getElementById("chat");
+			senderList.forEach(sender => {
+				if (sender !== 'admin') { // 'admin' 값을 필터링
+					const form = document.createElement("form");
+					form.action = `http://localhost:8080/detail/chatMain/${member.memberId}`;
+					const button = document.createElement("button");
+					button.type = "submit";
+					button.innerText = "상담";
+					button.classList.add("btn", "btn-sm", "btn-outline-secondary");
+					form.appendChild(button);
+					container.appendChild(listItem);
+				}
+			});
+		}
+
+		// 모든 유니크한 'sender' 가져오기, 'admin'은 제외된 채로 가져옵니다
+		getDistinctSender();
+	</script>
+</body>
+
+</html>

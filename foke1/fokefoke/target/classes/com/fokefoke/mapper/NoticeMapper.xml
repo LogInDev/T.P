@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fokefoke.mapper.NoticeMapper">
+
+
+	<select id="getList" resultType="com.fokefoke.dto.NoticeDTO">
+		<![CDATA[
+		select * from notice where noticeId > 0
+		]]>
+	</select>
+
+	<insert id="insert" useGeneratedKeys="true"
+		keyProperty="noticeId">
+<![CDATA[
+	INSERT INTO notice (noticeTitle, noticeContent, noticeDate, noticeImage, noticeState)
+	VALUES (#{noticeTitle}, #{noticeContent}, NOW(), #{noticeImage}, #{noticeState})
+  ]]>
+	</insert>
+
+	<insert id="insertSelectKey">
+		<selectKey keyProperty="noticeId" order="BEFORE"
+			resultType="int">
+  <![CDATA[
+    SELECT LAST_INSERT_ID() + 1 as nextval
+  ]]>
+		</selectKey>
+<![CDATA[
+	INSERT INTO notice (noticeTitle, noticeContent, noticeDate, noticeImage, noticeState)
+	VALUES (#{noticeTitle}, #{noticeContent}, NOW(), #{noticeImage}, #{noticeState})
+  ]]>
+	</insert>
+
+	<select id="read" resultType="com.fokefoke.dto.NoticeDTO">
+	<![CDATA[
+	select * from notice where noticeId = #{noticeId}
+	]]>
+	</select>
+
+	<delete id="delete">
+	<![CDATA[
+	delete from notice where noticeId = #{noticeId}
+	]]>
+	</delete>
+
+	<update id="update">
+	<![CDATA[
+	update notice set noticeTitle= #{noticeTitle}, noticeContent= #{noticeContent}, noticeImage= #{noticeImage}, noticeState= #{noticeState}
+	where noticeId = #{noticeId}
+	]]>
+	</update>
+
+	<!-- 교재 338p 참고 -->
+	<sql id="paging">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item="type" collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'title'">
+							noticeTitle LIKE CONCAT('%', #{keyword}, '%')
+						</when>
+						<when test="type == 'content'">
+							noticeContent LIKE CONCAT('%', #{keyword}, '%')
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+
+	<!-- 교재 335p 참고 -->
+	<select id="getListWithPaging"
+		resultType="com.fokefoke.dto.NoticeDTO">
+    <![CDATA[
+        SELECT noticeId, noticeTitle, noticeContent, noticeDate, noticeImage, noticeState
+        FROM notice 
+    ]]>
+		<where>
+			<if test="type == 'title'">
+				noticeTitle LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="type == 'content'">
+				noticeContent LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+		</where>
+    <![CDATA[
+        ORDER BY noticeId DESC LIMIT #{amount} OFFSET ${(pageNum - 1) * amount}
+    ]]>
+	</select>
+
+	<!-- 교재 323p 참고 -->
+	<select id="getTotalCount" resultType="int">
+    <![CDATA[
+    SELECT COUNT(*) FROM notice
+    ]]>
+		<if test="type == 'title'">
+			WHERE noticeTitle LIKE CONCAT('%', #{keyword}, '%')
+		</if>
+		<if test="type == 'content'">
+			WHERE noticeContent LIKE CONCAT('%', #{keyword}, '%')
+		</if>
+	</select>
+
+
+</mapper>

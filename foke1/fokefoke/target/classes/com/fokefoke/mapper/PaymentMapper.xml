@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fokefoke.mapper.PaymentMapper">
+
+	<select id="getMember" resultType="com.fokefoke.dto.MemberDTO" parameterType="com.fokefoke.dto.MemberDTO">
+	  <![CDATA[
+	  	SELECT * FROM MEMBER WHERE memberId=#{memberId}
+	  ]]>
+	</select>
+	
+	<select id="getDetail" resultType="com.fokefoke.dto.PaymentDTO" parameterType="com.fokefoke.dto.PaymentDTO">
+	  <![CDATA[
+	  	SELECT
+	    p.paymentId, p.fokeingredientId
+		FROM payment p
+		JOIN fokeingredient f ON p.fokeingredientId = f.fokeingredientId
+		WHERE p.paymentId = #{paymentId}
+	  ]]>
+	</select>
+	
+		<select id="getCart" resultType="com.fokefoke.dto.PaymentDTO" parameterType="com.fokefoke.dto.PaymentDTO">
+	  <![CDATA[
+	  	SELECT
+	    p.paymentId, p.cartId, p.memberId,p.fokeingredientId, c.cartCount
+		FROM payment p
+		JOIN cart c ON p.cartId = c.cartId
+		WHERE p.paymentId = #{paymentId}
+	  ]]>
+	</select>
+	
+	<select id="getall" parameterType="com.fokefoke.dto.CartDTO">
+	  <![CDATA[
+		SELECT f.fokeingredientId, f.productName, f.base, f.atopping, f.btopping, f.ctopping, f.dtopping, f.asource, 
+		f.bsource, f.aextratopping, f.bextratopping, f.extramain, f.setbeverage, f.setside 
+		FROM Cart c
+		JOIN fokeingredient f ON c.fokeingredientId = f.fokeingredientId 
+		WHERE c.fokeingredientId = #{fokeingredientId}
+	  ]]>
+	</select>
+
+	
+	<select id="getmem" resultType="com.fokefoke.dto.PaymentDTO" parameterType="com.fokefoke.dto.MemberDTO">
+	  <![CDATA[
+		SELECT * FROM payment where memberId = #{memberId}
+	  ]]>
+	</select>
+	<!-- 메뉴 리스트에서 카트에서 결제한 리스트 목록 -->
+	<select id="getcart1" resultType="hashMap" parameterType="com.fokefoke.dto.MemberDTO">
+	  <![CDATA[
+		SELECT  c.cartId , f.fokeingredientId, f.productName, p.paymentPickup, p.paymentAddress, f.onePrice, c.cartCount, p.paymentDay
+		FROM fokeingredient f
+		JOIN cart c ON f.fokeingredientId = c.fokeingredientId
+		JOIN payment p ON c.cartId = p.cartId
+		WHERE f.fokeingredientId IN (
+		SELECT c.fokeingredientId 
+		FROM cart c 
+		JOIN payment p ON c.cartId = p.cartId 
+		WHERE p.memberId = #{memberId}
+		) ORDER BY p.paymentday DESC;
+	  ]]>
+	</select>
+	<!-- 메뉴 리스트에서 detail에서 결제한 리스트 목록 -->
+		<select id="getdetail1" resultType="hashMap" parameterType="com.fokefoke.dto.MemberDTO">
+	  <![CDATA[
+		SELECT p.cartId, p.fokeingredientId,p.paymentAddress, p.paymentPickup, f.productName,p.paymentDay FROM fokeingredient f 
+		JOIN payment p ON f.fokeingredientId = p.fokeingredientId WHERE  p.memberId = #{memberId}
+	  ]]>
+	</select>
+	
+		<select id="getCartcount" resultType="com.fokefoke.dto.PaymentDTO">
+		<![CDATA[
+		select a.cartId, a.memberId, a.fokeingredientId, a.storeId, a.cartCount,
+		b.productName, b.base, b.atopping, b.btopping, b.ctopping, b.dtopping, b.asource, b.bsource, 
+		b.aextratopping, b.bextratopping, b.extramain,
+		b.setbeverage, b.setside,
+		b.total, b.price, b.onePrice,
+		c.storeName, c.storeAddress
+		from cart a INNER JOIN fokeingredient b
+		on a.fokeingredientId = b.fokeingredientId
+		INNER JOIN store c 
+		on a.storeId = c.storeId
+		where a.memberId = #{memberId}
+ 		]]>
+	</select>
+	
+		<update id="updatePoint" parameterType="com.fokefoke.dto.MemberDTO">
+		<![CDATA[
+		update member set point=#{point} where memberId = #{memberId}
+		]]>
+	</update>
+	
+
+
+</mapper>

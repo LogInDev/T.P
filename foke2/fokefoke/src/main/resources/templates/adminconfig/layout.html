@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+	<th:block th:replace="adminconfig/config :: adminConfig"></th:block>
+</head>
+
+<body>
+	<div class="container-xxl position-relative bg-white d-flex p-0">
+		<th:block th:replace="adminconfig/sidebar :: adminSidebar"></th:block>
+		
+		<!-- Content Start -->
+		<div class="content">
+			<th:block th:replace="adminconfig/header :: adminHeader"></th:block>
+			
+				<!-- 공통적이지 않은 부분이 들어가는 부분 s -->
+				<th:block layout:fragment="content">
+				</th:block>
+				<!--// 공통적이지 않은 부분이 들어가는 부분 e-->
+			
+			<th:block th:replace="adminconfig/footer :: adminFooter"></th:block>     
+		</div>
+	</div>
+</body>
+
+</html>
