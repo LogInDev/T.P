@@ -33,6 +33,9 @@
 <br><br><br>
 
 ## 기획의도
+<img src='https://user-images.githubusercontent.com/127198819/252628401-f83926ef-b184-459e-82b9-a17a0bba9801.png' width="30%" height="30%">
+
+- 매장별 음식 주문 사이트
 - Fast + Poke를 합쳐 빠르고 신선한 포케 샐러드를 전한다는 의미.
 - 로고의 모양은 포케포케의 대표 메뉴인 연어 샐러드의 연어를 표현하였으며, 말풍선 모양으로 고객과 끊임 없이 소통하겠다는 포케포케의 다짐이 들어있음.
 - 고객별 취향에 따라 옵션을 커스텀 할 수 있도록 구성 
@@ -49,6 +52,9 @@
 ### 👉 상세옵션 선택 springboot로 변환
 - thymeleaf등을 활용하여 기존 FokeFoke 프로젝트를 springboot로 변환
 <br><br><br>
+
+
+
 
 
 
