@@ -1,7 +1,7 @@
 # FokeFoke(23.06.17 ~ 23.07.17)
-- [STACKS]()
-- [기획의도]()
-- [담당파트]()
+- [STACKS](https://github.com/fhazlt/T.P/edit/main/foke2/README.md#-stacks)
+- [기획의도](https://github.com/fhazlt/T.P/edit/main/foke2/README.md#%EA%B8%B0%ED%9A%8D%EC%9D%98%EB%8F%84)
+- [담당파트](https://github.com/fhazlt/T.P/edit/main/foke2/README.md#%EB%8B%B4%EB%8B%B9%ED%8C%8C%ED%8A%B8)
 
 <br><br><br>
 
