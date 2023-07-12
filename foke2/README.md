@@ -50,11 +50,11 @@
 
 ## 담당파트
 ### 👉 실시간 1:1상담
-- webflux와 mongodb를 이용한 실시간 채팅 상담 서비스
+  - `webflux`와 `mongodb`를 이용한 실시간 채팅 상담 서비스
 ### 👉 Cosine 유사도를 통해 차트, api, wordcloud를 활용한 맛집 추천
-- 검색어와 Cosine유사도를 비교하여 유사율이 높으면서 네이버 별점 및 블로그 수 등 높은 맛집 추천
+- 검색어와 `Cosine`유사도를 비교하여 유사율이 높으면서 네이버 별점 및 블로그 수 등 높은 맛집 추천
 ### 👉 Elasticsearch
-- Kibana, Logstash를 이용하여 db연동 및 csv파일 데이터를 가져와 elasticsearch 쿼리를 통해 조회 및 출력.
+- `Kibana`, `Logstash`를 이용하여 db연동 및 csv파일 데이터를 가져와 elasticsearch 쿼리를 통해 조회 및 출력.
 ### 👉 배포
 - aws, google cloud platpom 등을 사용해 배포
 ### 👉 상세옵션 선택 springboot로 변환
@@ -66,24 +66,49 @@
 <br><br><br>
 
 ## Cosine 유사도를 통해 차트, api, wordcloud를 활용한 맛집 추천
+- `muchine-learning`을 통한 추천과 차트, `wordcloud`등을 `react-router`를 통해 `SPA`(Single Page Application)을 만들고 싶었음.
 <div>
-  
-<img src='https://user-images.githubusercontent.com/127198819/252830789-a001e135-6781-4b54-a043-b53e012f2602.gif' width="30%" height="30%">
+<img src='https://user-images.githubusercontent.com/127198819/252841021-3b9465d8-66ea-4d68-9a21-a6ca92b661ec.gif'>
+<img src='https://user-images.githubusercontent.com/127198819/252830789-a001e135-6781-4b54-a043-b53e012f2602.gif' width="40.5%" height="40.5%">
 </div>
 
--  `[공공데이터포털](https://www.data.go.kr/)`에서 '소상공인시장진흥공단_상가(상권)정보' 데이터 셋을 다운받음
+-  [`공공데이터포털`](https://www.data.go.kr/)에서 '소상공인시장진흥공단_상가(상권)정보' 데이터 셋 다운
 -  [상호명, 도로명주소, 상권업종대분류명, 상권업종중분류명, 상권업종소분류명 (대중소 분류명), 표준산업분류명, 행정동명 (흑석동 상도1동만 빼서 쓸 것임), 위도, 경도] 컬럼만 사용.
--  추가적으로 네이버 지도 리뷰를 `크롤링(recommend.ipynb)`하여 리뷰 별점, 리뷰 개수, 블로그 개수 컬럼을 만듦.
-  -  `pandas`, `numpy`, `selenium`, `를 사용하여 
--  
+-  추가적으로 네이버 지도 리뷰를 `크롤링`하여 네이버 리뷰 별점, 리뷰 개수, 블로그 개수 컬럼을 만듦.
+    -  `pandas`, `numpy`, `selenium`, `BeautifulSoup`를 사용 - [`recommend.ipynb`](https://github.com/fhazlt/T.P/blob/main/foke2/recommend.ipynb)
+-  업종 유사율, 네이버 리뷰 별점, 리뷰 개수, 블로그 개수 높은순으로 출력
+    - `MinMaxScaler`를 통해서 수치를 맞춤.
+    - `sklearn`에 `CountVectorizer`를 사용하여 '업종 컬럼'을 백터화하여 `cosine_similarity`를 통해 유사도를 만듦.
+    - 업종 유사도와 리뷰 수, 별점 수에 가중치를 부여하여 정렬 후 검색어에 따른 유사율, 별점등이 높은 맛집 추천.
+    - 추천 결과물을 json형식으로 출력
+- `react`를 통하여 차트, wordcloud, youtubeAPI 구현
+    - 검색어를 `axios`를 통해 flask서버로 요청하여 추천 결과물을 응답받음
+    - 해당 결과물을 통해 '네이버 별점', '네이버 별점 리뷰 수', '블로그 글자 수 ', '유사도', 네이버 블로그 수' 차트 생성(`react-chartjs-2`라이브러리 사용)
+    - `fetch`를 통해 가게명으로 `elasticsearch`에 인덱스를 조회하여 블로그 리뷰 텍스트 조회 후 wordcloud생성(`react-wordcloud`라이브러리 사용)
+    - `YouTub Data API v3`을 이용하여 가게명에 따른 youtube영상 조회 및 재생
 
 <br><br><br>
 
 ## Elasticsearch
+- `Logstash`, `Kibana`를 이용하여 db 연동 및 csv파일 인덱스 생성
+    - `Logstash`를 통해 mysqlDB와 연동 - [`logstash.conf`](https://github.com/fhazlt/T.P/blob/main/foke2/logstash2.conf)
+    - `Kibana`를 통해 csv파일 인덱스 생성
+- REST API를 사용하여 엘라스틱서치와 정보 교환.
+<img src='https://user-images.githubusercontent.com/127198819/252847744-0669ae31-d3d5-4f21-a320-75b081e5de4f.png' width='60%'>
+
+- `react`의 `fetch`를 통하여 elastic 서버와 `POST`로 정보 교환
+- elastic query를 사용하여 검색 출력 개수, 검색 필드 설정
+<img src='https://user-images.githubusercontent.com/127198819/252847843-965ce5aa-8669-467f-8a8f-bd70345fb383.png' width='60%'>
+
+- `javascript`의 `ajax`를 사용하여 elastic 서버와 `POST`로 정보 교환
+- elastic query를 사용하여 검색 출력 개수, 검색 필드, 출력 우선순위 설정
+    - 위도에 우선순위를 두어 현재 고객의 위치와 가까운 매장부터 검색 결과 출력
+    - `*`연산자를 통해 검색어가 들어가는 모든 매장, 지역 출력되도록 설정
 
 <br><br><br>
 
 ## 배포
+
 
 <br><br><br>
 
