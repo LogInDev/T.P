@@ -40,6 +40,7 @@
 <img src="https://img.shields.io/badge/visualstudiocode-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white">
 <img src="https://img.shields.io/badge/elasticstack-005571?style=for-the-badge&logo=elasticstack&logoColor=white">
 <img src="https://img.shields.io/badge/elasticsearch-005571?style=for-the-badge&logo=asticsearch&logoColor=white">
+<img src="https://img.shields.io/badge/mobaxterm-000000?style=for-the-badge&logo=mobx&logoColor=white">
 </div>
 
 <br><br><br>
@@ -68,6 +69,7 @@
 <br><br><br>
 
 ## 실시간 1:1상담
+- 
 
 <br><br><br>
 
@@ -120,7 +122,6 @@
    - flask 포트와 elastic 포트를 허용하여 프로젝트 구동
 - `google cloud platform` vm인스턴스를 통해 `elastic`, `kibana` 구동
 - `google cloud platform` vm인스턴스를 통해 `springframework`를 `jar`파일도 build하여 구동시킴(기본 springframework가 `netty`서버여서 jar파일에 netty구성요소가 이미 포함되어 있음)
-- 
 
 <br><br><br>
 
