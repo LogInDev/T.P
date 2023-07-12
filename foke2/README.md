@@ -3,39 +3,45 @@
   - [STACKS](#-stacks)
   - [기획의도](#%EA%B8%B0%ED%9A%8D%EC%9D%98%EB%8F%84)
   - [담당파트](#%EB%8B%B4%EB%8B%B9%ED%8C%8C%ED%8A%B8)
-  - [실시간 1:1상담]()
-  - [Cosine 유사도를 통해 차트, api, wordcloud를 활용한 맛집 추천]()
-  - [Elasticsearch]()
-  - [배포]()
-  - [상세옵션 선택 springboot로 변환]()
+  - [실시간 1:1상담](#%EC%8B%A4%EC%8B%9C%EA%B0%84-11%EC%83%81%EB%8B%B4)
+  - [Cosine 유사도를 통해 차트, api, wordcloud를 활용한 맛집 추천](#cosine-%EC%9C%A0%EC%82%AC%EB%8F%84%EB%A5%BC-%ED%86%B5%ED%95%B4-%EC%B0%A8%ED%8A%B8-api-wordcloud%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%EB%A7%9B%EC%A7%91-%EC%B6%94%EC%B2%9C)
+  - [Elasticsearch](#elasticsearch)
+  - [배포](#%EB%B0%B0%ED%8F%AC)
+  - [상세옵션 선택 springboot로 변환](#%EC%83%81%EC%84%B8%EC%98%B5%EC%85%98-%EC%84%A0%ED%83%9D-springboot%EB%A1%9C-%EB%B3%80%ED%99%98)
 <br><br><br>
 
 ## 📚 STACKS
 <div>
-  <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white"> 
-  <img src="https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white"> 
-  <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> 
-  <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> 
-  <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> 
-  <img src="https://img.shields.io/badge/jquery-0769AD?style=for-the-badge&logo=jquery&logoColor=white">
-  <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">  
-  <img src="https://img.shields.io/badge/mongoDB-47A248?style=for-the-badge&logo=MongoDB&logoColor=white">
-  <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"> 
-  <img src="https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white">
-  <img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"> 
-  <img src="https://img.shields.io/badge/flask-000000?style=for-the-badge&logo=flask&logoColor=white">
-  <img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white">
-  <img src="https://img.shields.io/badge/linux-FCC624?style=for-the-badge&logo=linux&logoColor=black"> 
-  <img src="https://img.shields.io/badge/amazonec2-FF9900?style=for-the-badge&logo=amazonec2&logoColor=white"> 
-  <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
-  <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
-  <img src="https://img.shields.io/badge/gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white">
-  <img src="https://img.shields.io/badge/vite-646CFF?style=for-the-badge&logo=vite&logoColor=white">
-  <img src="https://img.shields.io/badge/lombok-000000?style=for-the-badge&logo=flask&logoColor=white">
-  <img src="https://img.shields.io/badge/visualstudiocode-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white">
-  <img src="https://img.shields.io/badge/elasticstack-005571?style=for-the-badge&logo=elasticstack&logoColor=white">
-  <img src="https://img.shields.io/badge/elasticsearch-005571?style=for-the-badge&logo=elasticsearch&logoColor=white">
+<h3>Frontend</h3>
+<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
+<img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white">
+<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
+<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
+<img src="https://img.shields.io/badge/jquery-0769AD?style=for-the-badge&logo=jquery&logoColor=white">
+<img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white">
+<img src="https://img.shields.io/badge/vite-646CFF?style=for-the-badge&logo=vite&logoColor=white">
+<h3>Backend</h3>
+<img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white">
+<img src="https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white">
+<img src="https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white">
+<img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">
+<img src="https://img.shields.io/badge/flask-000000?style=for-the-badge&logo=flask&logoColor=white">
+<img src="https://img.shields.io/badge/lombok-000000?style=for-the-badge&logo=flask&logoColor=white">
+<h3>Database</h3>
+<img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
+<img src="https://img.shields.io/badge/mongoDB-47A248?style=for-the-badge&logo=MongoDB&logoColor=white">
+<h3>Tools & Services</h3>
+<img src="https://img.shields.io/badge/linux-FCC624?style=for-the-badge&logo=linux&logoColor=black">
+<img src="https://img.shields.io/badge/amazonec2-FF9900?style=for-the-badge&logo=amazc2&logoColor=white">
+<img src="https://img.shields.io/badge/nginx-009639?style=for-the-badge&logo=nginx&logoColor=white">
+<img src="https://.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
+<img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logogit&logoColor=white">
+<img src="https://img.shields.io/badge/gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white">
+<img src="https://img.shields.io/badge/visualstudiocode-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white">
+<img src="https://img.shields.io/badge/elasticstack-005571?style=for-the-badge&logo=elasticstack&logoColor=white">
+<img src="https://img.shields.io/badge/elasticsearch-005571?style=for-the-badge&logo=asticsearch&logoColor=white">
 </div>
+
 <br><br><br>
 
 ## 기획의도
@@ -52,13 +58,13 @@
 ### 👉 실시간 1:1상담
   - `webflux`와 `mongodb`를 이용한 실시간 채팅 상담 서비스
 ### 👉 Cosine 유사도를 통해 차트, api, wordcloud를 활용한 맛집 추천
-- 검색어와 `Cosine`유사도를 비교하여 유사율이 높으면서 네이버 별점 및 블로그 수 등 높은 맛집 추천
+- 백터 간 거리에 기반한 `Cosine`유사도를 비교하여 검색어와 유사율이 높으면서 네이버 별점 및 블로그 수 등 높은 맛집 추천
 ### 👉 Elasticsearch
 - `Kibana`, `Logstash`를 이용하여 db연동 및 csv파일 데이터를 가져와 elasticsearch 쿼리를 통해 조회 및 출력.
 ### 👉 배포
-- aws, google cloud platpom 등을 사용해 배포
-### 👉 상세옵션 선택 springboot로 변환
-- thymeleaf등을 활용하여 기존 FokeFoke 프로젝트를 springboot로 변환
+- `aws`, `google cloud platpom` 등을 사용해 배포
+### 👉 상세옵션 선택 `springboot`로 변환
+- `thymeleaf`등을 활용하여 기존 FokeFoke 프로젝트를 `springboot`로 변환
 <br><br><br>
 
 ## 실시간 1:1상담
@@ -93,7 +99,7 @@
 - `Logstash`, `Kibana`를 이용하여 db 연동 및 csv파일 인덱스 생성
     - `Logstash`를 통해 mysqlDB와 연동 - [`logstash.conf`](https://github.com/fhazlt/T.P/blob/main/foke2/logstash2.conf)
     - `Kibana`를 통해 csv파일 인덱스 생성
-- REST API를 사용하여 엘라스틱서치와 정보 교환.
+- `REST API`를 사용하여 엘라스틱서치와 정보 교환.
 <img src='https://user-images.githubusercontent.com/127198819/252847744-0669ae31-d3d5-4f21-a320-75b081e5de4f.png' width='60%'>
 
 - `react`의 `fetch`를 통하여 elastic 서버와 `POST`로 정보 교환
@@ -108,7 +114,8 @@
 <br><br><br>
 
 ## 배포
-
+- `flask`, `nginx`, `elastic`, `kibana`, `netty`, `mongodb` 배포
+- 
 
 <br><br><br>
 
