@@ -63,18 +63,18 @@ document.getElementById('pointAmt').value = amount;
 }
 </script>
 
-
+<!--자바스크립트로 해당 결제금액*0.05 포인트 적립-->
 <script>
 function calculateTotal() {
-    var prices = document.getElementsByName("price"); // 가격 정보를 담은 input 태그들의 name 속성 값이 "price"인 요소들을 가져옵니다.
-    var quantities = document.getElementsByName("quantity"); // 수량 정보를 담은 input 태그들의 name 속성 값이 "quantity"인 요소들을 가져옵니다.
+    var prices = document.getElementsByName("price"); 
+    var quantities = document.getElementsByName("quantity"); 
     var total = 0; // 총 주문금액을 담을 변수를 초기화합니다.
     for (var i = 0; i < prices.length; i++) {
-        var price = parseInt(prices[i].value); // 가격 정보를 가져와 정수형으로 변환합니다.
-        var quantity = parseInt(quantities[i].value); // 수량 정보를 가져와 정수형으로 변환합니다.
-        total += price * quantity; // 총 주문금액을 계산합니다.
+        var price = parseInt(prices[i].value); 
+        var quantity = parseInt(quantities[i].value); 
+        total += price * quantity; 
     }
-    document.getElementById("totalPrice").innerText = total + "원"; // 총 주문금액을 화면에 출력합니다.
+    document.getElementById("totalPrice").innerText = total + "원"; 
 }
 </script>
 
@@ -139,6 +139,7 @@ function calculateTotal() {
 								</p>
 								<input type="text" name="phone" th:value="${member.phone}"
 									class="checkout__input__add">
+								<span th:if="${member.phone == null}">핸드폰 번호를 입력해 주세요</span>
 							</div>
 							<p>&nbsp;</p>
 							<h6 class="checkout__title">주문내역</h6>

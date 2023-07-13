@@ -55,9 +55,9 @@ public class MemberDTO {
     
     // 예비 변수
     @Column
-    private Integer money;
+    private Integer money = 0;
     
     @Column
-    private Integer point;
+    private Integer point = 1000;
     
 }

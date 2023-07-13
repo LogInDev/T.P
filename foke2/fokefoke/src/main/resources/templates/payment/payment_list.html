@@ -113,7 +113,7 @@ function toggleBankInfo() {
 </script>
 
 <!-- 구매결제 버튼 창 누르면 실행 -->								
-<!--<script>
+<script>
 function validateForm() {
   var checkBox = document.getElementById("paymentAgree");
   if (!checkBox.checked){
@@ -125,8 +125,8 @@ function validateForm() {
 	  }
    }
 }
-</script>-->
-<script>
+</script>
+<!--<script>
 function validateForm() {
   var checkBox = document.getElementById("paymentAgree");
   if (!checkBox.checked){
@@ -145,9 +145,9 @@ function validateAndRequestPay() {
         requestPay();
     }
 }
-</script>
+</script>-->
 <!--카카오페이 창-->
-<script>
+<!--<script>
   var IMP = window.IMP;
   IMP.init("imp01240830");
 
@@ -155,7 +155,7 @@ function validateAndRequestPay() {
     IMP.request_pay({
       pg: "kakaopay",
       pay_method: "card",
-      merchant_uid: "57008833-33012",
+      merchant_uid: "57008833-33014",
       name: "포케 샐러드",
       amount: 100,
       buyer_email: "fokefoke@fokeworld.co.kr",
@@ -172,8 +172,8 @@ function validateAndRequestPay() {
       }
     });
   }
-</script>
-
+</script>-->
+<!--포인트 사용-->
 <script>
 function setPointAmount(amount){
     document.getElementById('pointAmt').value = amount;
@@ -210,9 +210,6 @@ function calculateTotal() {
 			</div>
 		</div>
 	</section>
-	<!-- Breadcrumb Section End -->
-
-	<!-- Checkout Section Begin -->
 	<section class="checkout spad">
 		<div class="container">
 			<div class="checkout__form">
@@ -254,6 +251,7 @@ function calculateTotal() {
 								</p>
 								<input type="text" name="phone" th:value="${member.phone}"
 									class="checkout__input__add">
+								<span th:if="${member.phone == null}">핸드폰 번호를 입력해 주세요</span>	
 							</div>
 							<div class="checkout__input">
 								<p>주문시 요청사항</p>
@@ -271,7 +269,7 @@ function calculateTotal() {
 							<div class="container">
 							<h6 class="checkout__title">할인 방법 선택</h6>
 							<div class="row">
-						<div class="col-lg-8 col-md-6">
+							<div class="col-lg-8 col-md-6">
 							<div class="checkout__input">
 								<span>포인트 사용</span>
 								<input id="pointAmt" name="point" type="text" value="">
@@ -515,9 +513,9 @@ function hideForms(){
 								</ul>
 								<br>
 								<div style="text-align: center;" class="btn_area">
-									<!--<button onclick="validateForm();" type="button"
-											style="background-color: #469543; color: #fff; border-radius: 30px; padding: 10px 20px; border: none; margin: 0 auto;">결제하기</button>-->
-									<button onclick="validateAndRequestPay();" type="button" style="background-color: #469543; color: #fff; border-radius: 30px; padding: 10px 20px; border: none; margin: 0 auto;">결제하기</button>
+									<button onclick="validateForm();" type="button"
+											style="background-color: #469543; color: #fff; border-radius: 30px; padding: 10px 20px; border: none; margin: 0 auto;">결제하기</button>
+									<!--<button onclick="validateAndRequestPay();" type="button" style="background-color: #469543; color: #fff; border-radius: 30px; padding: 10px 20px; border: none; margin: 0 auto;">결제하기</button>-->
 									
 								</div>
 							</div>

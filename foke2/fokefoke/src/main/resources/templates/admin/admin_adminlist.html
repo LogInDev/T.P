@@ -52,7 +52,7 @@
 				            <span th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
 				                  th:if="${page >= paging.number-5 and page <= paging.number+5}"
 				                  th:classappend="${page == paging.number} ? 'active'" class="paginate_button active">
-				                <a th:text="${page}" class="paginate_button"
+				                <a th:text="${page + 1}" class="paginate_button"
 				                   th:href="@{|?page=${page}|}"></a>
 				            </span>
 				            <span class="paginate_button next" th:classappend="${!paging.hasNext} ? 'disabled'">

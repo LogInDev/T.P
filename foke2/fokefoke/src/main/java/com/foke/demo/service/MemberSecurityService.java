@@ -26,14 +26,16 @@ public class MemberSecurityService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String memberId) throws UsernameNotFoundException {
-    	Optional<MemberDTO> _siteUser = this.memberRepository.findBymemberId(memberId);
+        Optional<MemberDTO> _siteUser = this.memberRepository.findBymemberId(memberId);
         if (_siteUser.isEmpty()) {
             throw new UsernameNotFoundException("사용자를 찾을수 없습니다.");
         }
         MemberDTO siteUser = _siteUser.get();
         List<GrantedAuthority> authorities = new ArrayList<>();
-        if ("admin@0".equals(memberId)) {
+        if ("admin@".equals(memberId)) {
             authorities.add(new SimpleGrantedAuthority(MemberRole.ADMIN.getValue()));
+        } else if (siteUser.getAdminCk() == 1) {
+            authorities.add(new SimpleGrantedAuthority(MemberRole.MANAGER.getValue()));
         } else {
             authorities.add(new SimpleGrantedAuthority(MemberRole.USER.getValue()));
         }

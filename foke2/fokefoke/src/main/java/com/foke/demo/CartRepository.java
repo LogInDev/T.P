@@ -31,4 +31,17 @@ public interface CartRepository extends JpaRepository<CartDTO, Integer> {
     @Query("UPDATE CartDTO c SET c.cartCount = :cartCount WHERE c.cartId = :cartId")
     int updateCartCount(@Param("cartCount") int cartCount, @Param("cartId") int cartId);
 	
+	
+	//(장바구니 상품차트)
+	@Query(value = "SELECT c.productName, COUNT(c.productName) AS count FROM CartDTO c GROUP BY c.productName ORDER BY count DESC")
+	List<Object[]> findMostAddedProducts();
+	
+	//(장바구니 지역차트)
+	@Query(value = "SELECT c.storeName, COUNT(c.storeName) AS count FROM CartDTO c GROUP BY c.storeName ORDER BY count DESC")
+	List<Object[]> findMostAddedStore();
+	
+	//결제페이지로 보낼 곳
+	@Query("SELECT c FROM CartDTO c WHERE c.cartId = :cartId")
+	CartDTO findCartByCartId(@Param("cartId") int cartId);
+
 }

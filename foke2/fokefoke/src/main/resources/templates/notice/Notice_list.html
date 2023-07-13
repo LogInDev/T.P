@@ -21,15 +21,16 @@
 	<section class="blog spad"> 
 	    <div class="container"> 
 	        <div class="row"> 
-	            <div class="col-lg-4 col-md-6 col-sm-6" th:each="notice, loop : ${paging}"> 
-	                <div class="blog__item">
-	                    <img th:src="@{'/notice/display/'+${notice.noticeImage}}" alt="Image" />
-	                    <div class="blog__item__text"> 
-	                        <a th:href="@{|/notice/detail/${notice.noticeId}|}" th:text="${notice.noticeTitle}"></a> 
-	                        <div th:text="${notice.noticeDate}"></div> 
-	                    </div> 
-	                </div>
-	            </div> 
+				<div class="col-lg-4 col-md-6 col-sm-6" th:each="notice, loop : ${paging}">
+                    <div class="blog__item">
+                        <div class="blog__item__pic set-bg" th:attr="style='background-image: url(' + @{'/notice/display/'+${notice.noticeImage}} + ');'"></div>
+                        <div class="blog__item__text">
+                            <span th:text="${#temporals.format(notice.noticeDate, 'yyyy-MM-dd HH:mm')}"><img th:src="@{/img/icon/calendar.png}" alt=""></span>
+                            <h5 th:href="@{|/notice/detail/${notice.noticeId}|}" th:text="${notice.noticeTitle}"></h5>
+                            <a th:href="@{|/notice/detail/${notice.noticeId}|}">자세히 보기</a>
+                        </div>
+                    </div>
+                </div>
 	        </div>
 	    </div>
 	</section>
@@ -47,7 +48,7 @@
                 <span th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
                    th:if="${page >= paging.number-5 and page <= paging.number+5}"
                    th:classappend="${page == paging.number} ? 'active'" class="paginate_button active">
-                   <a th:text="${page}" class="paginate_button"
+                   <a th:text="${page + 1}" class="paginate_button"
                       th:href="@{|?page=${page}|}"></a>
                 </span>
                 <span class="paginate_button next" th:classappend="${!paging.hasNext} ? 'disabled'">
@@ -59,12 +60,6 @@
           </div>
        </div>
        <!-- 페이징처리 끝 -->
-    
-    <!--게시글 등록-->
-  	<a th:href="@{/notice/enroll}" class="btn btn-primary">질문 등록하기</a>
-  	
-  
-	
         
 </body>
 </th:block>	

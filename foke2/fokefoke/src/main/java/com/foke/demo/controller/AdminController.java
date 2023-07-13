@@ -1,28 +1,42 @@
 package com.foke.demo.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.security.Principal;
+import java.util.List;
+import java.util.UUID;
 
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.foke.demo.config.MemberRole;
 import com.foke.demo.dto.MemberDTO;
 import com.foke.demo.dto.NoticeDTO;
 import com.foke.demo.service.AdminService;
+import com.foke.demo.service.CartService;
+import com.foke.demo.service.NoticeService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import net.coobird.thumbnailator.Thumbnails;
 
 @RequiredArgsConstructor
 @Controller
@@ -30,6 +44,8 @@ import lombok.RequiredArgsConstructor;
 public class AdminController {
 	
 	private final AdminService adminService;
+	private final CartService cartService;
+	private final NoticeService noticeService;
 	
 	// 관리자 메인 페이지 이동
 	@GetMapping("/main")
@@ -61,7 +77,11 @@ public class AdminController {
 	    } else {
 	        model.addAttribute("adminCk", 0);
 	    }
-
+	    
+	    //Cart차트
+		List<Object[]> mostAddedProducts = this.cartService.getMostAddedProducts();
+		model.addAttribute("mostAddedProducts",mostAddedProducts);
+	    
 	    return "admin/admin_main";
 	}
 
@@ -79,6 +99,7 @@ public class AdminController {
         return "admin/admin_adminlist.html";
     }
 	
+    
     //관리자 진급
 	@PostMapping("/enroll")
 	public String adminEnroll(@Valid MemberDTO memberDTO, BindingResult bindingResult,
@@ -93,6 +114,7 @@ public class AdminController {
 	        return "redirect:/admin/list";
 	}
 	
+	
 	//회원목록 페이지
 	@GetMapping("/list")
 	public String list(HttpServletRequest request, Model model, @RequestParam(value="page", defaultValue="0") int page) {
@@ -103,13 +125,24 @@ public class AdminController {
 	    model.addAttribute("currentUrl", currentUrl);
 		return "admin/admin_list";
 	}
+	
+	
 	//회원 정보 페이지
 	@GetMapping("/detail/{memberId}")
-	public String detail(Model model, @PathVariable("memberId") String id) {
-		MemberDTO memberdto = this.adminService.getmemberdto(id);
-		model.addAttribute("memberdto", memberdto);
-		return "admin/admin_detail";
+	public String detail(Model model, @PathVariable("memberId") String memberId) {
+	    MemberDTO memberdto = this.adminService.getmemberdto(memberId);
+	    String[] memberIdParts = splitMemberId(memberdto.getMemberId());
+	    model.addAttribute("username", memberIdParts[0]);
+	    model.addAttribute("domain", memberIdParts[1]);
+	    model.addAttribute("memberdto", memberdto);
+	    return "admin/admin_detail";
 	}
+
+	    public String[] splitMemberId(String memberId) {
+	        return memberId.split("@");
+	    
+	}
+	
 	
 	//관리자멤버 진급 수정
 	@PostMapping("/addmodify/{id}")
@@ -121,6 +154,7 @@ public class AdminController {
       return "redirect:/admin/adminlist";
     }
 	
+	
 	//관리자멤버 추방 수정
 	@PostMapping("/modify/{id}")
 	public String adminModify(@PathVariable("id") String id, MemberDTO member) {
@@ -131,7 +165,6 @@ public class AdminController {
 		return "redirect:/admin/adminlist";
 	}
 
-
 		
 	//회원 삭제
     @PostMapping("/delete/{id}")
@@ -140,7 +173,8 @@ public class AdminController {
         return "redirect:/admin/list"; 
     }
     
-  //이벤트리스트
+    
+    //이벤트리스트
     @GetMapping("/noticelist")
     public String noticelist(HttpServletRequest request, Model model, @RequestParam(value="page", defaultValue="0") int page) {
         Page<NoticeDTO> paging = this.adminService.getnoticeList(page); // 페이지 번호를 0부터 시작하도록 수정
@@ -152,4 +186,220 @@ public class AdminController {
     }
     
     
+    //이벤트 글쓰기 페이지
+  	@GetMapping("/notice_enroll")
+  	public String noticeEnroll(Model model) {
+  	    model.addAttribute("noticeDTO", new NoticeDTO());
+  	    return "admin/admin_noticeenroll";
+  	}
+    
+  	
+	//글등록,이미지 등록
+	@PostMapping("/notice_enroll")
+	public String noticeEnroll(@Valid NoticeDTO noticedto, BindingResult bindingResult,
+	                           @RequestParam(value = "fileItem", required = false) MultipartFile imageFile,
+	                           @RequestParam(value = "detailFile", required = false) MultipartFile detailImageFile) throws IOException {
+	    if (bindingResult.hasErrors()) {
+	        return "admin/notice_enroll";
+	    }
+
+	    String fileName = "";
+	    String detailfileName = "";
+	    //사이즈 설정
+	    int imageWidth = 400; // 원하는 가로 길이를 설정하세요.
+	    int imageHeight = 300; // 원하는 세로 길이를 설정하세요.
+	    
+	    // 썸네일 이미지 파일 저장
+	    String uploadDirectory = "/home/ubuntu/fokefoke/static/img/blog/";
+	    if (imageFile != null && !imageFile.isEmpty()) {
+	        File uploadDir = new File(uploadDirectory);
+	        if (!uploadDir.exists()) uploadDir.mkdirs();
+
+	        fileName = imageFile.getOriginalFilename();
+
+	        // uuid 적용 파일 이름 
+	        String uuid = UUID.randomUUID().toString();
+	        fileName = uuid + "_" + fileName;
+	        File imageFileToSave = new File(uploadDirectory + fileName);
+	        imageFile.transferTo(imageFileToSave);
+	    }
+	    
+	    // 게시판 이미지 파일 저장
+	    String boardDirectory = "/home/ubuntu/fokefoke/static/img/board/";
+	    if (detailImageFile != null && !detailImageFile.isEmpty()) {
+	        File boardDir = new File(boardDirectory);
+	        if (!boardDir.exists()) boardDir.mkdirs();
+	
+	        detailfileName = detailImageFile.getOriginalFilename();
+	
+	        // uuid 적용 파일 이름 
+	        String uuid = UUID.randomUUID().toString();
+	        detailfileName = uuid + "_" + detailfileName;
+	        File imageFileToSave = new File(boardDirectory + detailfileName);
+	        detailImageFile.transferTo(imageFileToSave);
+	        
+	        if (!detailfileName.isEmpty()) {
+	            noticedto.setDetailImage(detailfileName);
+	        }
+	    }
+
+	    // 이미지 리사이징
+	    if (!fileName.isEmpty()) {
+	        String resizedFileName = fileName.replace(".", "_resized.");
+	        File resizedFile = new File(uploadDirectory + resizedFileName);
+	        Thumbnails.of(uploadDirectory + fileName)
+	                .size(imageWidth, imageHeight) 
+	                .keepAspectRatio(false) // 원본 종횡비 미유지
+	                .toFile(resizedFile);
+	
+	        // 파일 URL을 DTO 객체에 설정
+	        noticedto.setNoticeImage(resizedFileName);
+	    }
+
+	    this.noticeService.enroll(noticedto.getNoticeTitle(), noticedto.getNoticeContent(), noticedto.getNoticeImage(),noticedto.getDetailImage());
+	    return "redirect:/admin/noticelist";
+	}
+  	
+	
+	// 섬네일 데이터 전송하기
+	@GetMapping("/display/{noticeImage}")
+	@ResponseBody
+	public ResponseEntity<byte[]> getFile(@PathVariable("noticeImage") String fileName) { // 특정 파일의 이름을 받아서 이미지 데이터를 전송하는 코드
+	    System.out.println("fileName : " + fileName); // fileName은 파일의 경로
+
+	    File file = new File("/home/ubuntu/fokefoke/static/img/blog/" + fileName);
+
+	    System.out.println("file : " + file);
+
+	    ResponseEntity<byte[]> result = null;
+
+	    try {
+	        HttpHeaders header = new HttpHeaders();
+
+	        header.add("Content-Type", Files.probeContentType(file.toPath()));
+	        result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), header, HttpStatus.OK);
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+
+	    return result; 
+	}
+	
+	// 게시판 데이터 전송하기
+	@GetMapping("/display2/{detailImage}")
+	@ResponseBody
+	public ResponseEntity<byte[]> getFileEntity(@PathVariable("detailImage") String detailfileName) { // 특정 파일의 이름을 받아서 이미지 데이터를 전송하는 코드
+	    System.out.println("detailfileName : " + detailfileName); // fileName은 파일의 경로
+
+	    File file = new File("/home/ubuntu/fokefoke/static/img/board/" + detailfileName);
+
+	    System.out.println("file : " + file);
+
+	    ResponseEntity<byte[]> result = null;
+
+	    try {
+	        HttpHeaders header = new HttpHeaders();
+
+	        header.add("Content-Type", Files.probeContentType(file.toPath()));
+	        result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), header, HttpStatus.OK);
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+
+	    return result; 
+	}
+	
+	
+    //게시글 삭제
+    @PostMapping("/notice_delete/{id}")
+    public String noticeDelete(@PathVariable("id") Integer id) {
+        noticeService.delete(id);
+        return "redirect:/admin/noticelist";
+    }
+    
+    
+	//게시글수정
+    @GetMapping("/notice_modify/{id}")
+    public String Modify(Model model, @PathVariable("id") Integer id) {
+    	model.addAttribute("noticedto", noticeService.getnoticedto(id));
+    	
+        return "admin/admin_noticemodify";
+    }
+    
+    
+    //게시글수정실행
+    @PostMapping("/notice_modify/{id}")
+    public String noticeModify(@PathVariable("id") Integer id, NoticeDTO notice,
+    		@RequestParam(value = "fileItem", required = false) MultipartFile imageFile,
+            @RequestParam(value = "detailFile", required = false) MultipartFile detailImageFile) throws IOException {
+    	System.out.println("imageFile-----------" + imageFile);
+    	System.out.println("detailImageFile-----------" + detailImageFile);
+    	String fileName = "";
+	    String detailfileName = "";
+	    NoticeDTO originalNotice = noticeService.getnoticedto(id);
+	    //사이즈 설정
+	    int imageWidth = 400; // 원하는 가로 길이를 설정하세요.
+	    int imageHeight = 300; // 원하는 세로 길이를 설정하세요.
+	    
+	    // 썸네일 이미지 파일 저장
+	    String uploadDirectory = "/home/ubuntu/fokefoke/static/img/blog/";
+	    if (imageFile != null && !imageFile.isEmpty()) {
+	        File uploadDir = new File(uploadDirectory);
+	        if (!uploadDir.exists()) uploadDir.mkdirs();
+
+	        fileName = imageFile.getOriginalFilename();
+
+	        // uuid 적용 파일 이름 
+	        String uuid = UUID.randomUUID().toString();
+	        fileName = uuid + "_" + fileName;
+	        File imageFileToSave = new File(uploadDirectory + fileName);
+	        imageFile.transferTo(imageFileToSave);
+	        
+	    }
+	    // 게시판 이미지 파일 저장
+	    String boardDirectory = "/home/ubuntu/fokefoke/static/img/board/";
+	    if (detailImageFile != null && !detailImageFile.isEmpty()) {
+	        File boardDir = new File(boardDirectory);
+	        if (!boardDir.exists()) boardDir.mkdirs();
+
+	        detailfileName = detailImageFile.getOriginalFilename();
+
+	        // uuid 적용 파일 이름 
+	        String uuid = UUID.randomUUID().toString();
+	        detailfileName = uuid + "_" + detailfileName;
+	        File imageFileToSave = new File(boardDirectory + detailfileName);
+	        detailImageFile.transferTo(imageFileToSave);
+	        
+	        if (!detailfileName.isEmpty()) {
+	            notice.setDetailImage(detailfileName);
+	        }
+	    } else {
+	        notice.setDetailImage(originalNotice.getDetailImage());
+	    }
+
+	    // 이미지 리사이징
+	    if (!fileName.isEmpty()) {
+	        String resizedFileName = fileName.replace(".", "_resized.");
+	        File resizedFile = new File(uploadDirectory + resizedFileName);
+	        Thumbnails.of(uploadDirectory + fileName)
+	                .size(imageWidth, imageHeight) 
+	                .keepAspectRatio(false) // 원본 종횡비 미유지
+	                .toFile(resizedFile);
+
+	        // 파일 URL을 DTO 객체에 설정
+	        notice.setNoticeImage(resizedFileName);
+	    }  else {
+	        notice.setNoticeImage(originalNotice.getNoticeImage());
+	    }
+    	
+    NoticeDTO noticeTemp = noticeService.getnoticedto(id);
+            
+      noticeTemp.setNoticeTitle(notice.getNoticeTitle());
+      noticeTemp.setNoticeContent(notice.getNoticeContent());
+      noticeTemp.setNoticeImage(notice.getNoticeImage());
+      noticeTemp.setDetailImage(notice.getDetailImage());
+      noticeService.modify(noticeTemp, notice.getNoticeTitle(), notice.getNoticeContent(), notice.getNoticeImage(),notice.getDetailImage());
+      return "redirect:/admin/notice_modify/" + noticeTemp.getNoticeId();
+    }
+
 }

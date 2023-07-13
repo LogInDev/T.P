@@ -167,7 +167,7 @@
 				msg: msgInput.value,
 			};
 			//fetch통신시 시간이 걸려서 null을 먼저 출력하고 통신함. 해서 await로 기다려줘야함. 또한 await로 인해 다른 모든 함수도 실행되지 않아서 비동기 함수로 수정해줘야함.
-			await fetch("http://34.64.159.23:8000/chat", {
+			await fetch("http://34.64.159.23:8000/chatAdmin", {
 				method: "post", //http post 메서드 (새로운 데이터를 write할때 사용)
 				body: JSON.stringify(chat), //JS -> JSON으로 변경
 				headers: {

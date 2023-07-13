@@ -181,8 +181,8 @@
 								<th class="green" scope="col">매장주소</th>
 								<th class="green" scope="col">연락처</th>
 								<th></th>
-								<th class="green" scope="col" th:if="${memberId eq 'admin@0'}">수정</th>
-								<th class="green" scope="col" th:if="${memberId eq 'admin@0'}">삭제</th>
+								<th class="green" scope="col" sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_MANAGER')">수정</th>
+								<th class="green" scope="col" sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_MANAGER')">삭제</th>
 							</tr>
 						</thead>
 						<tbody th:if="${paging.isEmpty()}">
@@ -207,13 +207,13 @@
 									</form>
 								</td>
 								<!--<td th:if="${memberId eq 'admin@0'}">-->
-									<td>
+									<td sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_MANAGER')">
 									<input type="button"
 										th:onclick="|location.href='/store/modify?storeId=${store.storeId}'|"
 										style="background-color: #469543; color: #fff; border-radius: 30px; padding: 5px 7px; border: none; margin: 0 auto; font-size: 12px;"
 										value="수정">
 								</td>
-								<td th:if="${memberId eq 'admin@0'}">
+								<td sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_MANAGER')">
 									<form action="/store/deleteProcess#storeList2" method="get">
 										<input type="hidden" name="storeId" th:value="${store.storeId}">
 										<input type="submit" value="삭제" onclick="return confirm('정말로 삭제하시겠습니까?');"

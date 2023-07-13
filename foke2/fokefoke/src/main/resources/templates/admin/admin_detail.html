@@ -4,37 +4,46 @@
 <body>
 	 <div class="container-fluid pt-4 px-4">
             <div class="row g-4">
-	 			<div class="col-sm-12 col-xl-6">
+	 			<div class="col-sm-12 col-xl-8">
                         <div class="bg-light rounded h-100 p-4">
                             <h6 class="mb-4">회원정보</h6>
-                                <div class="row mb-3">
-                                    <label for="inputEmail3" class="col-sm-2 col-form-label">회원ID</label>
-                                    <div class="col-sm-10" th:text="${memberdto.memberId}"></div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label for="inputPassword3" class="col-sm-2 col-form-label">이름</label>
-                                    <div class="col-sm-10" th:text="${memberdto.memberName}"></div>
-                                </div>
-                                 <div class="row mb-3">
-                                    <label for="inputPassword3" class="col-sm-2 col-form-label">생일</label>
-                                    <div class="col-sm-10" th:text="${memberdto.birth}"></div>
-                                </div>
-                                 <div class="row mb-3">
-                                    <label for="inputPassword3" class="col-sm-2 col-form-label">전화번호</label>
-                                    <div class="col-sm-10" th:text="${memberdto.phone}"></div>
-                                </div>
-                                 <div class="row mb-3">
-                                    <label for="inputPassword3" class="col-sm-2 col-form-label">돈</label>
-                                    <div class="col-sm-10" th:text="${memberdto.money}"></div>
-                                </div>
-                                 <div class="row mb-3">
-                                    <label for="inputPassword3" class="col-sm-2 col-form-label">포인트</label>
-                                    <div class="col-sm-10" th:text="${memberdto.point}"></div>
-                                </div>
-	                        </div>
-	                    </div>
-	            	</div>
-	            </div>
+                            
+                             <div class="input-group mb-3">
+                                <span class="input-group-text">회원 ID</span>
+                                <input type="text"  th:value="${username}"  disabled class="form-control" placeholder="Username" aria-label="Username"style="background-color:white">
+                                <span class="input-group-text">@</span>
+                                <input type="text" "text" th:value="${domain}" disabled class="form-control" placeholder="Server" aria-label="Server"style="background-color:white">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">고객성함</span>
+                                <input type="text" th:value="${memberdto.memberName}" disabled style="background-color:white" class="form-control" placeholder="Username" aria-label="Username"
+                                    aria-describedby="basic-addon1">
+                            </div>
+                             <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">생년월일</span>
+                                <input type="text" th:value="${memberdto.birth}" disabled style="background-color:white" class="form-control" placeholder="Username" aria-label="Username"
+                                    aria-describedby="basic-addon1">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">전화번호</span>
+                                <input type="text" th:value="${memberdto.phone}" disabled style="background-color:white" class="form-control" placeholder="Username" aria-label="Username"
+                                    aria-describedby="basic-addon1">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">회원잔고</span>
+                                <input type="text" th:value="${memberdto.money}"disabled style="background-color:white" class="form-control" placeholder="Username" aria-label="Username"
+                                    aria-describedby="basic-addon1">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">FokeFoke Point</span>
+                                <input type="text" th:value="${memberdto.point}" disabled style="background-color:white" class="form-control" placeholder="Username" aria-label="Username"
+                                    aria-describedby="basic-addon1">
+                            </div>
+                        <a href="/admin/list"> <button class="btn btn-primary">목록 </button></a>
+                        </div>
+                    </div>
+            	</div>
+            </div>
      
 	<!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

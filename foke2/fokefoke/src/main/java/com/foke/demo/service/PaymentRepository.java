@@ -20,12 +20,36 @@ public interface PaymentRepository extends JpaRepository<PaymentDTO, Integer> {
 	//멤버 정보 가져오기
 	@Query(value = "SELECT m FROM MemberDTO m WHERE m.memberId = :memberId")
 	MemberDTO findPaymentMemberByMemberId(@Param("memberId") String memberId);
-	//포인트 업데이트
-//	@Modifying
-//	@Query(value = "UPDATE member SET point = :point WHERE memberId = :memberId", nativeQuery = true)
-//	int updatePaymentMemberOneByMemeberId(@Param("point")int point,@Param("memberId") String memberId);
-//	@Modifying
-//	@Query("UPDATE MemberDTO m SET m.point = m.point + :newPoints WHERE m.memberId = :memberId")
-//	int updateMemberPoint(@Param("memberId") String memberId, @Param("newPoint") int newPoint);
+	//업데이트(장바구니)
+	 @Modifying
+	 @Query("UPDATE PaymentDTO p SET p.cartId = :cartId WHERE p.paymentId = :paymentId")
+	 int updatePaymentByPaymentId(@Param("paymentId") int paymentId, @Param("cartId") int cartId);
+	 @Query("SELECT p FROM PaymentDTO p WHERE p.paymentId = :paymentId AND p.cartId = :cartId")
+	 PaymentDTO findPaymentByPaymentIdAndCartId(@Param("paymentId") int paymentId, @Param("cartId") int cartId);
+
+	 
+	 
+	 
+	 //업데이트(스토어)
+//	 @Modifying
+//	 @Transactional
+//	 @Query("UPDATE PaymentDTO p SET p.storeId = :storeId WHERE p.paymentId = :paymentId")
+//	 int updatePaymentByPaymentIdAndStoreId(int paymentId, int storeId);
+//	 @Query("SELECT p FROM PaymentDTO p WHERE p.paymentId = :paymentId AND p.storeId = :storeId")
+//	    PaymentDTO findPaymentByPaymentIdAndStoreId(@Param("paymentId") int paymentId, @Param("storeId") int storeId);
+	 
+	 
+	 
+	 
+	 
+	 
+	 //업데이트(디테일)
+//	 @Modifying
+//	 @Transactional
+//	 @Query("UPDATE PaymentDTO p SET p.fokeingredientId = :fokeingredientId WHERE p.paymentId = :paymentId")
+//	 int updatePaymentByPaymentId2(int paymentId, int fokeingredientId);
+//	 //새로운 메서드 추가
+//	 @Query("SELECT p FROM PaymentDTO p WHERE p.paymentId = :paymentId AND p.fokeingredientId = :fokeingredientId")
+//	    PaymentDTO findPaymentByPaymentIdAndfokeingredientId(@Param("paymentId") int paymentId, @Param("fokeingredientId") int cartId);
 
 }

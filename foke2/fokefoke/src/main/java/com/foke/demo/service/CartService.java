@@ -62,5 +62,17 @@ public class CartService {
         }
     }
     
+    //차트
+    public List<Object[]> getMostAddedProducts() {
+        return cartRepository.findMostAddedProducts();
+    }
     
+    public List<Object[]> getMostAddedStore() {
+    	return cartRepository.findMostAddedStore();
+    }
+    
+    //결제로 보낼 service
+    public CartDTO findCartByCartId(int cartId) {
+        return cartRepository.findCartByCartId(cartId);
+    }
 }

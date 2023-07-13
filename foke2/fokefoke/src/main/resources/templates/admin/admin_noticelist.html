@@ -9,7 +9,7 @@
                     <div class="bg-light rounded h-100 p-4">
                         <h6 class="mb-4">이벤트 리스트</h6>
 							<!--게시글 등록-->
-  							<a th:href="@{/notice/enroll}" class="btn btn-primary">이벤트 등록하기</a>
+  							<a th:href="@{/admin/notice_enroll}" class="btn btn-primary">이벤트 등록하기</a>
                         <table class="table table-striped">
                             <thead>
 								  <tr>
@@ -24,14 +24,15 @@
 								  <tr th:each="notice : ${paging.content}">
 								    <td th:text="${notice.noticeId}"></td>
 								    <td>  <a th:href="@{|/notice/detail/${notice.noticeId}|}" th:text="${notice.noticeTitle}"></a> </td>
-								    <td th:text="${notice.noticeDate}"></td>
+								    <td th:text="${#temporals.format(notice.noticeDate, 'yyyy-MM-dd HH:mm')}"></td>
 								    <td>
-								      <form th:action="@{/notice/modify/{id}(id=${notice.noticeId})}" >
+								      <form th:action="@{/admin/notice_modify/{id}(id=${notice.noticeId})}" >
 								        <input type="submit" class="btn btn-sm btn-outline-primary" value="수정">
 								      </form>
 								    </td>
+								    
 								    <td>
-								      <form th:action="@{/notice/delete/{id}(id=${notice.noticeId})}" th:method="post">
+								      <form th:action="@{/admin/notice_delete/{id}(id=${notice.noticeId})}" th:method="post">
 								        <input type="submit" class="btn btn-sm btn-outline-primary" value="삭제">
 								      </form>
 								    </td>

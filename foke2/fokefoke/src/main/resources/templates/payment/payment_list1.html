@@ -174,42 +174,18 @@ function validateAndRequestPay() {
   }
 </script>
 
-<!-- <script>
-$(function(){
-  let price = "${detail.price}";
-  let point = price * 0.05;
-  let pointString = parseInt(point); // This formats the number with commas
-console.log(pointString);
-  $('#pointAccumulation').val(pointString);
-console.log($('#pointAccumulation').val());
-});
-</script>-->
-
-<!--<script>
-$(document).ready(function() {
-  let price = parseFloat($("#price").val());
-  let point = price * 0.05;
-  let pointString = parseInt(point);
-  console.log(pointString);
-  $('#pointAccumulation').val(pointString);
-  console.log($('#pointAccumulation').val());
-});
-</script>-->
-
-
 <!-- 포인트 사용 -->
 <script>
 function setPointAmount(amount) {
   document.getElementById('pointAmt').value = amount;
   
-  // 버튼 클릭하면 해당 포인트 텍스트 나타남
+  // 버튼 클릭하면 해당 사용 포인트 텍스트 나타남
   var newPaymentAmountElem = document.getElementById('newPaymentAmount');
   newPaymentAmountElem.textContent = amount + 'Point';
 }
 
 </script>
-
-
+<!--포인트-결제금액 뺀 나머지 결제금액 계산-->
 <script>
 function calculateTotal() {
     var prices = document.getElementsByName("price");
@@ -223,7 +199,6 @@ function calculateTotal() {
     document.getElementById("totalPrice").innerText = total + "원"; 
 }
 </script>
-
 
 <body>
 
@@ -283,6 +258,7 @@ function calculateTotal() {
 								</p>
 								<input type="text" name="phone" th:value="${member.phone}"
 									class="checkout__input__add">
+								<span th:if="${member.phone == null}">핸드폰 번호를 입력해 주세요</span>
 							</div>
 							<div class="checkout__input">
 								<p>주문시 요청사항</p>

@@ -1,13 +1,19 @@
 package com.foke.demo.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,10 +44,10 @@ public class PaymentDTO {
     private int fokeingredientId;
     
     @Column(length = 255)
-    private String paymentAddress;
+    private String storeAddress;
     
     @Column(length = 255)
-    private String paymentPickup;
+    private String storeName;
     
     @Column(nullable = false)
     private int point;
@@ -49,7 +55,24 @@ public class PaymentDTO {
     @Column(length = 20)
     private String phone;
     
-    @Column
-    private LocalDateTime paymentDay;
+    @Column(nullable = false)
+    private int price;
+    
+    @Column(length = 100)
+    private String productName;
+    
+    @Column(nullable = false)
+    private int totalPrice;
+    
+    @Column(nullable = false)
+    private int cartCount;
+    
+    @Column(name = "paymentDay")
+    private LocalDate paymentDay;
 
+    @PrePersist
+    protected void onCreate() {
+        paymentDay = LocalDate.now();
+    }
+    
 }

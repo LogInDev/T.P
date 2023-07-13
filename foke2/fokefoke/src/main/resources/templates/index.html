@@ -204,36 +204,30 @@
 			});
 
 			$(function () {
-				$
-					.get(
-						"/noticeList",
-						function (data) {
-							var noticeList = data.notice;
-							var html = '<table class="table" style="width: 100%;">';
-							for (var i = 0; i < noticeList.length && i < 3; i++) {
-								var notice = noticeList[i];
-								var noticeDate = new Date(notice.noticeDate);
-								var formattedDate = noticeDate
-									.getFullYear()
-									+ '-'
-									+ (noticeDate.getMonth() + 1)
-										.toString()
-										.padStart(2, '0')
-									+ '-'
-									+ noticeDate.getDate().toString()
-										.padStart(2, '0');
-								html += '<tr><td><a href="notice/view?noticeId='
-									+ notice.noticeId
-									+ '" style="color: #469543; font-size:16px; font-weight:700;">'
-									+ notice.noticeTitle
-									+ '</a></td><td style="color: #a1a1a1;">'
-									+ formattedDate
-									+ '</td></tr>';
-							}
-							html += '</table>'; // table 닫기
-							$('.notice__list').html(html);
-						});
-			});
+    $.get("/noticeList", function (data) {
+        var noticeList = data.notice;
+        var html = '<table class="table" style="width: 100%;">';
+        for (var i = 0; i < noticeList.length && i < 3; i++) {
+            var notice = noticeList[i];
+            var noticeDate = new Date(notice.noticeDate);
+            var formattedDate = noticeDate.getFullYear()
+                + '-'
+                + (noticeDate.getMonth() + 1).toString().padStart(2, '0')
+                + '-'
+                + noticeDate.getDate().toString().padStart(2, '0');
+            html += '<tr><td><a href="/notice/detail/'
+                + notice.noticeId
+                + '" style="color: #469543; font-size:16px; font-weight:700;">'
+                + notice.noticeTitle
+                + '</a></td><td style="color: #a1a1a1;">'
+                + formattedDate
+                + '</td></tr>';
+        }
+        html += '</table>'; // table 닫기
+        $('.notice__list').html(html);
+    });
+});
+
 		</script>
 	</body>
 </th:block>

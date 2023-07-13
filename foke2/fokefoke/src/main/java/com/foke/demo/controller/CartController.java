@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -128,6 +129,7 @@ public class CartController {
 	    List<CartDTO> cartList = new ArrayList<>();
 	    cartList.add(cart);
 	    session.setAttribute("cartList", cartList);
+
 		
 		int result = this.cartService.addCart(cart);
 		
@@ -149,7 +151,7 @@ public class CartController {
 	    return String.valueOf(result);
 	}
 	
-	//상품 삭제
+	//상품삭제
 	@PostMapping("/delete")
 	public String deleteCartPOST(CartDTO cart, @RequestParam("cartId") int cartId, HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -163,6 +165,21 @@ public class CartController {
 		return "redirect:/cart/" + memberId;
 	}
 	
+	//차트
+	@GetMapping("/cartchart")
+    public String showCartChart(Model model) {
+		List<Object[]> mostAddedProducts = this.cartService.getMostAddedProducts();
+		model.addAttribute("mostAddedProducts",mostAddedProducts);
+        
+		return "cart/cartchart";
+    }
+	
+	@GetMapping("/cartstorechart")
+    public String showCartStoreChart(Model model) {
+		List<Object[]> mostAddedStore = this.cartService.getMostAddedStore();
+		model.addAttribute("mostAddedStore",mostAddedStore);
+        
+		return "cart/cartstorechart";
+    }
+
 }
-
-

@@ -6,17 +6,12 @@ import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.foke.demo.dto.MemberDTO;
 import com.foke.demo.dto.NoticeDTO;
 import com.foke.demo.dto.ProductDTO;
 import com.foke.demo.dto.StoreDTO;
@@ -26,7 +21,6 @@ import com.foke.demo.service.ProductService;
 import com.foke.demo.service.StoreService;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -39,22 +33,6 @@ public class HomeController {
 
 	@GetMapping("/")
 	public String index(HttpServletRequest request, Model model) {
-		// 인증된 사용자가 있는지 확인
-		HttpSession session = request.getSession();
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
-			MemberDTO member = new MemberDTO();
-			member.setMemberId("guest");
-			member.setMemberName("guest");
-			session.setAttribute("member", member);
-			// 로그인하지 않은 사용자의 처리
-		} else {
-			// 로그인한 사용자의 처리
-			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-			String memberId = userDetails.getUsername();
-			MemberDTO member = memberService.getMember(memberId);
-			session.setAttribute("member", member);
-		}
 		return "index";
 	}
 

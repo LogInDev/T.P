@@ -32,11 +32,14 @@
                                     <td th:text="${member.phone}"></td>
                                    <!-- <td><span th:if="${member.sex == 0}">남</span><span th:if="${member.sex == 1}">여</span></td>-->
                                     <td th:text="${member.point}"></td>
-                                    <td>
-										<form th:action="@{/admin/delete/{id}(id=${member.memberId})}" th:method="post">
-										    <input type="submit" class="btn btn-sm btn-outline-primary" value="상담">
-										
-										</form>
+                                    <td th:data-member-id="${member.memberId}"
+										th:id="${member.memberId} + '-container'">
+										<a th:href="@{'http://localhost:8080/detail/chatMain/' + ${member.memberId}}"
+											class="btn btn-sm btn-outline-primary"
+											onclick="resetMessageCounter('[[${member.memberId}]]')">
+											상담
+										</a>
+										<span class="badge bg-warning" style="display:none;">0</span>
 									</td>
                                     
                                     <td>
@@ -69,7 +72,7 @@
 				            <span th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
 				                  th:if="${page >= paging.number-5 and page <= paging.number+5}"
 				                  th:classappend="${page == paging.number} ? 'active'" class="paginate_button active">
-				                <a th:text="${page}" class="paginate_button"
+				                <a th:text="${page + 1}" class="paginate_button"
 				                   th:href="@{|?page=${page}|}"></a>
 				            </span>
 				            <span class="paginate_button next" th:classappend="${!paging.hasNext} ? 'disabled'">
@@ -97,6 +100,38 @@
     
     <!-- Template Javascript -->
     <script src="/js/admin/main.js"></script>
+    <script th:src="@{/js/addCsrfTokenToAjaxRequest.js}"></script>
+    <script th:inline="javascript">
+			// memberId별로 스크립트 적용하기
+			document.addEventListener('DOMContentLoaded', function () {
+				var memberIds = document.querySelectorAll('td[data-member-id]');
+				memberIds.forEach(function (member) {
+					var memberId = member.getAttribute('data-member-id');
+					let roomNum;
+					roomNum = memberId + "1";
+					const eventSource = new EventSource(
+						`http://34.64.159.23:8000/chat/roomNum/${roomNum}`
+					);
+
+					eventSource.onmessage = (event) => {
+						const data = JSON.parse(event.data);
+						console.log(1, data.pushNum);
+						// span 엘리먼트 선택
+						const badgeSpan = member.querySelector('.badge');
+						// text 값을 변경
+						// pushNum 값이 0 이상일 때는 span 엘리먼트를 보여주고
+						// 0 이하일 때는 숨김
+						if (data.pushNum > 0) {
+							badgeSpan.textContent = data.pushNum;
+							badgeSpan.style.display = 'inline-block';
+						} else {
+							badgeSpan.style.display = 'none';
+						}
+					};
+
+				});
+			});
+		</script>
 </body>
 </th:block>
 </html>

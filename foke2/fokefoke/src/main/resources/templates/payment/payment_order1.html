@@ -71,7 +71,7 @@ document.getElementById('pointAmt').value = amount;
 }
 </script>
 
-
+<!--자바스크립트로 해당 결제금액*0.05 포인트 적립-->
 <script>
 function calculateTotal() {
     var prices = document.getElementsByName("price"); 
@@ -144,6 +144,7 @@ function calculateTotal() {
 								</p>
 								<input type="text" name="phone" th:value="${member.phone}"
 									class="checkout__input__add">
+								<span th:if="${member.phone == null}">핸드폰 번호를 입력해 주세요</span>
 							</div>
 							<p>&nbsp;</p>
 							<h6 class="checkout__title">주문내역</h6>
