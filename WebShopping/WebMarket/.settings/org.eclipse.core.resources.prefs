@@ -1,0 +1,9 @@
+eclipse.preferences.version=1
+encoding//src/dao/MVCBoardDAO.java=UTF-8
+encoding//src/dao/MVCCartDAO.java=UTF-8
+encoding//src/mvc/controller/BoardController.java=UTF-8
+encoding//src/mvc/controller/CartController.java=UTF-8
+encoding//src/mvc/controller/JDBConnect.java=UTF-8
+encoding//src/mvc/controller/ShippingInfoController.java=UTF-8
+encoding//src/mvc/model/BoardDAO.java=UTF-8
+encoding//src/util/BoardPage.java=UTF-8
