@@ -126,9 +126,10 @@
 ## 배포
 - `flask`, `nginx`, `elastic`, `kibana`, `netty`, `mongodb` 배포
 - `aws 인스턴스`로 `ubuntu`운영체제에 `nginx`와 `flask`를 구동시킴
-   - npm을 통해 react프로젝트를 build하여 git으로 가져옴
+   - react프로젝트를 build하여 git으로 가져옴
    - flask 포트와 elastic 포트를 허용하여 프로젝트 구동
 - `google cloud platform` vm인스턴스를 통해 `elastic`, `kibana` 구동
+    - 'logstash`를 이용하여 mySQL과 연동
 - `google cloud platform` vm인스턴스를 통해 `springframework`를 `jar`파일도 build하여 구동시킴(기본 springframework가 `netty`서버여서 jar파일에 netty구성요소가 이미 포함되어 있음)
 
 <br><br><br>
