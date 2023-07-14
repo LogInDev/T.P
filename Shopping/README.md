@@ -3,6 +3,9 @@
   - [STACKS](#-stacks)
   - [기획의도](#%EA%B8%B0%ED%9A%8D%EC%9D%98%EB%8F%84)
   - [담당파트](#%EB%8B%B4%EB%8B%B9%ED%8C%8C%ED%8A%B8)
+      - [회원 가입 · 수정 · 탈퇴](#%ED%9A%8C%EC%9B%90-%EA%B0%80%EC%9E%85--%EC%88%98%EC%A0%95--%ED%83%88%ED%87%B4)
+      - [게시판 등록 · 수정 · 삭제](#%EA%B2%8C%EC%8B%9C%ED%8C%90-%EB%93%B1%EB%A1%9D--%EC%88%98%EC%A0%95--%EC%82%AD%EC%A0%9C)
+      - [관리자 페이지](#%EA%B4%80%EB%A6%AC%EC%9E%90-%ED%8E%98%EC%9D%B4%EC%A7%80)
  <br><br><br>
  
 ## 📚 STACKS
