@@ -3,6 +3,7 @@
   - [STACKS](#-stacks)
   - [기획의도](#%EA%B8%B0%ED%9A%8D%EC%9D%98%EB%8F%84)
   - [담당파트](#%EB%8B%B4%EB%8B%B9%ED%8C%8C%ED%8A%B8)
+      - [형상 관리]() 
       - [실시간 1:1상담](#%EC%8B%A4%EC%8B%9C%EA%B0%84-11-%EC%83%81%EB%8B%B4)
       - [Cosine 유사도를 통해 차트, api, wordcloud를 활용한 맛집 추천](#cosine-%EC%9C%A0%EC%82%AC%EB%8F%84%EB%A5%BC-%ED%86%B5%ED%95%B4-%EC%B0%A8%ED%8A%B8-api-wordcloud%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%EB%A7%9B%EC%A7%91-%EC%B6%94%EC%B2%9C)
       - [Elasticsearch](#elasticsearch)
@@ -56,6 +57,13 @@
 <br><br><br>
 
 ## 담당파트
+### 👉 형상관리 - git organizations 생성
+<div>
+<img src='https://user-images.githubusercontent.com/127198819/253467341-720111bc-48c7-4d0c-aaca-b40c2d29edd8.png' width='40%'>
+<img src='https://user-images.githubusercontent.com/127198819/253467524-d6b3dfde-998e-48af-93dd-42574b15c39e.png' width='40%'>
+</div>
+
+- main과 dev 브랜치로 나누어 dev에서 팀원들이 개발한 프로젝트를 자유롭게 올리고, 원본과 병합은 main에서 관리자가 실행
 ### 👉 실시간 1:1 상담
   - `webflux`, `SSE`, `mongodb`를 이용한 실시간 채팅 상담 서비스
 ### 👉 Cosine 유사도를 통해 차트, api, wordcloud를 활용한 맛집 추천
