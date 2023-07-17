@@ -80,7 +80,6 @@
 <img src='https://user-images.githubusercontent.com/127198819/253440300-03f84e13-b0ea-4608-b74b-0a44188ce46e.gif'>
 
 - 관리자가 보지 못한 메시지는 아이디별로 push알림 효과 구현.
-    - `mongodb`를 사용해서 'pushNum'컬럼을 만들어서 적용시킴 
 - `webFlux`와 `mongodb`를 사용하여 실시간 채팅 가능
     - `SSE(Server-Sent Events)`프로토콜을 사용하여 일방향으로 서버에서 클라이언트로만 데이터를 전송하여 리소스 사용이 상대적으로 낮음
     - `@Tailable`을 사용하여 결과를 조회할 때 결과 스트림이 열리고, 쿼리 조건에 일치하는 추가 데이터가 MongoDB에 삽입될 때마다 클라이언트에 해당 데이터가 전송되어 실시간 채팅효과가 있음.
