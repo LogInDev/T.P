@@ -47,14 +47,14 @@
             <!-- Sale & Revenue End -->
 
 
-            <!-- Sales Chart Start -->
+            <!-- 차트 -->
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
                     <div class="col-sm-12 col-xl-6">
                         <div class="bg-light text-center rounded p-4">
                             <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">장바구니 상품 차트</h6>
-                                <a href="/cart/cartchart">Show All</a>
+                                <h6 class="mb-0">인기 상품 분석차트</h6>
+<!--                            <a href="/payment/paymentchart">Show All</a>-->
                             </div>
 <!--                        <canvas id="worldwide-sales"></canvas>-->
 							<canvas id="productChart" width="400" height="400"></canvas>
@@ -63,287 +63,216 @@
                     <div class="col-sm-12 col-xl-6">
                         <div class="bg-light text-center rounded p-4">
                             <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">지역별 장바구니 차트</h6>
-                                <a href="/cart/cartstorechart">Show All</a>
+                                <h6 class="mb-0">지역별 분석차트</h6>
+<!--                             <a href="/cart/cartstorechart">Show All</a>-->
                             </div>
-                            <canvas id="cartStoreChart" width="400" height="400"></canvas>
+<!--                            <canvas id="cartStoreChart" width="400" height="400"></canvas>-->
+								<canvas id="cartAndPaymentChart" width="400" height="400"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Sales Chart End -->
+            <!-- 분석 차트 End -->
 
 
-            <!-- Recent Sales Start -->
+            <!-- 매출 -->
             <div class="container-fluid pt-4 px-4">
-                <div class="bg-light text-center rounded p-4">
+                <div class="bg-light text-center rounded p-4" >
                     <div class="d-flex align-items-center justify-content-between mb-4">
-                        <h6 class="mb-0">Recent Salse</h6>
-                        <a href="">Show All</a>
+                        <h6 class="mb-0">전체 매출</h6>
+<!--                    <a href="">Show All</a>-->
                     </div>
-                    <div class="table-responsive">
-                        <table class="table text-start align-middle table-bordered table-hover mb-0">
-                            <thead>
-                                <tr class="text-dark">
-                                    <th scope="col"><input class="form-check-input" type="checkbox"></th>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">Invoice</th>
-                                    <th scope="col">Customer</th>
-                                    <th scope="col">Amount</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    	<canvas id="revenueChart" width="400" height="150"></canvas>
+<!-- 					<canvas id="productChart" width="400" height="400"></canvas>-->
+                   
                 </div>
             </div>
-            <!-- Recent Sales End -->
+            <!-- 매출 End -->
 
 
-            <!-- Widgets Start -->
-            <div class="container-fluid pt-4 px-4">
-                <div class="row g-4">
-                    <div class="col-sm-12 col-md-6 col-xl-4">
-                        <div class="h-100 bg-light rounded p-4">
-                            <div class="d-flex align-items-center justify-content-between mb-2">
-                                <h6 class="mb-0">Messages</h6>
-                                <a href="">Show All</a>
-                            </div>
-                            <div class="d-flex align-items-center border-bottom py-3">
-                                <img class="rounded-circle flex-shrink-0" th:src="@{/img/user.jpg}" alt="" style="width: 40px; height: 40px;">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h6 class="mb-0">Jhon Doe</h6>
-                                        <small>15 minutes ago</small>
-                                    </div>
-                                    <span>Short message goes here...</span>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center border-bottom py-3">
-                                <img class="rounded-circle flex-shrink-0" th:src="@{/img/user.jpg}" alt="" style="width: 40px; height: 40px;">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h6 class="mb-0">Jhon Doe</h6>
-                                        <small>15 minutes ago</small>
-                                    </div>
-                                    <span>Short message goes here...</span>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center border-bottom py-3">
-                                <img class="rounded-circle flex-shrink-0" th:src="@{/img/user.jpg}" alt="" style="width: 40px; height: 40px;">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h6 class="mb-0">Jhon Doe</h6>
-                                        <small>15 minutes ago</small>
-                                    </div>
-                                    <span>Short message goes here...</span>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center pt-3">
-                                <img class="rounded-circle flex-shrink-0" th:src="@{/img/user.jpg}" alt="" style="width: 40px; height: 40px;">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h6 class="mb-0">Jhon Doe</h6>
-                                        <small>15 minutes ago</small>
-                                    </div>
-                                    <span>Short message goes here...</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-xl-4">
-                        <div class="h-100 bg-light rounded p-4">
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">Calender</h6>
-                                <a href="">Show All</a>
-                            </div>
-                            <div id="calender"></div>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-xl-4">
-                        <div class="h-100 bg-light rounded p-4">
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">To Do List</h6>
-                                <a href="">Show All</a>
-                            </div>
-                            <div class="d-flex mb-2">
-                                <input class="form-control bg-transparent" type="text" placeholder="Enter task">
-                                <button type="button" class="btn btn-primary ms-2">Add</button>
-                            </div>
-                            <div class="d-flex align-items-center border-bottom py-2">
-                                <input class="form-check-input m-0" type="checkbox">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span>Short task goes here...</span>
-                                        <button class="btn btn-sm"><i class="fa fa-times"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center border-bottom py-2">
-                                <input class="form-check-input m-0" type="checkbox">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span>Short task goes here...</span>
-                                        <button class="btn btn-sm"><i class="fa fa-times"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center border-bottom py-2">
-                                <input class="form-check-input m-0" type="checkbox" checked>
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span><del>Short task goes here...</del></span>
-                                        <button class="btn btn-sm text-primary"><i class="fa fa-times"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center border-bottom py-2">
-                                <input class="form-check-input m-0" type="checkbox">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span>Short task goes here...</span>
-                                        <button class="btn btn-sm"><i class="fa fa-times"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center pt-2">
-                                <input class="form-check-input m-0" type="checkbox">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span>Short task goes here...</span>
-                                        <button class="btn btn-sm"><i class="fa fa-times"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Widgets End -->
+<script>//인기상품차트
+  async function fetchAllData() {
+    const responseCart = await fetch('/api/cart/most-added-products');
+    const mostAddedProductsCart = await responseCart.json();
 
-        <script> //CartChart
-        async function fetchAllData() {
-            const response = await fetch('/cart/api/most-added-products');
-            const mostAddedProducts = await response.json();
-            createCartChart(mostAddedProducts);
-        }
+    const responsePayment = await fetch('/api/payment/most-added-products');
+    const mostAddedProductsPayment = await responsePayment.json();
 
-        function createCartChart(mostAddedProducts) {
-            var ctx = document.getElementById('productChart').getContext('2d');
-            var labels = [];
-            var data = [];
-            for (var i = 0; i < mostAddedProducts.length; i++) {
-                labels.push(mostAddedProducts[i][0]);
-                data.push(mostAddedProducts[i][1]);
+    const combinedData = combineAndSortData(mostAddedProductsCart, mostAddedProductsPayment);
+    createCartAndPaymentChart(combinedData.cartData, combinedData.paymentData, combinedData.labels);
+  }
+
+  function combineAndSortData(cartData, paymentData) {
+    const uniqueProductNames = [
+      ...new Set([...cartData.map(item => item[0]), ...paymentData.map(item => item[0])])
+    ].sort();
+
+    const combinedCartData = uniqueProductNames.map(name => {
+      const item = cartData.find(item => item[0] === name);
+      return item ? item[1] : 0;
+    });
+
+    const combinedPaymentData = uniqueProductNames.map(name => {
+      const item = paymentData.find(item => item[0] === name);
+      return item ? item[1] : 0;
+    });
+
+    return {
+      cartData: combinedCartData,
+      paymentData: combinedPaymentData,
+      labels: uniqueProductNames
+    };
+  }
+
+  function createCartAndPaymentChart(cartData, paymentData, labels) {
+    var ctx = document.getElementById('productChart').getContext('2d');
+
+    var cartAndPaymentChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: '장바구니에 담긴 상품목록',
+              data: cartData,
+			  backgroundColor: 'rgba(30, 130, 76, 0.2)',
+			  borderColor: 'rgba(30, 130, 76, 1)',
+              borderWidth: 1
+            },
+            {
+              label: '실제 구매한 상품목록',
+              data: paymentData,
+              backgroundColor: 'rgba(255, 152, 0, 0.2)',
+              borderColor: 'rgba(255, 152, 0, 1)',
+              borderWidth: 1
             }
-            var cartChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: '장바구니에 담긴 상품순위',
-                        data: data,
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: { beginAtZero: true }
-                    }
-                }
-            });
+          ]
+        },
+        options: {
+          scales: {
+            y: { beginAtZero: true }
+          }
         }
-        fetchAllData();
-        
-    </script>
+    });
+  }
+  
+  fetchAllData();
+</script>
+
+<script>//지역별차트
+async function fetchAllData() {
+    const responseCart = await fetch('/api/cart/most-added-store');
+    const mostAddedStoresCart = await responseCart.json();
     
-    <script>
-        async function fetchAllData() {
-            const response = await fetch('/cart/api/most-added-store');
-            const mostAddedStore = await response.json();
-            createCartStoreChart(mostAddedStore);
-        }
+    const responsePayment = await fetch('/api/payment/most-added-store');
+    const mostAddedStoresPayment = await responsePayment.json();
+    
+    createChart(mostAddedStoresCart, mostAddedStoresPayment);
+}
 
-        function createCartStoreChart(mostAddedStore) {
-            var ctx = document.getElementById('cartStoreChart').getContext('2d');
-            var labels = [];
-            var data = [];
-            for (var i = 0; i < mostAddedStore.length; i++) {
-                labels.push(mostAddedStore[i][0]);
-                data.push(mostAddedStore[i][1]);
-            }
-            var cartStoreChart = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: '장바구니에 가장 많이 담긴 지역',
-                        data: data,
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1
-                    }]
+function createChart(cartData, paymentData) {
+    const labelsCart = cartData.map(item => item[0]);
+    const labelsPayment = paymentData.map(item => item[0]);
+    const uniqueLabels = [...new Set([...labelsCart, ...labelsPayment])].sort();
+    
+    const cartCounts = uniqueLabels.map(label => {
+      const item = cartData.find(item => item[0] === label);
+      return item ? item[1] : 0;
+    });
+    
+    const paymentCounts = uniqueLabels.map(label => {
+      const item = paymentData.find(item => item[0] === label);
+      return item ? item[1] : 0;
+    });
+
+    var ctx = document.getElementById('cartAndPaymentChart').getContext('2d');
+    var cartAndPaymentChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: uniqueLabels,
+            datasets: [
+                {
+                    label: '지역별 장바구니 상품목록',
+                    data: cartCounts,
+                    backgroundColor: 'rgba(30, 130, 76, 0.2)',
+                    borderColor: 'rgba(30, 130, 76, 1)',
+                    borderWidth: 1
                 },
-                options: {
-                    scales: {
-                        y: { beginAtZero: true }
+                {
+                    label: '지역별 결제 상품목록',
+                    data: paymentCounts,
+                    backgroundColor: 'rgba(255, 152, 0, 0.2)',
+                    borderColor: 'rgba(255, 152, 0, 1)',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    stacked: true
+                },
+                x: {
+                    stacked: true
+                }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: (context) => {
+                            const label = context.dataset.label;
+                            const value = context.raw;
+                            return `${label}: ${value}`;
+                        }
                     }
                 }
-            });
+            }
         }
-        fetchAllData();
-        
-    </script>
+    });
+}
+
+fetchAllData();
+</script>
+
+<script>//매출
+    async function fetchAllData() {
+        const response = await fetch('/api/payment/revenue');
+        const mostAddedProducts = await response.json();
+        createRevenueChart(mostAddedProducts);
+    }
+
+    function createRevenueChart(mostAddedProducts) {
+        var ctx = document.getElementById('revenueChart').getContext('2d');
+        var labels = [];
+        var data = [];
+        for (var i = 0; i < mostAddedProducts.length; i++) {
+            labels.push(mostAddedProducts[i][0]);
+            data.push(mostAddedProducts[i][1]);
+        }
+        var cartChart = new Chart(ctx, {
+            type: 'line', // 수정된 부분
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: '일 별 매출',
+                    data: data,
+					backgroundColor: 'rgba(255, 0, 0, 0.2)',
+					borderColor: 'rgba(255, 0, 0, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    }
+    fetchAllData();
+    
+</script>
+
     
 	<!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

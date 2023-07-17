@@ -6,7 +6,7 @@
 	  <div class="col-sm-12 col-xl-12">
             <div class="bg-light rounded h-100 p-4">
 				<form method="post" action="#" th:action="@{/admin/notice_modify/{id}(id = ${noticedto.noticeId})}" th:object="${noticeDTO}" enctype="multipart/form-data">
-	                <h3 class="mb-4">이벤트 수정</h3>
+	                <h4 class="mb-4">이벤트 수정</h4>
 	                <div class="bg-light rounded h-100 p-4">
                         <h6 class="mb-4">이미지수정</h6>
                         <div class="accordion" id="accordionExample">
@@ -56,7 +56,7 @@
 	                
 
 
-		            <input type="submit" value="저장하기" class="btn btn-primary my-2">
+		            <input type="submit" value="수정하기" class="btn btn-primary my-2 ban-btn">
 				</form>
 	    		<a href="/admin/noticelist"> <button class="btn btn-primary">목록 </button></a>
             </div>
@@ -75,6 +75,9 @@
     
     <!-- Template Javascript -->
     <script src="/js/admin/main.js"></script>
+    
+    
+    <!-- 이미지ajax-->
     <script>
 	$(document).ready(function() {
 	  $("#fileItem").on("change", function() {
@@ -104,6 +107,23 @@
 	  
 	  
 	});
+	</script>
+	
+	<!--버튼유효성-->
+	<script>
+		$(document).ready(function () {
+		  console.log("Document is ready"); // 콘솔에 메시지 출력 (문서가 준비되었는지 확인)
+		
+		  $(".ban-btn").on("click", function (e) {
+		    console.log("Button clicked"); // 버튼 클릭 이벤트 발생 시 콘솔에 메시지 출력
+		    e.preventDefault(); // 기본 제출 동작을 방지
+		    const shouldSubmit = confirm("게시물을 수정 하시겠습니까??"); // alert 대신 confirm 창을 사용
+		
+		    if (shouldSubmit) {
+		      $(this).closest("form").submit(); // 클릭한 버튼에 가장 가까운 폼을 제출
+		    }
+		  });
+		});
 	</script>
 
 </body>

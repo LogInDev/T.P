@@ -10,11 +10,13 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.foke.demo.config.PrincipalDetails;
 import com.foke.demo.dto.CartDTO;
 import com.foke.demo.dto.DetailDTO;
 import com.foke.demo.dto.MemberDTO;
@@ -44,7 +46,7 @@ public class PaymentController {
 	private final CartService cartService;
 
 	@PostMapping(value = "list")
-	public String list(@AuthenticationPrincipal User user, HttpServletRequest request, Model model, ProductDTO pro, @RequestParam(required = false) List<String> cartId) {
+	public String list(@AuthenticationPrincipal PrincipalDetails user, HttpServletRequest request, Model model, ProductDTO pro, @RequestParam(required = false) List<String> cartId) {
 		
 		HttpSession session = request.getSession();
 	    String memberId = user.getUsername();
@@ -63,12 +65,14 @@ public class PaymentController {
 	                sdto.setStoreAddress(cartList.get(j).getStoreAddress());
 	                sdto.setStoreName(cartList.get(j).getStoreName());
 	                
-	                //cart에서 정보 받아왔음
+	                //cart에서 정보 받아왔음.
 	                CartDTO Cart = cartService.findCartByCartId(Integer.parseInt(cartId.get(i)));
-
 	                //db에 업데이트 할 컬럼들
 	        	    PaymentDTO payment = new PaymentDTO();
 	        	    payment.setMemberId(member.getMemberId());
+	        	    payment.setPoint(member.getPoint());
+	        	    payment.setPhone(member.getPhone());
+	        	    payment.setMemberName(member.getMemberName());
 	        	    payment.setCartId(cartList.get(j).getCartId());
 	        	    payment.setProductName(Cart.getProductName());
 	        	    payment.setPrice(Cart.getPrice());
@@ -100,13 +104,14 @@ public class PaymentController {
 	
 	//카트 - 뷰 페이지
 	@RequestMapping(value = "order", method={RequestMethod.GET, RequestMethod.POST})
-	public String order(@AuthenticationPrincipal User user, HttpServletRequest request, Model model, PaymentDTO pdto, ProductDTO pro, @RequestParam(required=false) List<String> cartId) {
+	public String order(@AuthenticationPrincipal PrincipalDetails user, HttpServletRequest request, Model model, PaymentDTO pdto, ProductDTO pro, @RequestParam(required=false) List<String> cartId) {
 		HttpSession session = request.getSession();
 		StoreDTO sdto = new StoreDTO();
 		sdto.setStoreName((String)session.getAttribute("storeName"));
 		sdto.setStoreAddress((String)session.getAttribute("StoreAddress"));
 		String memberId = user.getUsername();
-		MemberDTO member = this.paymentservice.getMember(memberId);
+        MemberDTO member = this.paymentservice.getMember(memberId);
+
 
 		//장바구니 정보 리스트
 		List<CartDTO> cartList = cartService.getCartList(memberId);
@@ -145,7 +150,7 @@ public class PaymentController {
 
 	//뷰 - 결제페이지
 	@PostMapping(value = "list1")
-	public String list1(@AuthenticationPrincipal User user, HttpServletRequest request, Model model, PaymentDTO pdto, ProductDTO pro, DetailDTO ddto, @RequestParam(required = false) List<String> toppingchk, 
+	public String list1(@AuthenticationPrincipal PrincipalDetails user, HttpServletRequest request, Model model, PaymentDTO pdto, ProductDTO pro, DetailDTO ddto, @RequestParam(required = false) List<String> toppingchk, 
 			@RequestParam(required = false) List<String> sourcechk, @RequestParam(required = false) List<String> extrachk) {
 
 
@@ -188,8 +193,6 @@ public class PaymentController {
 		String memberId = user.getUsername();
 		MemberDTO member = this.paymentservice.getMember(memberId);
 		
-		
-		
 		//detail 데이터를 세션에 담음
 		session.setAttribute("detail", ddto);
 
@@ -202,7 +205,7 @@ public class PaymentController {
 
 	//디테일 - 오더 페이지
 	@RequestMapping(value = "order1", method={RequestMethod.GET, RequestMethod.POST})
-	public String order1(@AuthenticationPrincipal User user, HttpServletRequest request, Model model, PaymentDTO pdto,MemberDTO mdto, ProductDTO pro, DetailDTO ddto) {
+	public String order1(@AuthenticationPrincipal PrincipalDetails user, HttpServletRequest request, Model model, PaymentDTO pdto,MemberDTO mdto, ProductDTO pro, DetailDTO ddto) {
 
 		HttpSession session = request.getSession();
 		DetailDTO sessionddto = (DetailDTO)session.getAttribute("detail");
@@ -230,5 +233,32 @@ public class PaymentController {
 
 		return "payment/payment_order1";
 	}
+	
+	//(결제 상품차트)
+	@GetMapping("/paymentchart")
+    public String showpaymentChart(Model model) {
+		List<Object[]> mostAddedProducts = this.paymentservice.getMostAddedProducts();
+		model.addAttribute("mostAddedProducts",mostAddedProducts);
+        
+		return "payment/payment_chart";
+    }
+	
+	//(결제 지역차트)
+	@GetMapping("/paymentstorechart")
+    public String showCartStoreChart(Model model) {
+		List<Object[]> mostAddedStore = this.paymentservice.getMostAddedStore();
+		model.addAttribute("mostAddedStore",mostAddedStore);
+        
+		return "payment/payment_storechart";
+    }
+	
+	//(결제 매출차트)
+	@GetMapping("/paymentrevenuechart")
+    public String showRevenueChart(Model model) {
+		List<Object[]> revenue = this.paymentservice.getRevenue();
+		model.addAttribute("revenue",revenue);
+        
+		return "payment/payment_revenue";
+    }
 
 }

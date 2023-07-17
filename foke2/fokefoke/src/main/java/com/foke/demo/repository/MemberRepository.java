@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,5 +26,9 @@ public interface MemberRepository extends JpaRepository<MemberDTO, String> {
 	List<MemberDTO> findByMemberIdLike(String memberId);
 	//관리자멤버 페이징
 	Page<MemberDTO> findByAdminCk(int adminCk, PageRequest pageRequest);
+	
+	//관리자 사이드바정보
+		@Query("SELECT m.memberName FROM MemberDTO m WHERE m.memberId = ?1")
+	    String findMemberNameByUsername(String username);
 
 }

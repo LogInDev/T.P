@@ -25,7 +25,10 @@
                     <div class="blog__item">
                         <div class="blog__item__pic set-bg" th:attr="style='background-image: url(' + @{'/notice/display/'+${notice.noticeImage}} + ');'"></div>
                         <div class="blog__item__text">
-                            <span th:text="${#temporals.format(notice.noticeDate, 'yyyy-MM-dd HH:mm')}"><img th:src="@{/img/icon/calendar.png}" alt=""></span>
+                            <div class="blog__item__text_date-container">
+					            <img th:src="@{/img/icon/calendar.png}" alt="">
+					            <span th:text="${#temporals.format(notice.noticeDate, 'yyyy-MM-dd HH:mm')}"></span>
+					        </div>
                             <h5 th:href="@{|/notice/detail/${notice.noticeId}|}" th:text="${notice.noticeTitle}"></h5>
                             <a th:href="@{|/notice/detail/${notice.noticeId}|}">자세히 보기</a>
                         </div>
@@ -33,8 +36,6 @@
                 </div>
 	        </div>
 	    </div>
-	</section>
-   
     <!-- 페이징처리 시작 -->
        <div class="row">
           <div class="col-lg-12">
@@ -60,7 +61,7 @@
           </div>
        </div>
        <!-- 페이징처리 끝 -->
-        
+	</section>
 </body>
 </th:block>	
 </html>

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.foke.demo.config.PrincipalDetails;
 import com.foke.demo.dto.CartDTO;
 import com.foke.demo.dto.DetailDTO;
 import com.foke.demo.dto.ProductDTO;
@@ -38,16 +40,18 @@ public class CartController {
 	
 	//장바구니
 	@RequestMapping(value = "/{memberId}", method = {RequestMethod.POST, RequestMethod.GET})
-	public String cartPagePOST(@PathVariable("memberId") String memberId, Model model, HttpSession session) {
-		memberId = (String)session.getAttribute("memberId");
+	public String cartPagePOST(@PathVariable("memberId") String memberId, Model model, HttpSession session, @AuthenticationPrincipal PrincipalDetails user) {
+		//memberId = (String)session.getAttribute("memberId");
+		memberId = user.getUsername();
+		session.setAttribute("memberId", memberId);
 		List<CartDTO> cartList = this.cartService.getCartList(memberId);		
 		model.addAttribute("memberId", memberId);
 		model.addAttribute("cartInfo", cartList);
+		System.out.println("회원 정보 : " + memberId);
 		System.out.println("cartInfo 정보 : " + cartList);
-		
+
 		return "cart/cart";
 	}
-	
 	
 	//상품 추가
 	@ResponseBody
@@ -171,7 +175,7 @@ public class CartController {
 		List<Object[]> mostAddedProducts = this.cartService.getMostAddedProducts();
 		model.addAttribute("mostAddedProducts",mostAddedProducts);
         
-		return "cart/cartchart";
+		return "cart/cart_chart";
     }
 	
 	@GetMapping("/cartstorechart")
@@ -179,7 +183,7 @@ public class CartController {
 		List<Object[]> mostAddedStore = this.cartService.getMostAddedStore();
 		model.addAttribute("mostAddedStore",mostAddedStore);
         
-		return "cart/cartstorechart";
+		return "cart/cart_storechart";
     }
 
 }

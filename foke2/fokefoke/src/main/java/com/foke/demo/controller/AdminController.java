@@ -3,6 +3,8 @@ package com.foke.demo.controller;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
@@ -11,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +21,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,9 +34,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.foke.demo.config.MemberRole;
 import com.foke.demo.dto.MemberDTO;
 import com.foke.demo.dto.NoticeDTO;
+import com.foke.demo.dto.PaymentDTO;
 import com.foke.demo.service.AdminService;
 import com.foke.demo.service.CartService;
+import com.foke.demo.service.MemberService;
 import com.foke.demo.service.NoticeService;
+import com.foke.demo.service.Paymentservice;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -46,6 +54,8 @@ public class AdminController {
 	private final AdminService adminService;
 	private final CartService cartService;
 	private final NoticeService noticeService;
+	private final Paymentservice paymentService;
+	
 	
 	// 관리자 메인 페이지 이동
 	@GetMapping("/main")
@@ -84,7 +94,38 @@ public class AdminController {
 	    
 	    return "admin/admin_main";
 	}
+	
+	
+	
+	//관리자사이드바 정보
+	@ControllerAdvice
+	public class UserControllerAdvice {
 
+	    private final MemberService memberService;
+
+	    public UserControllerAdvice(MemberService memberService) {
+	        this.memberService = memberService;
+	    }
+
+	    @ModelAttribute("username")
+	    public String getUsername() {
+	        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	        if (auth != null && auth.isAuthenticated()) {
+	            return auth.getName();
+	        }
+	        return null;
+	    }
+
+	    @ModelAttribute("memberName")
+	    public String getMemberName() {
+	        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	        if (auth != null && auth.isAuthenticated()) {
+	            return memberService.getMemberNameByUsername(auth.getName());
+	        }
+	        return null;
+	    }
+	}
+	
 	
     // 관리자 목록페이지 이동
     @GetMapping("/adminlist")
@@ -210,38 +251,40 @@ public class AdminController {
 	    int imageHeight = 300; // 원하는 세로 길이를 설정하세요.
 	    
 	    // 썸네일 이미지 파일 저장
-	    String uploadDirectory = "/home/ubuntu/fokefoke/static/img/blog/";
-	    if (imageFile != null && !imageFile.isEmpty()) {
-	        File uploadDir = new File(uploadDirectory);
-	        if (!uploadDir.exists()) uploadDir.mkdirs();
+        Path uploadPath = Paths.get("src/main/resources/static/img/blog/");
+        String uploadDirectory = uploadPath.toAbsolutePath().toString() + File.separator;
+        if (imageFile != null && !imageFile.isEmpty()) {
+            File uploadDir = new File(uploadDirectory);
+            if (!uploadDir.exists()) uploadDir.mkdirs();
 
-	        fileName = imageFile.getOriginalFilename();
+            fileName = imageFile.getOriginalFilename();
 
-	        // uuid 적용 파일 이름 
-	        String uuid = UUID.randomUUID().toString();
-	        fileName = uuid + "_" + fileName;
-	        File imageFileToSave = new File(uploadDirectory + fileName);
-	        imageFile.transferTo(imageFileToSave);
-	    }
+            // uuid 적용 파일 이름
+            String uuid = UUID.randomUUID().toString();
+            fileName = uuid + "_" + fileName;
+            File imageFileToSave = new File(uploadDirectory + fileName);
+            imageFile.transferTo(imageFileToSave);
+        }
 	    
-	    // 게시판 이미지 파일 저장
-	    String boardDirectory = "/home/ubuntu/fokefoke/static/img/board/";
-	    if (detailImageFile != null && !detailImageFile.isEmpty()) {
-	        File boardDir = new File(boardDirectory);
-	        if (!boardDir.exists()) boardDir.mkdirs();
-	
-	        detailfileName = detailImageFile.getOriginalFilename();
-	
-	        // uuid 적용 파일 이름 
-	        String uuid = UUID.randomUUID().toString();
-	        detailfileName = uuid + "_" + detailfileName;
-	        File imageFileToSave = new File(boardDirectory + detailfileName);
-	        detailImageFile.transferTo(imageFileToSave);
-	        
-	        if (!detailfileName.isEmpty()) {
-	            noticedto.setDetailImage(detailfileName);
-	        }
-	    }
+        // 게시판 이미지 파일 저장
+        Path boardPath = Paths.get("src/main/resources/static/img/board/");
+        String boardDirectory = boardPath.toAbsolutePath().toString() + File.separator;
+        if (detailImageFile != null && !detailImageFile.isEmpty()) {
+            File boardDir = new File(boardDirectory);
+            if (!boardDir.exists()) boardDir.mkdirs();
+
+            detailfileName = detailImageFile.getOriginalFilename();
+
+            // uuid 적용 파일 이름
+            String uuid = UUID.randomUUID().toString();
+            detailfileName = uuid + "_" + detailfileName;
+            File imageFileToSave = new File(boardDirectory + detailfileName);
+            detailImageFile.transferTo(imageFileToSave);
+
+            if (!detailfileName.isEmpty()) {
+                noticedto.setDetailImage(detailfileName);
+            }
+        }
 
 	    // 이미지 리사이징
 	    if (!fileName.isEmpty()) {
@@ -260,17 +303,18 @@ public class AdminController {
 	    return "redirect:/admin/noticelist";
 	}
   	
-	
-	// 섬네일 데이터 전송하기
+	//썸네임 이미지 출력
 	@GetMapping("/display/{noticeImage}")
 	@ResponseBody
-	public ResponseEntity<byte[]> getFile(@PathVariable("noticeImage") String fileName) { // 특정 파일의 이름을 받아서 이미지 데이터를 전송하는 코드
-	    System.out.println("fileName : " + fileName); // fileName은 파일의 경로
-
-	    File file = new File("/home/ubuntu/fokefoke/static/img/blog/" + fileName);
-
-	    System.out.println("file : " + file);
-
+	public ResponseEntity<byte[]> getFile(@PathVariable("noticeImage") String fileName) {
+	    
+	    // 경로 수정
+	    Path uploadPath = Paths.get("src/main/resources/static/img/blog/");
+	    System.out.println("uploadPath : " + uploadPath);
+	    
+	    String uploadDirectory = uploadPath.toAbsolutePath().toString() + File.separator;
+	    File file = new File(uploadDirectory + fileName);
+	    
 	    ResponseEntity<byte[]> result = null;
 
 	    try {
@@ -282,18 +326,19 @@ public class AdminController {
 	        e.printStackTrace();
 	    }
 
-	    return result; 
+	    return result;
 	}
-	
-	// 게시판 데이터 전송하기
+
+	//게시판 이미지 출력
 	@GetMapping("/display2/{detailImage}")
 	@ResponseBody
-	public ResponseEntity<byte[]> getFileEntity(@PathVariable("detailImage") String detailfileName) { // 특정 파일의 이름을 받아서 이미지 데이터를 전송하는 코드
-	    System.out.println("detailfileName : " + detailfileName); // fileName은 파일의 경로
+	public ResponseEntity<byte[]> getFileEntity(@PathVariable("detailImage") String detailfileName) {
+	    System.out.println("detailfileName : " + detailfileName);
 
-	    File file = new File("/home/ubuntu/fokefoke/static/img/board/" + detailfileName);
-
-	    System.out.println("file : " + file);
+	    // 경로 수정
+	    Path boardPath = Paths.get("src/main/resources/static/img/board/");
+	    String boardDirectory = boardPath.toAbsolutePath().toString() + File.separator;
+	    File file = new File(boardDirectory + detailfileName);
 
 	    ResponseEntity<byte[]> result = null;
 
@@ -306,9 +351,8 @@ public class AdminController {
 	        e.printStackTrace();
 	    }
 
-	    return result; 
+	    return result;
 	}
-	
 	
     //게시글 삭제
     @PostMapping("/notice_delete/{id}")
@@ -332,8 +376,7 @@ public class AdminController {
     public String noticeModify(@PathVariable("id") Integer id, NoticeDTO notice,
     		@RequestParam(value = "fileItem", required = false) MultipartFile imageFile,
             @RequestParam(value = "detailFile", required = false) MultipartFile detailImageFile) throws IOException {
-    	System.out.println("imageFile-----------" + imageFile);
-    	System.out.println("detailImageFile-----------" + detailImageFile);
+    
     	String fileName = "";
 	    String detailfileName = "";
 	    NoticeDTO originalNotice = noticeService.getnoticedto(id);
@@ -342,7 +385,8 @@ public class AdminController {
 	    int imageHeight = 300; // 원하는 세로 길이를 설정하세요.
 	    
 	    // 썸네일 이미지 파일 저장
-	    String uploadDirectory = "/home/ubuntu/fokefoke/static/img/blog/";
+	    Path uploadPath = Paths.get("src/main/resources/static/img/blog/");
+        String uploadDirectory = uploadPath.toAbsolutePath().toString() + File.separator;
 	    if (imageFile != null && !imageFile.isEmpty()) {
 	        File uploadDir = new File(uploadDirectory);
 	        if (!uploadDir.exists()) uploadDir.mkdirs();
@@ -357,7 +401,8 @@ public class AdminController {
 	        
 	    }
 	    // 게시판 이미지 파일 저장
-	    String boardDirectory = "/home/ubuntu/fokefoke/static/img/board/";
+	    Path boardPath = Paths.get("src/main/resources/static/img/board/");
+	    String boardDirectory = boardPath.toAbsolutePath().toString() + File.separator;
 	    if (detailImageFile != null && !detailImageFile.isEmpty()) {
 	        File boardDir = new File(boardDirectory);
 	        if (!boardDir.exists()) boardDir.mkdirs();
@@ -401,5 +446,33 @@ public class AdminController {
       noticeService.modify(noticeTemp, notice.getNoticeTitle(), notice.getNoticeContent(), notice.getNoticeImage(),notice.getDetailImage());
       return "redirect:/admin/notice_modify/" + noticeTemp.getNoticeId();
     }
-
+    
+    //주문정보 페이지불러오기
+    @GetMapping("/orderlist")
+	public String orderlist(HttpServletRequest request, Model model, @RequestParam(value="page", defaultValue="0") int page) {
+		Page<PaymentDTO> paging = this.paymentService.getList(page);
+		model.addAttribute("paging", paging);
+		
+	    String currentUrl = request.getRequestURI();
+	    model.addAttribute("currentUrl", currentUrl);
+		return "admin/admin_order";
+	}
+    
+    //주문상세보기
+    @GetMapping("/orderdetail/{id}")
+    public String orderdetail(Model model, @PathVariable("id") Integer id) {
+    	model.addAttribute("paymentdto", paymentService.getpaymentdto(id));
+    	System.out.println("paymentdto 실행");
+    	
+        return "admin/admin_orderdetail";
+    }
+    
+    //주문취소
+    @PostMapping("/orderdelete/{id}")
+    public String orderdelete(@PathVariable("id") Integer id) {
+        paymentService.delete(id);
+        return "redirect:/admin/orderlist";
+    }
+    
+   
 }

@@ -21,5 +21,9 @@ public interface NoticeRepository extends JpaRepository<NoticeDTO, Integer> {
     List<NoticeDTO> findAll();
 
     Page<NoticeDTO> findAll(Pageable pageable);
+    
+    //상세 이전 다음글
+    NoticeDTO findTopByNoticeIdLessThanOrderByNoticeIdDesc(Integer noticeId);
+    NoticeDTO findTopByNoticeIdGreaterThanOrderByNoticeIdAsc(Integer noticeId);
 
 }

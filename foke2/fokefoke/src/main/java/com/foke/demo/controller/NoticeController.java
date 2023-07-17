@@ -2,6 +2,8 @@ package com.foke.demo.controller;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
@@ -38,22 +40,30 @@ public class NoticeController {
 	}
 	
 	
-	//디테일
+	//디테일 (이전다음글 보기추가)
 	@GetMapping(value = "/detail/{noticeId}")
 	public String detail(Model model, @PathVariable("noticeId") Integer id) {
-		NoticeDTO noticedto = this.noticeService.getnoticedto(id);
-		model.addAttribute("noticedto", noticedto);
-		return "notice/Notice_detail";
+	    NoticeDTO noticedto = this.noticeService.getnoticedto(id);
+	    model.addAttribute("noticedto", noticedto);
+
+	    NoticeDTO previousNotice = noticeService.getPreviousNotice(id);
+	    NoticeDTO nextNotice = noticeService.getNextNotice(id);
+	    model.addAttribute("previousNotice", previousNotice);
+	    model.addAttribute("nextNotice", nextNotice);
+
+	    return "notice/Notice_detail";
 	}
 
-		
+	
 	// 섬네일 데이터 전송하기
 	@GetMapping("/display/{noticeImage}")
 	@ResponseBody
 	public ResponseEntity<byte[]> getFile(@PathVariable("noticeImage") String fileName) { // 특정 파일의 이름을 받아서 이미지 데이터를 전송하는 코드
 	    System.out.println("fileName : " + fileName); // fileName은 파일의 경로
 
-	    File file = new File("/home/ubuntu/fokefoke/static/img/blog/" + fileName);
+	    Path uploadPath = Paths.get("src/main/resources/static/img/blog/");
+	    String uploadDirectory = uploadPath.toAbsolutePath().toString() + File.separator;
+	    File file = new File(uploadDirectory + fileName);
 
 	    System.out.println("file : " + file);
 
@@ -77,7 +87,9 @@ public class NoticeController {
 	public ResponseEntity<byte[]> getFileEntity(@PathVariable("detailImage") String detailfileName) { // 특정 파일의 이름을 받아서 이미지 데이터를 전송하는 코드
 	    System.out.println("detailfileName : " + detailfileName); // fileName은 파일의 경로
 
-	    File file = new File("/home/ubuntu/fokefoke/static/img/board/" + detailfileName);
+	    Path boardPath = Paths.get("src/main/resources/static/img/board/");
+	    String boardDirectory = boardPath.toAbsolutePath().toString() + File.separator;
+	    File file = new File(boardDirectory + detailfileName);
 
 	    System.out.println("file : " + file);
 
@@ -94,5 +106,7 @@ public class NoticeController {
 
 	    return result; 
 	}
+
+
    
 }

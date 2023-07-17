@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.foke.demo.config.PrincipalDetails;
 import com.foke.demo.dto.MemberDTO;
 import com.foke.demo.service.MemberService;
 
@@ -42,7 +43,7 @@ public class MemberController {
 
 	// 회원정보 수정 페이지 이동
 	@GetMapping(value = "/mypage/edit")
-	public String editMemberGET(@AuthenticationPrincipal User user, Model model) throws Exception {
+	public String editMemberGET(@AuthenticationPrincipal PrincipalDetails user, Model model) throws Exception {
 		String memberId = user.getUsername();
 		MemberDTO member = memberService.getMember(memberId);
 		model.addAttribute("member", member);
@@ -65,7 +66,7 @@ public class MemberController {
 
 	// 마케팅 수신 설정 페이지 이동
 	@GetMapping(value = "/mypage/push_setting")
-	public String pushMemberGET(@AuthenticationPrincipal User user, Model model) {
+	public String pushMemberGET(@AuthenticationPrincipal PrincipalDetails user, Model model) {
 		String memberId = user.getUsername();
 		MemberDTO member = memberService.getMember(memberId);
 		model.addAttribute("member", member);
@@ -88,7 +89,7 @@ public class MemberController {
 
 	// 비밀번호 재설정 페이지 이동
 	@GetMapping(value = "/mypage/edit_password")
-	public String editPwMemberGET(@AuthenticationPrincipal User user, Model model) {
+	public String editPwMemberGET(@AuthenticationPrincipal PrincipalDetails user, Model model) {
 		String memberId = user.getUsername();
 		MemberDTO member = memberService.getMember(memberId);
 		model.addAttribute("member", member);
@@ -104,7 +105,7 @@ public class MemberController {
 
 	// 회원 탈퇴 페이지 이동
 	@GetMapping(value = "/mypage/withdrawals")
-	public String withdrawalsMemberGET(@AuthenticationPrincipal User user, Model model) {
+	public String withdrawalsMemberGET(@AuthenticationPrincipal PrincipalDetails user, Model model) {
 		String memberId = user.getUsername();
 		MemberDTO member = memberService.getMember(memberId);
 		model.addAttribute("member", member);

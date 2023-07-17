@@ -72,7 +72,7 @@ public class ChatController {
 	                .max(Comparator.comparing(Chat::getCreatedAt));
 
 	            if (mostRecentChat.isPresent() && mostRecentChat.get().getSender().equals("admin")) {
-	                chat.setPushNum(0);
+	                chat.setPushNum(1);
 	                return Mono.just(chat);
 	            } else {
 	                return chatRepository.mFindBySender(chat.getSender())

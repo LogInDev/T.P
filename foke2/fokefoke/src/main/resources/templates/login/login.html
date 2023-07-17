@@ -54,10 +54,29 @@
 										id="findPwBtn">비밀번호 찾기</a></li>
 								<li class="nav-item"><a class="nav-link" th:href="@{/login/join}">회원가입</a></li>
 							</ul>
-							<p class="mt-5 mb-3 text-muted">&copy; 2017–2022</p>
 						</div>
 					</div>
 				</form>
+					<section>
+						<div class="css-1qr6979 e1ufx3to1">계정으로 간편 로그인 / 회원가입</div>
+						<ul class="centerplz" style="list-style: none;">
+							<li class="locin-icon">
+								<a href="/oauth2/authorization/google">
+									<img class="circle-button" th:src="@{/img/icon/google.png}" alt="google-login">
+								</a>
+							</li>
+							<li class="locin-icon">
+								<a href="/oauth2/authorization/naver">
+									<img class="circle-button" th:src="@{/img/icon/naver.png}" alt="naver-login">
+								</a>
+							</li>
+							<li class="locin-icon" style="margin-right:0;">
+								<a href="/oauth2/authorization/kakao">
+									<img class="circle-button" th:src="@{/img/icon/kakao.png}" alt="kakao-login">
+								</a>
+							</li>
+						</ul>
+					</section>
 			</main>
 		</div>
 

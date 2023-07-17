@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.foke.demo.config.PrincipalDetails;
 import com.foke.demo.dto.DetailDTO;
 import com.foke.demo.dto.NutritionalDTO;
 import com.foke.demo.dto.ProductDTO;
@@ -53,7 +54,7 @@ public class DetailController {
 	}
 	
 	@GetMapping("/view")
-	public String List(@AuthenticationPrincipal User user, Model model, @ModelAttribute ProductDTO productDTO, @Param("productName")String productName) {
+	public String List(@AuthenticationPrincipal PrincipalDetails user, Model model, @ModelAttribute ProductDTO productDTO, @Param("productName")String productName) {
 		
 		String memberId = user.getUsername();
 		session.setAttribute("memberId", memberId);

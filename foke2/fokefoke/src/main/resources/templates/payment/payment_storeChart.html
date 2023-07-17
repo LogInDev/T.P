@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>PaymentStore Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container-fluid px-4">
+        <div class="row g-4">
+            <div class="col-sm-12 col-xl-6">
+                <div class="bg-light text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">Payment Store Chart</h6>
+                    </div>
+                    <canvas id="paymentStoreChart" width="400" height="400"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+        function getRandomColor() {
+          const r = Math.floor(Math.random() * 256);
+          const g = Math.floor(Math.random() * 256);
+          const b = Math.floor(Math.random() * 256);
+          const color = `rgba(${r}, ${g}, ${b}, 0.2)`;
+          return color;
+        }
+
+        async function fetchAllData() {
+            const response = await fetch('/api/payment/most-added-store');
+            const mostAddedStore = await response.json();
+            createPaymentStoreChart(mostAddedStore);
+        }
+
+        function createPaymentStoreChart(mostAddedStore) {
+            var ctx = document.getElementById('paymentStoreChart').getContext('2d');
+            var labels = [];
+            var data = [];
+            var backgroundColors = [];
+            for (var i = 0; i < mostAddedStore.length; i++) {
+                labels.push(mostAddedStore[i][0]);
+                data.push(mostAddedStore[i][1]);
+                backgroundColors.push(getRandomColor());
+            }
+            var paymentStoreChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '결제 많은 지역',
+                        data: data,
+                        backgroundColor: backgroundColors,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+        }
+        fetchAllData();
+    </script>
+</body>
+</html>

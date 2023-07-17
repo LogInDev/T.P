@@ -133,6 +133,11 @@ public class MemberService {
 			return "fail";
 		}
 	}
-
+	
+	
+	//관리자정보
+    public String getMemberNameByUsername(String username) {
+        return memberRepository.findMemberNameByUsername(username);
+    }
 	
 }

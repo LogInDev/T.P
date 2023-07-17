@@ -37,6 +37,15 @@ public class NoticeService {
         }
     }
     
+    
+    //공지사항 상세 이전다음글 가져오기
+    public NoticeDTO getPreviousNotice(Integer noticeId) {
+        return NoticeRepository.findTopByNoticeIdLessThanOrderByNoticeIdDesc(noticeId);
+    }
+    public NoticeDTO getNextNotice(Integer noticeId) {
+        return NoticeRepository.findTopByNoticeIdGreaterThanOrderByNoticeIdAsc(noticeId);
+    }
+    
     //게시글쓰기
     @Transactional
     public void enroll(String noticeTitle, String noticeContent, String noticeImage,String detailImage) {

@@ -7,7 +7,7 @@
             <div class="row g-4">
 				<div class="col-sm-12">
                     <div class="bg-light rounded h-100 p-4">
-                        <h6 class="mb-4">회원정보 리스트</h6>
+                        <h4 class="mb-4">회원정보 리스트</h4>
                         <table class="table table-striped">
                             <thead>
                                 <tr>
@@ -36,7 +36,7 @@
 										th:id="${member.memberId} + '-container'">
 										<a th:href="@{'http://localhost:8080/detail/chatMain/' + ${member.memberId}}"
 											class="btn btn-sm btn-outline-primary"
-											onclick="resetMessageCounter('[[${member.memberId}]]')">
+											>
 											상담
 										</a>
 										<span class="badge bg-warning" style="display:none;">0</span>
@@ -44,14 +44,12 @@
                                     
                                     <td>
 										<form th:action="@{/admin/delete/{id}(id=${member.memberId})}" th:method="post">
-										    <input type="submit" class="btn btn-sm btn-outline-primary" value="삭제">
-										
+										    <input type="submit" class="btn btn-sm btn-outline-primary ban-btn" value="삭제">
 										</form>
 									</td>
                                     <td>
 										<form th:action="@{/admin/addmodify/{id}(id=${member.memberId})}" th:method="post">
-										    <input type="submit" class="btn btn-sm btn-outline-primary" value="등록">
-										
+										    <input type="submit" class="btn btn-sm btn-outline-primary ban-btn1" value="등록" >
 										</form>
 									</td>
 									
@@ -131,7 +129,40 @@
 
 				});
 			});
+		
 		</script>
+	<!--회원추방-->	
+	<script>
+	$(document).ready(function () {
+	  console.log("Document is ready"); // 콘솔에 메시지 출력 (문서가 준비되었는지 확인)
+	
+	  $(".ban-btn").on("click", function (e) {
+	    console.log("Button clicked"); // 버튼 클릭 이벤트 발생 시 콘솔에 메시지 출력
+	    e.preventDefault(); // 기본 제출 동작을 방지
+	    const shouldSubmit = confirm("회원을 삭제 하시겠습니까??"); // alert 대신 confirm 창을 사용
+	
+	    if (shouldSubmit) {
+	      $(this).closest("form").submit(); // 클릭한 버튼에 가장 가까운 폼을 제출
+	    }
+	  });
+	});
+	
+	/*관리자 등록*/
+	$(document).ready(function () {
+	  console.log("Document is ready"); // 콘솔에 메시지 출력 (문서가 준비되었는지 확인)
+	
+	  $(".ban-btn1").on("click", function (e) {
+	    console.log("Button clicked"); // 버튼 클릭 이벤트 발생 시 콘솔에 메시지 출력
+	    e.preventDefault(); // 기본 제출 동작을 방지
+	    const shouldSubmit = confirm("관리자를 등록 하시겠습니까??"); // alert 대신 confirm 창을 사용
+	
+	    if (shouldSubmit) {
+	      $(this).closest("form").submit(); // 클릭한 버튼에 가장 가까운 폼을 제출
+	    }
+	  });
+	});
+	</script>
+		
 </body>
 </th:block>
 </html>

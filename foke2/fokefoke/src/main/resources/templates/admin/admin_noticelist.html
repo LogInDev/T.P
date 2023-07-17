@@ -7,9 +7,11 @@
             <div class="row g-4">
 				<div class="col-sm-12">
                     <div class="bg-light rounded h-100 p-4">
-                        <h6 class="mb-4">이벤트 리스트</h6>
+                        <h4 class="mb-4">이벤트 리스트</h4>
 							<!--게시글 등록-->
-  							<a th:href="@{/admin/notice_enroll}" class="btn btn-primary">이벤트 등록하기</a>
+							<div class="d-flex justify-content-end">
+  							<a th:href="@{/admin/notice_enroll}" class="btn btn-primary float-right">이벤트 등록하기</a>
+							</div>
                         <table class="table table-striped">
                             <thead>
 								  <tr>
@@ -33,7 +35,7 @@
 								    
 								    <td>
 								      <form th:action="@{/admin/notice_delete/{id}(id=${notice.noticeId})}" th:method="post">
-								        <input type="submit" class="btn btn-sm btn-outline-primary" value="삭제">
+								        <input type="submit" class="btn btn-sm btn-outline-primary ban-btn" value="삭제">
 								      </form>
 								    </td>
 								  </tr>
@@ -81,6 +83,25 @@
     
     <!-- Template Javascript -->
     <script src="/js/admin/main.js"></script>
+    
+    
+    <!--이벤트삭제-->	
+	<script>
+		$(document).ready(function () {
+		  console.log("Document is ready"); // 콘솔에 메시지 출력 (문서가 준비되었는지 확인)
+		
+		  $(".ban-btn").on("click", function (e) {
+		    console.log("Button clicked"); // 버튼 클릭 이벤트 발생 시 콘솔에 메시지 출력
+		    e.preventDefault(); // 기본 제출 동작을 방지
+		    const shouldSubmit = confirm("게시물을 삭제 하시겠습니까??"); // alert 대신 confirm 창을 사용
+		
+		    if (shouldSubmit) {
+		      $(this).closest("form").submit(); // 클릭한 버튼에 가장 가까운 폼을 제출
+		    }
+		  });
+		});
+	</script>
+	
 </body>
 </th:block>
 </html>

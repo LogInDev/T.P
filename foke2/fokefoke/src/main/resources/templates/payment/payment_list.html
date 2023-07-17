@@ -113,7 +113,7 @@ function toggleBankInfo() {
 </script>
 
 <!-- 구매결제 버튼 창 누르면 실행 -->								
-<script>
+<!--<script>
 function validateForm() {
   var checkBox = document.getElementById("paymentAgree");
   if (!checkBox.checked){
@@ -125,8 +125,8 @@ function validateForm() {
 	  }
    }
 }
-</script>
-<!--<script>
+</script>-->
+<script>
 function validateForm() {
   var checkBox = document.getElementById("paymentAgree");
   if (!checkBox.checked){
@@ -145,9 +145,9 @@ function validateAndRequestPay() {
         requestPay();
     }
 }
-</script>-->
+</script>
 <!--카카오페이 창-->
-<!--<script>
+<script>
   var IMP = window.IMP;
   IMP.init("imp01240830");
 
@@ -155,7 +155,7 @@ function validateAndRequestPay() {
     IMP.request_pay({
       pg: "kakaopay",
       pay_method: "card",
-      merchant_uid: "57008833-33014",
+      merchant_uid: "57008833-33018",
       name: "포케 샐러드",
       amount: 100,
       buyer_email: "fokefoke@fokeworld.co.kr",
@@ -172,7 +172,7 @@ function validateAndRequestPay() {
       }
     });
   }
-</script>-->
+</script>
 <!--포인트 사용-->
 <script>
 function setPointAmount(amount){
@@ -513,9 +513,9 @@ function hideForms(){
 								</ul>
 								<br>
 								<div style="text-align: center;" class="btn_area">
-									<button onclick="validateForm();" type="button"
-											style="background-color: #469543; color: #fff; border-radius: 30px; padding: 10px 20px; border: none; margin: 0 auto;">결제하기</button>
-									<!--<button onclick="validateAndRequestPay();" type="button" style="background-color: #469543; color: #fff; border-radius: 30px; padding: 10px 20px; border: none; margin: 0 auto;">결제하기</button>-->
+									<!--<button onclick="validateForm();" type="button"
+											style="background-color: #469543; color: #fff; border-radius: 30px; padding: 10px 20px; border: none; margin: 0 auto;">결제하기</button>-->
+									<button onclick="validateAndRequestPay();" type="button" style="background-color: #469543; color: #fff; border-radius: 30px; padding: 10px 20px; border: none; margin: 0 auto;">결제하기</button>
 									
 								</div>
 							</div>

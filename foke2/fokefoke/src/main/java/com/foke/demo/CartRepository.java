@@ -33,11 +33,11 @@ public interface CartRepository extends JpaRepository<CartDTO, Integer> {
 	
 	
 	//(장바구니 상품차트)
-	@Query(value = "SELECT c.productName, COUNT(c.productName) AS count FROM CartDTO c GROUP BY c.productName ORDER BY count DESC")
+	@Query(value = "SELECT c.productName, SUM(c.cartCount) AS total FROM CartDTO c GROUP BY c.productName ORDER BY total DESC")
 	List<Object[]> findMostAddedProducts();
 	
 	//(장바구니 지역차트)
-	@Query(value = "SELECT c.storeName, COUNT(c.storeName) AS count FROM CartDTO c GROUP BY c.storeName ORDER BY count DESC")
+	@Query(value = "SELECT c.storeName, SUM(c.cartCount) AS total FROM CartDTO c GROUP BY c.storeName ORDER BY total DESC")
 	List<Object[]> findMostAddedStore();
 	
 	//결제페이지로 보낼 곳

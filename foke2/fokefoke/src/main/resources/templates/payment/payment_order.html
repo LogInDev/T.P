@@ -56,7 +56,7 @@
 	
 </style>
 
-<!-- 포인트 사용 -->
+<!-- 포인트 사용. -->
 <script>
 function setPointAmount(amount){
 document.getElementById('pointAmt').value = amount;
@@ -97,9 +97,9 @@ function calculateTotal() {
 	
 	<!-- 주문번호 랜덤 -->
 	<div class="order-box" style="display: flex; align-items: center;">
-    	<h4 style="margin-right: 10px; color:#fff;">주문번호 : </h4>
+    	<h5 style="margin-right: 10px; color:#fff;">주문번호:</h5>
     <div>
-        <h4 style='color:#fff;' th:text="${randomString}"></h4>
+        <h5 style='color:#fff;' th:text="${randomString}"></h5>
     </div>
 	</div>
 

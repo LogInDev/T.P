@@ -26,7 +26,7 @@ public class NoticeDTO {
     @Column(length = 30)
     private String noticeTitle;
 
-    @Column(length = 200)
+    @Column(length = 1000)
     private String noticeContent;
 
     @CreationTimestamp

@@ -6,19 +6,19 @@
 	  <div class="col-sm-12 col-xl-12">
             <div class="bg-light rounded h-100 p-4">
 				<form method="post" action="#" th:action="@{/admin/notice_enroll}" th:object="${noticeDTO}" enctype="multipart/form-data">
-	                <h6 class="mb-4">이벤트 등록</h6>
+	                <h4 class="mb-4">이벤트 등록</h4>
 	                 <div class="bg-light rounded h-100 p-4">
-                        <h6 class="mb-4">이미지수정</h6>
+                        <h6 class="mb-4">이미지 등록</h6>
                         <div class="accordion" id="accordionExample">
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="headingOne">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        썸네일 이미지 수정
+                                        썸네일 이미지 등록
                                     </button>
                                 </h2>
                                 <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
-                                        <div><img id="previewImage" width="400"  alt="Image" /></div><br>
+                                        <div><img id="previewImage" width="400" alt="Image" onerror="this.src='/img/logo.png'" /></div><br>
 	                					<input class="form-control form-control-lg" type="file" id="fileItem" name="fileItem" > <br> 
                                     </div>
                                 </div>
@@ -26,12 +26,12 @@
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="headingTwo">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                        상세 이미지 수정
+                                        상세 이미지 등록
                                     </button>
                                 </h2>
                                 <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
-                                        <div><img id="previewImage2" width="400"  alt="Image" /></div><br>
+                                        <div><img id="previewImage2" width="400" alt="Image" onerror="this.src='/img/logo.png'"  /></div><br>
 	                					<input class="form-control form-control-lg" type="file" id="detailFile" name="detailFile"> <br>
                                     </div>
                                 </div>
@@ -49,7 +49,7 @@
                         </div>
                     </div>
 	            <br>
-		            <input type="submit" value="저장하기" class="btn btn-primary my-2">
+		            <input type="submit" value="저장하기" class="btn btn-primary my-2 ban-btn">
 				</form>
 	    		<a href="/admin/noticelist"> <button class="btn btn-primary">목록 </button></a>
             </div>
@@ -98,6 +98,24 @@
 	    }
 	  });
 	});
+	</script>
+	
+	
+	<!--버튼유효성-->
+	<script>
+		$(document).ready(function () {
+		  console.log("Document is ready"); // 콘솔에 메시지 출력 (문서가 준비되었는지 확인)
+		
+		  $(".ban-btn").on("click", function (e) {
+		    console.log("Button clicked"); // 버튼 클릭 이벤트 발생 시 콘솔에 메시지 출력
+		    e.preventDefault(); // 기본 제출 동작을 방지
+		    const shouldSubmit = confirm("게시물을 등록 하시겠습니까??"); // alert 대신 confirm 창을 사용
+		
+		    if (shouldSubmit) {
+		      $(this).closest("form").submit(); // 클릭한 버튼에 가장 가까운 폼을 제출
+		    }
+		  });
+		});
 	</script>
 </body>
 </th:block>

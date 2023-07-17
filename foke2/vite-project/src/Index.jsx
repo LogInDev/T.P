@@ -40,7 +40,7 @@ const Index = () => {
             <Form.Control
               className="searchtext"
               type="text"
-              placeholder="searchstore"
+              placeholder="마라, 중식, 커피등 카테고리로 검색해주세요."
               value={text}
               onChange={handleChange}
               onKeyDown={(event) => {

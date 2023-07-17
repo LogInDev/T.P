@@ -3003,7 +3003,7 @@ span.paginate_button.active {
 -----------------------*/
 
 .blog {
-  padding-bottom: 150px;
+ /* padding-bottom: 150px;*/
 }
 
 .latest {
@@ -3057,6 +3057,14 @@ span.paginate_button.active {
   margin-bottom: 10px;
 
   
+}
+
+.blog__item__text_date-container {
+    display: flex;
+    align-items: baseline;
+}
+.blog__item__text_date-container img {
+    margin-right: 5px;
 }
 
 .blog__item__text span img {
@@ -3349,13 +3357,20 @@ span.paginate_button.active {
   top: -25px;
 }
 
-.blog__details__quote p {
+.blog__details__quote pre {
   color: #111111;
   font-size: 18px;
   font-weight: 600;
   font-style: italic;
   margin-bottom: 20px;
+  font-family: 'Noto Sans KR', sans-serif;
+  width: 840px; /* 필요한 너비를 설정하세요. */
+    white-space: pre-wrap; /* 자동 줄 바꿈 적용 */
+    word-wrap: break-word; /* 더 긴 단어의 경우 줄 바꿈 처리 */
+  
 }
+
+
 
 .blog__details__quote h6 {
   color: #e53637;

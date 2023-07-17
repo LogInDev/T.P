@@ -25,7 +25,6 @@ import lombok.Setter;
 @Table(name = "payment")
 //@NoArgsConstructor //파라미터가 없는 기본 생성자 만들어줌
 public class PaymentDTO {
-	
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,12 +66,17 @@ public class PaymentDTO {
     @Column(nullable = false)
     private int cartCount;
     
+    @Column(length = 255)
+    private String memberName;
+    
     @Column(name = "paymentDay")
     private LocalDate paymentDay;
 
     @PrePersist
     protected void onCreate() {
         paymentDay = LocalDate.now();
+        
     }
+    
     
 }

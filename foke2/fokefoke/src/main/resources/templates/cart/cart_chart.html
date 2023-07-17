@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>CartChart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container-fluid px-4">
+        <div class="row g-4">
+            <div class="col-sm-12 col-xl-6">
+                <div class="bg-light text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">Cart Chart</h6>
+                    </div>
+                    <canvas id="productChart" width="400" height="400"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function fetchAllData() {
+            const response = await fetch('/api/cart/most-added-products');
+            const mostAddedProducts = await response.json();
+            createCartChart(mostAddedProducts);
+        }
+
+        function createCartChart(mostAddedProducts) {
+            var ctx = document.getElementById('productChart').getContext('2d');
+            var labels = [];
+            var data = [];
+            for (var i = 0; i < mostAddedProducts.length; i++) {
+                labels.push(mostAddedProducts[i][0]);
+                data.push(mostAddedProducts[i][1]);
+            }
+            var cartChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '장바구니에 가장 많이 담긴 상품',
+                        data: data,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+        }
+        fetchAllData();
+        
+    </script>
+</body>
+</html>

@@ -1,13 +1,15 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{adminconfig/layout}">
 	<th:block layout:fragment="content">
-
+<head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
 <body>
         <!-- Table Start -->
         <div class="container-fluid pt-4 px-4">
             <div class="row g-4">
 				<div class="col-sm-12">
                     <div class="bg-light rounded h-100 p-4">
-                        <h6 class="mb-4">관리자 리스트</h6>
+                        <h4 class="mb-4">관리자 리스트</h4>
                         <table class="table table-striped">
                             <thead>
                                 <tr>
@@ -28,9 +30,12 @@
                                    <!-- <td><span th:if="${member.sex == 0}">남</span><span th:if="${member.sex == 1}">여</span></td>-->
                                  
                                     <td>
-										<form th:action="@{/admin/modify/{id}(id=${member.memberId})}" th:method="post">
-										    <input type="submit" class="btn btn-sm btn-outline-primary" value="추방">
+										<!--<form th:action="@{/admin/modify/{id}(id=${member.memberId})}" th:method="post">
+										    <input type="button" class="btn btn-sm btn-outline-primary" id="ban-btn" value="추방">
 										
+										</form>-->
+										<form th:action="@{/admin/modify/{id}(id=${member.memberId})}" th:method="post">
+										  <input type="button" class="btn btn-sm btn-outline-primary ban-btn" value="추방">
 										</form>
 									</td>
 									
@@ -70,7 +75,7 @@
 	<!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/lib/chart/chart.min.js"></script>
+    <!--<script src="/lib/chart/chart.min.js"></script>-->
     <script src="/lib/easing/easing.min.js"></script>
     <script src="/lib/waypoints/waypoints.min.js"></script>
     <script src="/lib/owlcarousel/owl.carousel.min.js"></script>
@@ -80,6 +85,25 @@
     
     <!-- Template Javascript -->
     <script src="/js/admin/main.js"></script>
+	
+	<!--추방하기-->	
+	<script>
+	$(document).ready(function () {
+	  console.log("Document is ready"); // 콘솔에 메시지 출력 (문서가 준비되었는지 확인)
+	
+	  $(".ban-btn").on("click", function (e) {
+	    console.log("Button clicked"); // 버튼 클릭 이벤트 발생 시 콘솔에 메시지 출력
+	    e.preventDefault(); // 기본 제출 동작을 방지
+	    const shouldSubmit = confirm("관리자를 추방하시겠습니까?"); // alert 대신 confirm 창을 사용
+	
+	    if (shouldSubmit) {
+	      $(this).closest("form").submit(); // 클릭한 버튼에 가장 가까운 폼을 제출
+	    }
+	  });
+	});
+	</script>
+	
+	
 </body>
 </th:block>
 </html>

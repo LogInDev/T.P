@@ -4,6 +4,7 @@
 	color: green;
 	display: none;
 }
+
 /* 중복아이디 존재하는 경우 */
 .id_input_re_2 {
 	color: red;
@@ -45,13 +46,13 @@
 
 /* 제발 가운데로 */
 .centerplz {
-    display: flex;
-    justify-content: center;
+	display: flex;
+	justify-content: center;
 }
 
-.centerplz2 label{
+.centerplz2 label {
 	display: inline-block;
-    margin-left: 20px;
+	margin-left: 20px;
 }
 
 /* 경고 문구 */
@@ -60,58 +61,59 @@
 	font-size: 14px;
 	color: red;
 }
+
 .text-success {
 	display: none;
 }
 
 .section_subway1 {
-    margin: 0 auto;
-    padding: 80px 0;
+	margin: 0 auto;
+	padding: 80px 0;
 }
 
-.section_subway1 .utilization1{
+.section_subway1 .utilization1 {
 	background: url(https://www.subway.co.kr/images/main/bg_utilization.png) 0 0 no-repeat;
-    width: 400px;
-    height: 300px;
-    position: relative;
-    margin-left: 55px;
-    float: left;
+	width: 400px;
+	height: 300px;
+	position: relative;
+	margin-left: 55px;
+	float: left;
 }
 
 .section_subway1 .utilization1 p {
-    color: #fff;
-    font-size: 28px;
-    font-weight: bold;
-    line-height: 40px;
-    letter-spacing: -0.03em;
-    position: absolute;
-    left: 39px;
-    top: 38px;
+	color: #fff;
+	font-size: 28px;
+	font-weight: bold;
+	line-height: 40px;
+	letter-spacing: -0.03em;
+	position: absolute;
+	left: 39px;
+	top: 38px;
 }
 
 .utilization1 .btn1 {
 	position: absolute;
-    left: 41px;
-    bottom: 42px;
-    border: 2px solid #fff;
-    border-radius: 20px;
-    width: 92px;
-    font-size: 18px;
-    font-weight: bold;
-    text-align: center;
-    display: inline-block;
-    vertical-align: middle;
-    transition-duration: 0.2s;
+	left: 41px;
+	bottom: 42px;
+	border: 2px solid #fff;
+	border-radius: 20px;
+	width: 92px;
+	font-size: 18px;
+	font-weight: bold;
+	text-align: center;
+	display: inline-block;
+	vertical-align: middle;
+	transition-duration: 0.2s;
 }
 
 .section_subway1 .utilization1 .btn1 span {
-    display: block;
-    height: 36px;
-    line-height: 36px;
-    color: #fff;
-    font-size: 16px;
-    font-weight: 300;
-    text-align: center;
+	display: block;
+	height: 36px;
+	line-height: 36px;
+	color: #fff;
+	font-size: 16px;
+	font-weight: 300;
+	text-align: center;
 	text-decoration: none;
 	font-family: font_ns, sans-serif;
 }
@@ -122,11 +124,11 @@
 
 .goodbtn {
 	background-color: #469543;
-    color: #fff;
-    border-radius: 30px;
-    padding: 10px 20px;
-    border: none;
-    margin: 0 auto;
+	color: #fff;
+	border-radius: 30px;
+	padding: 10px 20px;
+	border: none;
+	margin: 0 auto;
 }
 
 .goodbtn[disabled] {
@@ -135,53 +137,76 @@
 
 .notgoodbtn {
 	background-color: #BDBDBD;
-    color: #fff;
-    border-radius: 30px;
-    padding: 10px 20px;
-    border: none;
-    margin: 0 auto;
+	color: #fff;
+	border-radius: 30px;
+	padding: 10px 20px;
+	border: none;
+	margin: 0 auto;
 }
 
 .goodstar {
 	font-size: 15px;
 	color: #f06923;
-    position: absolute;
-    top: -1px;
-    right: -7px;
+	position: absolute;
+	top: -1px;
+	right: -7px;
 }
 
 .goodgolbaeng {
-    font-size: 15px;
-    top: -1px;
-    position: absolute;
-    top: 29%;
-    left: 49%;
+	font-size: 15px;
+	top: -1px;
+	position: absolute;
+	top: 29%;
+	left: 49%;
 }
 
 .goodselect {
 	width: 49%;
-    height: 50px;
-    border: 1px solid #e1e1e1;
-    font-size: 14px;
-    color: #b7b7b7;
-    padding-left: 20px;
-    padding-right: 10px;
-    margin-bottom: 20px;
-    border-radius: 30px;
+	height: 50px;
+	border: 1px solid #e1e1e1;
+	font-size: 14px;
+	color: #b7b7b7;
+	padding-left: 20px;
+	padding-right: 10px;
+	margin-bottom: 20px;
+	border-radius: 30px;
 }
 
 .loginbody {
-	height: 700px;
+	/*height: 700px;*/
 	display: flex;
 	align-items: center;
 	padding-top: 100px;
-	padding-bottom: 40px;
+	padding-bottom: 80px;
 	background-color: #f5f5f5;
 }
 
 .form-signin {
 	max-width: 400px;
 	padding: 15px;
+}
+
+.circle-button {
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	background-color: transparent;
+	border: none;
+	padding: 0;
+	cursor: pointer;
+}
+
+.css-1qr6979 {
+	margin: 0px 0px 15px;
+	color: rgb(117, 117, 117);
+	font-size: 12px;
+	font-weight: normal;
+	line-height: 1.33;
+	text-align: center;
+}
+
+.locin-icon {
+	margin-right: 25px;	
 }
 
 
