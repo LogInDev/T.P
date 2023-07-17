@@ -135,12 +135,11 @@
 
 ## Deployment
 - `flask`, `nginx`, `elastic`, `kibana`, `netty`, `mongodb` 배포를 진행.
-- `AWS 인스턴스`에서 `ubuntu` 운영체제를 사용하여 `nginx`와 `flask`를 실행합니다.
+- `AWS 인스턴스`에서 `ubuntu` 운영체제로 mobaXterm Tool을 사용하여 `nginx`와 `flask`를 실행.
    - react프로젝트를 build하여 git으로 가져옴
    - flask 포트와 elastic 포트를 허용하여 프로젝트 구동
-- `google cloud platform` vm인스턴스를 통해 `elastic`, `kibana` 배포.
-    - 'logstash`를 이용하여 mySQL과 연동
-- springframework는 기본적으로 `netty`서버이고 jar파일에 netty구성요소가 이미 포함되어 있어서 build하여 `google cloud platform` vm인스턴스를 통해 배포.
+- `Elasticsearch`와 `Kibana`, `Spring Framework`는 `rocky-linux`운영체제로 SSH키를 사용하여 Google Cloud Platform에서 배포
+- `springframework`는 default가 `netty`서버이고 jar파일에 netty서버 구성요소가 이미 포함되어 있어서 build 후 바로 Google cloud platform 인스턴스를 통해 배포
 - 각 구성 요소가 서로 다른 클라우드 플랫폼에서 운영되는 것을 강조함으로써, 프로젝트가 여러 가지 클라우드 환경에서 유연하게 작동할 수 있음을 보여주고자 하였음.
 
 <br><br><br>
