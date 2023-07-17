@@ -108,7 +108,7 @@
     - React 프로젝트 생성 시 `Vite`를 사용하였는데, Vite는 Webpack 기반의 `create-react-app`보다 더 빠른 rollup 기반의 경량화된 프론트엔드 번들러.
     - 이로 인해 초기 빌드 시간이 줄어들었고 설정이 간소화되어, 작은 프로젝트에 적합.
     - 페이지 전체를 다시 로드하지 않고 변경 사항만 반영하는 `HMR`(Hot Module Replacement) 기능을 제공하여 개발 생산성이 향상.
-    - 검색어를 `axios`를 통해 flask서버로 요청하여 추천 결과물을 응답받음
+    - 검색어를 `axios`를 통해 flask서버로 요청하여 머신러닝을 통해 추천 결과물을 응답받음
     - 해당 결과물을 통해 '네이버 별점', '네이버 별점 리뷰 수', '블로그 글자 수 ', '유사도', 네이버 블로그 수' 차트 생성(`react-chartjs-2`라이브러리 사용)
     - `fetch`를 통해 가게명으로 `elasticsearch`에 인덱스를 조회하여 블로그 리뷰 텍스트 조회 후 wordcloud생성(`react-wordcloud`라이브러리 사용)
     - `YouTub Data API v3`을 이용하여 가게명에 따른 youtube영상 조회 및 재생
