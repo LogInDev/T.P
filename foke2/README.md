@@ -80,14 +80,16 @@
 <img src='https://user-images.githubusercontent.com/127198819/253440300-03f84e13-b0ea-4608-b74b-0a44188ce46e.gif'>
 
 - 관리자가 보지 못한 메시지는 아이디별로 push알림 효과 구현.
-- `webFlux`와 `mongodb`를 사용하여 실시간 채팅 가능
-    - `SSE(Server-Sent Events)`프로토콜을 사용하여 일방향으로 서버에서 클라이언트로만 데이터를 전송하여 리소스 사용이 상대적으로 낮음
-    - `@Tailable`을 사용하여 결과를 조회할 때 결과 스트림이 열리고, 쿼리 조건에 일치하는 추가 데이터가 MongoDB에 삽입될 때마다 클라이언트에 해당 데이터가 전송되어 실시간 채팅효과가 있음.
+- 실시간 1대1 상담 구현을 위해 `SSE`(Server-Sent Events)프로토콜, `WebFlux`, `MongoDB`를 활용
+- 폴링과 웹소켓 대신 SSE를 사용해 리소스 사용을 감소시켰으며, Spring Framework 5.0의 WebFlux에서 비동기 및 이벤트 기반 처리로 적은 스레드 사용이 가능하도록 구현.
+- MongoDB의 `@Tailable` 과 Capped 컬렉션을 이용해 데이터 처리가 빠르고 스트리밍 데이터 처리에 적합한 구조를 제공하여 실시간 채팅 애플리케이션 구축에 이상적인 환경을 만듦.
+- 이렇게 변환된 Capped 컬렉션은 데이터의 고정된 크기를 할당받아, 데이터의 삽입 및 조회가 매우 빠르게 처리되며, 스트리밍 데이터 처리에 적합한 구조를 가지고 있어 실시간 채팅 애플리케이션 구현에 적합.
+- 이를 통해 WebFlux와 결합하여 즉각적인 메시지 전달과 함께 사용자 간의 원활한 상호작용이 가능한 실시간 채팅 시스템을 구축
 
 <br><br><br>
 
 ## Cosine 유사도를 통해 차트, api, wordcloud를 활용한 맛집 추천
-- `muchine-learning`을 통한 추천과 차트, `wordcloud`등을 `react-router`를 통해 `SPA`(Single Page Application)을 만들고 싶었음.
+- `muchine-learning`을 통한 맛집 추천과 차트, `wordcloud`등을 `react-router`를 통해 `SPA`(Single Page Application)을 만듦.
 <div>
 <img src='https://user-images.githubusercontent.com/127198819/252841021-3b9465d8-66ea-4d68-9a21-a6ca92b661ec.gif'>
 <img src='https://user-images.githubusercontent.com/127198819/252830789-a001e135-6781-4b54-a043-b53e012f2602.gif' width="40.5%" height="40.5%">
@@ -98,13 +100,14 @@
 -  추가적으로 네이버 지도 리뷰를 `크롤링`하여 네이버 리뷰 별점, 리뷰 개수, 블로그 개수 컬럼을 만듦.
     -  `pandas`, `numpy`, `selenium`, `BeautifulSoup`를 사용 - [`recommend.ipynb`](https://github.com/fhazlt/T.P/blob/main/foke2/recommend.ipynb)
 -  업종 유사율, 네이버 리뷰 별점, 리뷰 개수, 블로그 개수 높은순으로 출력
-    - `MinMaxScaler`를 통해서 수치를 맞춤.
-    - `sklearn`에 `CountVectorizer`를 사용하여 '업종 컬럼'을 백터화하여 `cosine_similarity`를 통해 유사도를 만듦.
-    - 업종 유사도와 리뷰 수, 별점 수에 가중치를 부여하여 정렬 후 검색어에 따른 유사율, 별점등이 높은 맛집 추천.
+    - `MinMaxScaler`를 통해서 각 변수의 값의 범위를 맞춤.
+    - `sklearn`에 `CountVectorizer`를 사용하여 '업종 컬럼'을 백터화하여 `cosine_similarity`를 통해 거리기반 유사도를 만듦.
+    - 벡터화 진행 시 업종 유사도와 리뷰 수, 별점 수에 가중치를 부여하여 정렬 후 검색어에 따른 유사율, 별점등이 높은 맛집 추천.
     - 추천 결과물을 json형식으로 출력
 - `react`를 통하여 차트, wordcloud, youtubeAPI 구현
-    - `create-react-app`대신에 `vite`로 프로젝트 생성
-        -  초기 로딩 시간을 크게 줄여주며, 빌드 과정에서 사용하지 않는 코드를 제거함으로써 최종 번들의 크기를 줄여주고 결과적으로 웹 애프리케이션의 로딩 속도를 높여주는 효과가 있음.
+    - React 프로젝트 생성 시 `Vite`를 사용하였는데, Vite는 Webpack 기반의 `create-react-app`보다 더 빠른 rollup 기반의 경량화된 프론트엔드 번들러.
+    - 이로 인해 초기 빌드 시간이 줄어들었고 설정이 간소화되어, 작은 프로젝트에 적합.
+    - 페이지 전체를 다시 로드하지 않고 변경 사항만 반영하는 `HMR`(Hot Module Replacement) 기능을 제공하여 개발 생산성이 향상.
     - 검색어를 `axios`를 통해 flask서버로 요청하여 추천 결과물을 응답받음
     - 해당 결과물을 통해 '네이버 별점', '네이버 별점 리뷰 수', '블로그 글자 수 ', '유사도', 네이버 블로그 수' 차트 생성(`react-chartjs-2`라이브러리 사용)
     - `fetch`를 통해 가게명으로 `elasticsearch`에 인덱스를 조회하여 블로그 리뷰 텍스트 조회 후 wordcloud생성(`react-wordcloud`라이브러리 사용)
@@ -116,28 +119,29 @@
 - `Logstash`, `Kibana`를 이용하여 db 연동 및 csv파일 인덱스 생성
     - `Logstash`를 통해 mysqlDB와 연동 - [`logstash.conf`](https://github.com/fhazlt/T.P/blob/main/foke2/logstash2.conf)
     - `Kibana`를 통해 csv파일 인덱스 생성
-- `REST API`를 사용하여 엘라스틱서치와 정보 교환.
+- `HTTP` 프로토콜을 사용하여 `REST API` 요청으로 엘라스틱서치와 정보 교환.
 <img src='https://user-images.githubusercontent.com/127198819/252847744-0669ae31-d3d5-4f21-a320-75b081e5de4f.png' width='60%'>
 
-- `react`의 `fetch`를 통하여 elastic 서버와 `POST`로 정보 교환
-- elastic query를 사용하여 검색 출력 개수, 검색 필드 설정
+- `react`의 `fetch`를 통하여 Elasticsearch 서버와 `POST`로 정보 교환
+- Elasticsearch 쿼리를 사용하여 검색 출력 개수, 검색 필드 설정
 <img src='https://user-images.githubusercontent.com/127198819/252847843-965ce5aa-8669-467f-8a8f-bd70345fb383.png' width='60%'>
 
 - `javascript`의 `ajax`를 사용하여 elastic 서버와 `POST`로 정보 교환
-- elastic query를 사용하여 검색 출력 개수, 검색 필드, 출력 우선순위 설정
-    - 위도에 우선순위를 두어 현재 고객의 위치와 가까운 매장부터 검색 결과 출력
+- Elasticsearch 쿼리를 사용하여 검색 출력 개수, 검색 필드, 출력 우선순위 설정
+    - 고객과 가장 가까운 매장을 검색하기 위해 위도 기반 우선 순위를 설정합니다.
     - `*`연산자를 통해 검색어가 들어가는 모든 매장, 지역 출력되도록 설정
 
 <br><br><br>
 
-## 배포
-- `flask`, `nginx`, `elastic`, `kibana`, `netty`, `mongodb` 배포
-- `aws 인스턴스`로 `ubuntu`운영체제에 `nginx`와 `flask`를 구동시킴
+## Deployment
+- `flask`, `nginx`, `elastic`, `kibana`, `netty`, `mongodb` 배포를 진행.
+- `AWS 인스턴스`에서 `ubuntu` 운영체제를 사용하여 `nginx`와 `flask`를 실행합니다.
    - react프로젝트를 build하여 git으로 가져옴
    - flask 포트와 elastic 포트를 허용하여 프로젝트 구동
-- `google cloud platform` vm인스턴스를 통해 `elastic`, `kibana` 구동
+- `google cloud platform` vm인스턴스를 통해 `elastic`, `kibana` 배포.
     - 'logstash`를 이용하여 mySQL과 연동
-- `google cloud platform` vm인스턴스를 통해 `springframework`를 `jar`파일도 build하여 구동시킴(기본 springframework가 `netty`서버여서 jar파일에 netty구성요소가 이미 포함되어 있음)
+- springframework는 기본적으로 `netty`서버이고 jar파일에 netty구성요소가 이미 포함되어 있어서 build하여 `google cloud platform` vm인스턴스를 통해 배포.
+- 각 구성 요소가 서로 다른 클라우드 플랫폼에서 운영되는 것을 강조함으로써, 프로젝트가 여러 가지 클라우드 환경에서 유연하게 작동할 수 있음을 보여주고자 하였음.
 
 <br><br><br>
 
