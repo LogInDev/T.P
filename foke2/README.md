@@ -9,7 +9,7 @@
       - [Elasticsearch](#elasticsearch)
       - [배포](#%EB%B0%B0%ED%8F%AC)
       - [상세옵션 선택 springboot로 변환](#%EC%83%81%EC%84%B8%EC%98%B5%EC%85%98-%EC%84%A0%ED%83%9D-springboot%EB%A1%9C-%EB%B3%80%ED%99%98)
-  - 느낀점 및 아쉬웠던 부분
+  - [느낀점 및 아쉬웠던 부분](#%EB%8A%90%EB%82%80%EC%A0%90-%EB%B0%8F-%EC%95%84%EC%89%AC%EC%9B%A0%EB%8D%98-%EB%B6%80%EB%B6%84)
 <br><br><br>
 
 ## 📚 STACKS
