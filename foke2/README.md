@@ -7,7 +7,7 @@
       - [실시간 1:1상담](#%EC%8B%A4%EC%8B%9C%EA%B0%84-11-%EC%83%81%EB%8B%B4)
       - [Cosine 유사도를 통해 차트, api, wordcloud를 활용한 맛집 추천](#cosine-%EC%9C%A0%EC%82%AC%EB%8F%84%EB%A5%BC-%ED%86%B5%ED%95%B4-%EC%B0%A8%ED%8A%B8-api-wordcloud%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%EB%A7%9B%EC%A7%91-%EC%B6%94%EC%B2%9C)
       - [Elasticsearch](#elasticsearch)
-      - [배포](#%EB%B0%B0%ED%8F%AC)
+      - [배포](#deployment)
       - [상세옵션 선택 springboot로 변환](#%EC%83%81%EC%84%B8%EC%98%B5%EC%85%98-%EC%84%A0%ED%83%9D-springboot%EB%A1%9C-%EB%B3%80%ED%99%98)
   - [느낀점 및 아쉬웠던 부분](#%EB%8A%90%EB%82%80%EC%A0%90-%EB%B0%8F-%EC%95%84%EC%89%AC%EC%9B%A0%EB%8D%98-%EB%B6%80%EB%B6%84)
 <br><br><br>
