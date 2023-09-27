@@ -82,12 +82,17 @@
 ## 데이터베이스 설계
 ### ERD
 
+<img src='https://user-images.githubusercontent.com/127198819/271025161-c00ff605-58be-466e-be19-1714ace0c7e2.png' width='60%'>
+
 ### 테이블 설명
-- base : 음식의 기본 재료 정보 저장(재료 ID, 이름, 유형 등)
 - cart : 사용자가 선택한 상품 정보 저장(장바구니 ID, 회원 ID, 상품 수량 등)
 - mamber : 회원 정보 저장(회원 ID, 비밀번호, 이름 등)
 - product : 판매되는 제품 정보 저장(제품 ID, 이름, 가격 등)
 - store : 매장 정보 저장(매장 ID, 이름, 주소 등)
+- notice : 공지 게시판 정보 저장(공지 ID, 제목, 내용, 날짜 등)
+- nutritional : 메뉴 영양성분 정보 저장(영양 ID, 제품 ID, 제품명, 무게 등)
+- payment : 사용자 결제 내역 정보 저장(지불 ID, 회원 ID, 카트 ID, 매장 ID 등)
+- stock : 매장별 재고 정보 저장(재고 ID, 매장 ID, 상품 ID, 재고량 등)
 
 ### 성능 최적화 전략
 - 인덱싱 전략 : 사용자 ID(member.memberId), 상품 ID(product.productId), 매장ID(store.storeId)에 대해 인덱싱을 수행하여 조회 성능을 개선했습니다.
