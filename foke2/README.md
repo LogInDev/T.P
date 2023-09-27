@@ -95,7 +95,7 @@
 - stock : 매장별 재고 정보 저장(재고 ID, 매장 ID, 상품 ID, 재고량 등)
 
 ### 성능 최적화 전략
-- 인덱싱 전략 : 사용자 ID(member.memberId), 상품 ID(product.productId), 매장ID(store.storeId)에 대해 인덱싱을 수행하여 조회 성능을 개선했습니다.
+- 인덱싱 전략 : 사용자 ID(member.memberId), 상품 ID(product.productId), 매장ID(store.storeId)에 대해 인덱싱을 수행하여 조회 성능을 개선했습니다. - Duration/Fethch Time을 통해 시간 단축 확인.(0.013 sec -> 0.0021sec로 단축)
 - 쿼리 최적화: JOIN 연산과 GROUP BY 연산을 활용하여 필요한 정보만 효율적으로 가져오는 쿼리를 작성하였습니다.
 <br><br><br>
 
