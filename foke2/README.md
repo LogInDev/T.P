@@ -4,7 +4,7 @@
   - [기획의도](#%EA%B8%B0%ED%9A%8D%EC%9D%98%EB%8F%84)
   - [담당파트](#%EB%8B%B4%EB%8B%B9%ED%8C%8C%ED%8A%B8) 
       - [형상 관리](#-%ED%98%95%EC%83%81%EA%B4%80%EB%A6%AC---git-organizations-%EC%83%9D%EC%84%B1)
-      - [데이터베이스 설계](#%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EC%84%A4%EA%B3%84)
+      - [DB ERD, 성능 최적화](#%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EC%84%A4%EA%B3%84)
       - [실시간 1:1상담](#%EC%8B%A4%EC%8B%9C%EA%B0%84-11-%EC%83%81%EB%8B%B4)
       - [Cosine 유사도를 통해 차트, api, wordcloud를 활용한 맛집 추천](#cosine-%EC%9C%A0%EC%82%AC%EB%8F%84%EB%A5%BC-%ED%86%B5%ED%95%B4-%EC%B0%A8%ED%8A%B8-api-wordcloud%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%EB%A7%9B%EC%A7%91-%EC%B6%94%EC%B2%9C)
       - [Elasticsearch](#elasticsearch)
@@ -66,7 +66,7 @@
 </div>
 
 - main과 dev 브랜치로 나누어 dev에서 팀원들이 개발한 프로젝트를 자유롭게 올리고, 원본과 병합은 main에서 관리자가 실행
-### 👉 데이터베이스 설계
+### 👉 DB ERD, 성능 최적화
 ### 👉 실시간 1:1 상담
   - `webflux`, `SSE`, `mongodb`를 이용한 실시간 채팅 상담 서비스
 ### 👉 Crawling과 Cosine 유사도를 통해 차트, api, wordcloud를 활용한 맛집 추천
@@ -79,23 +79,23 @@
 - `thymeleaf`등을 활용하여 기존 FokeFoke 프로젝트를 `springboot`로 변환
 <br><br><br>
 
-## 데이터베이스 설계
+## DB ERD, 성능 최적화
 ### ERD
 
 <img src='https://user-images.githubusercontent.com/127198819/271027444-bc6b5f4b-5493-4536-9494-0e03aa62e30c.png' width='60%'>
 
-### 테이블 설명
-- cart : 사용자가 선택한 상품 정보 저장(장바구니 ID, 회원 ID, 상품 수량 등)
-- mamber : 회원 정보 저장(회원 ID, 비밀번호, 이름 등)
-- product : 판매되는 제품 정보 저장(제품 ID, 이름, 가격 등)
-- store : 매장 정보 저장(매장 ID, 이름, 주소 등)
-- notice : 공지 게시판 정보 저장(공지 ID, 제목, 내용, 날짜 등)
-- nutritional : 메뉴 영양성분 정보 저장(영양 ID, 제품 ID, 제품명, 무게 등)
-- payment : 사용자 결제 내역 정보 저장(지불 ID, 회원 ID, 카트 ID, 매장 ID 등)
-- stock : 매장별 재고 정보 저장(재고 ID, 매장 ID, 상품 ID, 재고량 등)
+테이블 설명
+  - cart : 사용자가 선택한 상품 정보 저장(장바구니 ID, 회원 ID, 상품 수량 등)
+  - mamber : 회원 정보 저장(회원 ID, 비밀번호, 이름 등)
+  - product : 판매되는 제품 정보 저장(제품 ID, 이름, 가격 등)
+  - store : 매장 정보 저장(매장 ID, 이름, 주소 등)
+  - notice : 공지 게시판 정보 저장(공지 ID, 제목, 내용, 날짜 등)
+  - nutritional : 메뉴 영양성분 정보 저장(영양 ID, 제품 ID, 제품명, 무게 등)
+  - payment : 사용자 결제 내역 정보 저장(지불 ID, 회원 ID, 카트 ID, 매장 ID 등)
+  - stock : 매장별 재고 정보 저장(재고 ID, 매장 ID, 상품 ID, 재고량 등)
 
-### 성능 최적화 전략
-- 인덱싱 전략 : 사용자 ID(member.memberId), 상품 ID(product.productId), 매장ID(store.storeId)에 대해 인덱싱을 수행하여 조회 성능을 개선했습니다. - Duration/Fethch Time을 통해 시간 단축 확인.(0.013 sec -> 0.0021sec로 단축)
+### 성능 최적화 
+- 인덱싱 전략 : 사용자 ID(member.memberId), 상품 ID(product.productId), 매장ID(store.storeId)에 대해 인덱싱을 수행하여 조회 성능을 개선했습니다. - Duration/Fethch Time을 통해 시간 단축 확인.(ex : memberId 조회 0.013 sec -> 0.0021sec로 단축)
 - 쿼리 최적화: JOIN 연산과 GROUP BY 연산을 활용하여 필요한 정보만 효율적으로 가져오는 쿼리를 작성하였습니다.
 <br><br><br>
 
