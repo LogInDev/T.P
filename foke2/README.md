@@ -82,7 +82,7 @@
 ## 데이터베이스 설계
 ### ERD
 
-<img src='https://user-images.githubusercontent.com/127198819/271025161-c00ff605-58be-466e-be19-1714ace0c7e2.png' width='60%'>
+<img src='https://user-images.githubusercontent.com/127198819/271027444-bc6b5f4b-5493-4536-9494-0e03aa62e30c.png' width='60%'>
 
 ### 테이블 설명
 - cart : 사용자가 선택한 상품 정보 저장(장바구니 ID, 회원 ID, 상품 수량 등)
