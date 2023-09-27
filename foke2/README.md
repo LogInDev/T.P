@@ -2,10 +2,10 @@
 - [목차](#fokefoke230617--230717)
   - [STACKS](#-stacks)
   - [기획의도](#%EA%B8%B0%ED%9A%8D%EC%9D%98%EB%8F%84)
-  - [데이터베이스 설계]
-      - [ERD]()
-      - [테이블 설명]()
-      - [성능 최적화 전략]()
+  - [데이터베이스 설계](#%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EC%84%A4%EA%B3%84)
+      - [ERD](#erd)
+      - [테이블 설명](#%ED%85%8C%EC%9D%B4%EB%B8%94-%EC%84%A4%EB%AA%85)
+      - [성능 최적화 전략](#%EC%84%B1%EB%8A%A5-%EC%B5%9C%EC%A0%81%ED%99%94-%EC%A0%84%EB%9E%B5)
   - [담당파트](#%EB%8B%B4%EB%8B%B9%ED%8C%8C%ED%8A%B8) 
       - [형상 관리](#-%ED%98%95%EC%83%81%EA%B4%80%EB%A6%AC---git-organizations-%EC%83%9D%EC%84%B1) 
       - [실시간 1:1상담](#%EC%8B%A4%EC%8B%9C%EA%B0%84-11-%EC%83%81%EB%8B%B4)
@@ -61,6 +61,27 @@
 - 기존에 했던 FokeFoke프로젝트를 Springboot로 변환하고 다양한 기술 스펙트럼이 있는 것을 보여주는 것이 목표
 <br><br><br>
 
+## 담당파트
+### 👉 형상관리 - git organizations 생성
+<div>
+<img src='https://user-images.githubusercontent.com/127198819/253467341-720111bc-48c7-4d0c-aaca-b40c2d29edd8.png' width='40%'>
+<img src='https://user-images.githubusercontent.com/127198819/253467524-d6b3dfde-998e-48af-93dd-42574b15c39e.png' width='40%'>
+</div>
+
+- main과 dev 브랜치로 나누어 dev에서 팀원들이 개발한 프로젝트를 자유롭게 올리고, 원본과 병합은 main에서 관리자가 실행
+### 👉 데이터베이스 설계
+### 👉 실시간 1:1 상담
+  - `webflux`, `SSE`, `mongodb`를 이용한 실시간 채팅 상담 서비스
+### 👉 Crawling과 Cosine 유사도를 통해 차트, api, wordcloud를 활용한 맛집 추천
+- 백터 간 거리에 기반한 `Cosine`유사도를 비교하여 검색어와 유사율이 높으면서 네이버 별점 및 블로그 수 등 높은 맛집 추천
+### 👉 Elasticsearch
+- `Kibana`, `Logstash`를 이용하여 db연동 및 csv파일 데이터를 가져와 elasticsearch 쿼리를 통해 조회 및 출력.
+### 👉 배포
+- `aws`, `google cloud platpom` 등을 사용해 배포
+### 👉 상세옵션 선택 `springboot`로 변환
+- `thymeleaf`등을 활용하여 기존 FokeFoke 프로젝트를 `springboot`로 변환
+<br><br><br>
+
 ## 데이터베이스 설계
 ### ERD
 
@@ -74,26 +95,6 @@
 ### 성능 최적화 전략
 - 인덱싱 전략 : 사용자 ID(member.memberId), 상품 ID(product.productId), 매장ID(store.storeId)에 대해 인덱싱을 수행하여 조회 성능을 개선했습니다.
 - 쿼리 최적화: JOIN 연산과 GROUP BY 연산을 활용하여 필요한 정보만 효율적으로 가져오는 쿼리를 작성하였습니다.
-
-## 담당파트
-### 👉 형상관리 - git organizations 생성
-<div>
-<img src='https://user-images.githubusercontent.com/127198819/253467341-720111bc-48c7-4d0c-aaca-b40c2d29edd8.png' width='40%'>
-<img src='https://user-images.githubusercontent.com/127198819/253467524-d6b3dfde-998e-48af-93dd-42574b15c39e.png' width='40%'>
-</div>
-
-- main과 dev 브랜치로 나누어 dev에서 팀원들이 개발한 프로젝트를 자유롭게 올리고, 원본과 병합은 main에서 관리자가 실행
-   
-### 👉 실시간 1:1 상담
-  - `webflux`, `SSE`, `mongodb`를 이용한 실시간 채팅 상담 서비스
-### 👉 Crawling과 Cosine 유사도를 통해 차트, api, wordcloud를 활용한 맛집 추천
-- 백터 간 거리에 기반한 `Cosine`유사도를 비교하여 검색어와 유사율이 높으면서 네이버 별점 및 블로그 수 등 높은 맛집 추천
-### 👉 Elasticsearch
-- `Kibana`, `Logstash`를 이용하여 db연동 및 csv파일 데이터를 가져와 elasticsearch 쿼리를 통해 조회 및 출력.
-### 👉 배포
-- `aws`, `google cloud platpom` 등을 사용해 배포
-### 👉 상세옵션 선택 `springboot`로 변환
-- `thymeleaf`등을 활용하여 기존 FokeFoke 프로젝트를 `springboot`로 변환
 <br><br><br>
 
 ## 실시간 1:1 상담
